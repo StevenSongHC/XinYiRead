@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xinyiread.dao.WriterDAO">  
+	
+    <resultMap type="Writer" id="writerResultMap">
+        <id column="wid" property="id" />
+        <result column="uid" property="uid" />
+        <result column="w_pen_name" property="penName" />
+        <result column="w_contact" property="contact" />
+        <result column="w_intro" property="intro" />
+        <result column="w_current_project" property="currentProject" />
+        <result column="w_like_count" property="likeCount" />
+    </resultMap>
+    
+    <insert id="insert" parameterType="Writer" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO writer(uid,w_pen_name,w_contact,w_intro,w_current_project,w_like_count)
+        VALUES (#{uid},#{penName},#{contact},#{intro},#{currentProject},#{likeCount})
+    </insert>
+    
+    <select id="getWriterByPenName" parameterType="String" resultType="Writer" resultMap="writerResultMap">
+        SELECT * FROM writer WHERE w_pen_name=#{penName}
+    </select>
+    
+</mapper>

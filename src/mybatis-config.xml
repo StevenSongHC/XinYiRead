@@ -24,5 +24,6 @@
     <!-- 全局别名设置，在映射文件中只需写别名，而不必写出整个类路径 -->
     <typeAliases>
         <typeAlias alias="User" type="com.xinyiread.model.User" />
+        <typeAlias alias="Writer" type="com.xinyiread.model.Writer" />
     </typeAliases>
 </configuration>  

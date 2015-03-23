@@ -14,5 +14,9 @@ public interface UserDAO {
 	public long insert(User user);
 	
 	public List<User> getUserList();
+	
+	public User getUserByName(String username);
+	
+	public User getUserByEmail(String email);
 
 }

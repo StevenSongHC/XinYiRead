@@ -3,15 +3,12 @@
 <% 
 String basepath = request.getContextPath();
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="<%=basepath%>/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="<%=basepath%>/css/bootstrap-dialog.css">
-<script type="text/javascript"	src="<%=basepath%>/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript"	src="<%=basepath%>/js/bootstrap.min.js"></script>
-<script type="text/javascript"	src="<%=basepath%>/js/bootstrap-dialog.min.js"></script>
+<jsp:include page="include.jsp" flush="true" />
 <script type="text/javascript">
 	$(document).ready(function() {
 		BootstrapDialog.show({
@@ -47,5 +44,6 @@ String basepath = request.getContextPath();
 <h1>Hello World</h1>
 <h5><a href="user/list">data test</a></h5>
 <button type="button" class="btn btn-default" onclick="ajaxGreeting()">ajax test</button>
+<a href="<%=basepath%>/join">注册</a>
 </body>
 </html>

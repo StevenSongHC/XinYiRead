@@ -22,5 +22,13 @@ public class UserServiceImpl implements UserService {
 	public List<User> getUserList() {
 		return uDao.getUserList();
 	}
+	
+	public User getUserByName(String username) {
+		return uDao.getUserByName(username);
+	}
+	
+	public User getUserByEmail(String email) {
+		return uDao.getUserByEmail(email);
+	}
 
 }

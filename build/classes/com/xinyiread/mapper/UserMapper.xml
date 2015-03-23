@@ -5,19 +5,32 @@
 <mapper namespace="com.xinyiread.dao.UserDAO">  
 	
     <resultMap type="User" id="userResultMap">
-        <id column="id" property="id" />
+        <id column="uid" property="id" />
         <result column="u_name" property="name" />
+        <result column="u_password" property="password" />
+        <result column="u_email" property="email" />
+        <result column="u_is_email_show" property="isEmailShow" />
+        <result column="u_join_date" property="joinDate" />
+        <result column="u_last_login_date" property="lastLoginDate" />
     </resultMap>
     
     <insert id="insert" parameterType="User" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO user(u_name)
-        VALUES (#{name})
+        INSERT INTO user(u_name,u_password,u_email,u_is_email_show,u_join_date,u_last_login_date)
+        VALUES (#{name},#{password},#{email},#{isEmailShow},#{joinDate},#{lastLoginDate})
     </insert>
     
     <select id="getUserList" parameterType="String" resultType="User" resultMap="userResultMap">  
         <![CDATA[
             SELECT * FROM user
         ]]>
+    </select>
+    
+    <select id="getUserByName" parameterType="String" resultType="User" resultMap="userResultMap">
+        SELECT * FROM user WHERE u_name=#{username}
+    </select>
+    
+    <select id="getUserByEmail" parameterType="String" resultType="User" resultMap="userResultMap">
+        SELECT * FROM user WHERE u_email=#{email}
     </select>
     
 </mapper>
