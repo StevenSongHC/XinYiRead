@@ -118,7 +118,6 @@ public class IndexController {
 										 String account,
 										 String password,
 										 boolean rememberme,
-										 SessionStatus sessionStatus,
 										 HttpSession session,
 										 HttpServletRequest request,
 										 HttpServletResponse response) {
@@ -163,6 +162,19 @@ public class IndexController {
 				result.put("code", -1);
 			}
 		}
+		
+		return result;
+	}
+	
+	@RequestMapping("logout")
+	@ResponseBody
+	public Map<String, Object> logoutUser(SessionStatus sessionStatus,
+										  HttpServletRequest request,
+										  HttpServletResponse response) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		sessionStatus.setComplete();									// remove session
+		CookieUtil.removeCookie(request, response, "USER_COOKIE");		// remove cookie
 		
 		return result;
 	}

@@ -12,6 +12,7 @@ $(document).ready(function() {
 		}
 	});
 });
+
 function login() {
 	if ($("#top-bar #login-account").val().trim() === "") {
 		alert("用户名或邮箱不得为空");
@@ -54,6 +55,20 @@ function login() {
 		alert("failed to login");
 	});
 }
+function logout() {
+	$.ajax( {
+		async: false,
+		url: "<%=basepath%>/logout",
+		type: "POST",
+		dataType: "JSON",
+	}).done(function(json) {
+	}).fail(function() {
+		alert("failed to logout");
+	}).error(function (XMLHttpRequest, textStatus, errorThrown) {
+		alert("failed to logout");
+	});
+	window.location.reload();
+}
 </script>
 <style type="text/css">
 body {
@@ -62,6 +77,7 @@ body {
 #top-bar {
 	position: absolute;
 	top: 2px;
+	padding-right: 35px;
 	width: 100%;
 }
 #top-bar div {
@@ -91,7 +107,12 @@ body {
 		<a href="<%=basepath%>/join" class="btn btn-default">注册</a>
 	</c:when>
 	<c:otherwise>
-		${sessionScope.USER_SESSION.name}
+		<div>
+			${sessionScope.USER_SESSION.name}
+		</div>
+		<div>
+			<button class="btn btn-default" onclick="logout()">登出</button>
+		</div>
 	</c:otherwise>
 	</c:choose>
 	</div>

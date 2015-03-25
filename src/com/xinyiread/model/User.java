@@ -7,6 +7,7 @@ public class User {
 	private long id;
 	private String name;
 	private String password;
+	private String portrait;
 	private String email;
 	private int isEmailShow;
 	private Date joinDate;
@@ -29,6 +30,12 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getPortrait() {
+		return portrait;
+	}
+	public void setPortrait(String portrait) {
+		this.portrait = portrait;
 	}
 	public String getEmail() {
 		return email;
