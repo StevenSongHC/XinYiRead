@@ -12,13 +12,13 @@ String basepath = request.getContextPath();
 </head>
 <body>
 <h1>list1</h1>
-<ul>
+<ul id="list1">
 <c:forEach items="${list1}" var="l1">
 	<li>${l1}</li>
 </c:forEach>
 </ul>
 <h1>list2</h1>
-<ul>
+<ul id="list2">
 <c:forEach items="${list2}" var="l2">
 	<li>${l2}</li>
 </c:forEach>

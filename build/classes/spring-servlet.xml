@@ -38,10 +38,9 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/user/*" />
-            <!-- <mvc:exclude-mapping path="/user/register" /> -->
             <bean class="com.xinyiread.interceptor.UserInterceptor" />
         </mvc:interceptor>
-        <!-- <bean class="com.xinyiread.interceptor.BaseInterceptor" /> -->
+        <bean class="com.xinyiread.interceptor.BaseInterceptor" />
     </mvc:interceptors>
     
     <!-- jsp 视图 -->

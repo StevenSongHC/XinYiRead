@@ -26,6 +26,7 @@ $(document).ready(function() {
 						if ($("#form-container #input-password").val() === $("#form-container #input-repeat-password").val()) {
 							if (isUsernameExisted()) {
 								alert("existed username");
+								$("#form-container #input-username").focus();
 								return;
 							}
 							// 邮箱和笔名都在确认不为空后才进行更近的一步验证
@@ -33,11 +34,13 @@ $(document).ready(function() {
 								if (validateEmail()) {
 									if (isEmailExisted()) {
 										alert("existed email");
+										$("#form-container #input-email").focus();
 										return;
 									}
 								}
 								else {
 									alert("illegal email");
+									$("#form-container #input-email").focus();
 									return;
 								}
 							}
@@ -45,11 +48,13 @@ $(document).ready(function() {
 								if (legalNameReg.test($("#form-container #input-pen-name").val().trim())) {
 									if (isPenNameExisted()) {
 										alert("existed pen name");
+										$("#form-container #pen-name").focus();
 										return;
 									}
 								}
 								else {
 									alert("illegal pen name");
+									$("#form-container #pen-name").focus();
 									return;
 								}
 							}
@@ -75,26 +80,31 @@ $(document).ready(function() {
 						}
 						else {
 							alert("different password");
+							$("#form-container #input-repeat-password").focus();
 							return;
 						}
 					}
 					else {
 						alert("short password");
+						$("#form-container #input-password").focus();
 						return;
 					}
 				}
 				else {
 					alert("empty password");
+					$("#form-container #input-password").focus();
 					return;
 				}
 			}
 			else {
-				alert("illegal char");
+				alert("illegal username");
+				$("#form-container #input-username").focus();
 				return;
 			}
 		}
 		else {
 			alert("empty username");
+			$("#form-container #input-username").focus();
 			return;
 		}
 	});
@@ -206,7 +216,7 @@ function submitForm() {
 				break;
 			case 1:
 				alert("Congratulations!!!");
-				window.location.href="../user/" + json.username;
+				window.location.href="<%=basepath%>/user/i/" + json.username;
 				break;
 			default:
 				alert("通信失败");

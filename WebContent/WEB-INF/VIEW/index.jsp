@@ -9,6 +9,7 @@ String basepath = request.getContextPath();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="include.jsp" flush="true" />
+<jsp:include page="top-bar.jsp" flush="true" />
 <script type="text/javascript">
 	$(document).ready(function() {
 		BootstrapDialog.show({

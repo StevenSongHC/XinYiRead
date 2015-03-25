@@ -29,10 +29,10 @@ public class UserController {
 		if (currentUser == null)
 			return "redirect:/login";
 		// else redirect to current user's homepage
-		return "redirect:/user/" + currentUser.getName();
+		return "redirect:/user/i/" + currentUser.getName();
 	}
 	
-	@RequestMapping("{username}")
+	@RequestMapping("i/{username}")
 	public String homepage(ModelMap model,
 						   @PathVariable String username) {
 		User user = uService.getUserByName(username);
