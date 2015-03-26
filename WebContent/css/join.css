@@ -1,0 +1,28 @@
+body {
+	margin: 0;
+	background-image: url(join_page_background.jpg);
+	background-size: 100%;
+}
+#form-container {
+	width: 540px;
+	position: absolute;
+	top: 20%;
+	left: 30%;
+	background-color: #fff;
+	border: 1px solid #ccc;
+}
+#form-container .input-group {
+	margin: 25px 20px;
+}
+#form-container .input-group span {
+	width: 120px;
+}
+#form-container .input-group input {
+	width: 380px;
+}
+#form-container .well {
+	margin: 5px;
+}
+#writer-form {
+	display: none;
+}

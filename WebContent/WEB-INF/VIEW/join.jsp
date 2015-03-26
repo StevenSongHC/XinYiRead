@@ -228,12 +228,13 @@ function submitForm() {
 	});
 }
 </script>
-<link rel="stylesheet" href="<%=basepath%>/css/user/join.css" type="text/css" />
+<link rel="stylesheet" href="<%=basepath%>/css/join.css" type="text/css" />
 <title>注册</title>
 </head>
 <body>
 <div id="form-container">
 	<div id="user-form">
+		<a href="<%=basepath%>/login" class="btn btn-lg" role="button">使用已有账号登陆</a>
 		<div class="input-group">
 			<span class="input-group-addon"><strong>* 用户名</strong></span>
 			<input id="input-username" type="text" class="form-control" placeholder="username">
@@ -250,7 +251,7 @@ function submitForm() {
 			<span class="input-group-addon"><strong>邮箱</strong></span>
 			<input id="input-email" type="text" class="form-control" placeholder="@@@@@">
 		</div>
-		<button id="load-more" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-down"></span></button>
+		<button id="load-more" class="btn btn-default btn-sm btn-block"><span class="glyphicon glyphicon-chevron-down"></span></button>
 	</div>
 	<div id="writer-form">
 		<div class="well well-sm">每人都能成为一名作者</div>
@@ -258,7 +259,7 @@ function submitForm() {
 			<span class="input-group-addon"><strong>笔名</strong></span>
 			<input id="input-pen-name" type="text" class="form-control" placeholder="pen name">
 		</div>
-		<button id="load-terms" class="btn btn-default">就先提交这些吧</button>
+		<button id="load-terms" class="btn btn-default btn-block">就先提交这些吧</button>
 	</div>
 </div>
 </body>

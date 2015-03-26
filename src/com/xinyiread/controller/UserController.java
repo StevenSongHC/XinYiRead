@@ -27,7 +27,7 @@ public class UserController {
 		
 		// if no login, redirect to login page
 		if (currentUser == null)
-			return "redirect:/login";
+			return "redirect:../login";
 		// else redirect to current user's homepage
 		return "redirect:/user/i/" + currentUser.getName();
 	}
@@ -65,6 +65,16 @@ public class UserController {
 	public String listUser(ModelMap model) {
 		model.addAttribute("userList", uService.getUserList());
 		return "USER/list";
+	}
+	
+	@RequestMapping("setting")
+	public String setting(ModelMap model,
+						  HttpSession session) {
+		User currentUser = (User) session.getAttribute("USER_SESSION");
+		if (currentUser == null)
+			return "redirect:../login";
+		model.put("user", currentUser);
+		return "setting";
 	}
 
 }

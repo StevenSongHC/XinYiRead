@@ -8,6 +8,7 @@
         <id column="uid" property="id" />
         <result column="u_name" property="name" />
         <result column="u_password" property="password" />
+        <result column="u_portrait" property="portrait" />
         <result column="u_email" property="email" />
         <result column="u_is_email_show" property="isEmailShow" />
         <result column="u_join_date" property="joinDate" />

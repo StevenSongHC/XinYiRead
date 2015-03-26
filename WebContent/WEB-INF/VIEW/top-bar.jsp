@@ -4,6 +4,7 @@
 String basepath = request.getContextPath();
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script type="text/javascript"	src="<%=basepath%>/js/bootstrap-hover-dropdown.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#top-bar").keyup(function(e) {
@@ -86,6 +87,19 @@ body {
 .right-wrapper {
 	float: right;
 }
+#top-bar img {
+	width: 25px;
+	height: 25px;
+}
+#top-bar #user-title {
+	border: 1px #ccc solid;
+	padding: 3px;
+	cursor: pointer;
+	font-weight: bold;
+}
+#top-bar #user-title .dropdown-menu {
+	font-size: 13px;
+}
 </style>
 <div id="top-bar">
 	<div class="right-wrapper">
@@ -107,8 +121,17 @@ body {
 		<a href="<%=basepath%>/join" class="btn btn-default">注册</a>
 	</c:when>
 	<c:otherwise>
-		<div>
-			${sessionScope.USER_SESSION.name}
+		<div id="user-title" class="dropdown">
+			<a href="<%=basepath%>/user"><img alt="${sessionScope.USER_SESSION.name}的头像" title="前往我的主页" src="<%=basepath%>/${sessionScope.USER_SESSION.portrait}"></a>
+			<span class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+				<span class="username"><c:out value="${sessionScope.USER_SESSION.name}" /></span>
+				<b class="caret"></b>
+			</span>
+			<ul class="dropdown-menu">
+				<li><a href="#">书签</a></li>
+				<li><a href="#">收藏</a></li>
+				<li><a href="#">设置</a></li>
+			</ul>
 		</div>
 		<div>
 			<button class="btn btn-default" onclick="logout()">登出</button>
