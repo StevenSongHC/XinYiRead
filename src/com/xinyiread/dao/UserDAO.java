@@ -13,6 +13,8 @@ public interface UserDAO {
 	
 	public long insert(User user);
 	
+	public int update(User user);
+	
 	public List<User> getUserList();
 	
 	public User getUserByName(String username);

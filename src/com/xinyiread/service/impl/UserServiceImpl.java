@@ -18,6 +18,10 @@ public class UserServiceImpl implements UserService {
 	public long addUser(User user) {
 		return uDao.insert(user);
 	}
+	
+	public int updateUser(User user) {
+		return uDao.update(user);
+	}
 
 	public List<User> getUserList() {
 		return uDao.getUserList();

@@ -20,6 +20,18 @@
         VALUES (#{name},#{password},#{email},#{isEmailShow},#{joinDate},#{lastLoginDate})
     </insert>
     
+     <update id="update" parameterType="User">
+        UPDATE user SET
+            u_name=#{name},
+            u_password=#{password},
+            u_portrait=#{portrait},
+            u_email=#{email},
+            u_is_email_show=#{isEmailShow},
+            u_join_date=#{joinDate},
+            u_last_login_date=#{lastLoginDate}
+        WHERE uid=#{id}
+    </update>
+    
     <select id="getUserList" parameterType="String" resultMap="userResultMap">  
         <![CDATA[
             SELECT * FROM user

@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.xinyiread.model.User;
 import com.xinyiread.service.UserService;
@@ -25,58 +24,52 @@ public class ManagerController {
 		User currentUser = (User) session.getAttribute("USER_SESSION");
 		// go to admin page
 		if (uService.getUserAdministrativeCategoryById(currentUser.getId()).contains(0)) {
-			if (menu == null) {
+			// go to default page while receiving illegal data
+			if (menu == null || (!menu.equals("user") && !menu.equals("article") && 
+					!menu.equals("message") && !menu.equals("comment") && !menu.equals("authority") && !menu.equals("more")))
 				return "redirect:/manager?menu=user&submenu=list";
-			}
+			
 			if (menu.equals("user")) {
-				model.put("menu", "user");
-				if (submenu.equals("list")) {
-					model.put("userList", uService.getUserList());
-					model.put("submenu", "list");
-				}
-				else if (submenu.equals("writer")) {
-
-					model.put("submenu", "writer");
-				}
-				else if (submenu.equals("history")) {
-
-					model.put("submenu", "history");
-				}
-				else if (submenu.equals("bookmark")) {
-
-					model.put("submenu", "bookmark");
-				}
-				else if (submenu.equals("collection")) {
-
-					model.put("submenu", "collection");
-				}
+				if (submenu== null || (!submenu.equals("list") && !submenu.equals("writer") && 
+						!submenu.equals("history") && !submenu.equals("bookmark") && !submenu.equals("collection")))
+					return "redirect:/manager?menu=user&submenu=list";
 			}
 			else if (menu.equals("article")) {
-				model.put("menu", "article");
+				if (submenu== null || (!submenu.equals("list") && !submenu.equals("category") && !submenu.equals("tag")))
+					return "redirect:/manager?menu=article&submenu=list";
 			}
 			else if (menu.equals("message")) {
-				model.put("menu", "message");
+				if (submenu== null || !submenu.equals("list"))
+					return "redirect:/manager?menu=message&submenu=list";
 			}
 			else if (menu.equals("comment")) {
-				model.put("menu", "comment");
+				if (submenu== null || (!submenu.equals("list") && !submenu.equals("unhandled_list") && !submenu.equals("handled_list")))
+					return "redirect:/manager?menu=comment&submenu=list";
 			}
 			else if (menu.equals("authority")) {
-				model.put("menu", "authority");
+				if (submenu== null || !submenu.equals("list"))
+					return "redirect:/manager?menu=authority&submenu=list";
 			}
 			else if (menu.equals("more")) {
-				model.put("menu", "more");
+				if (submenu== null || !submenu.equals("modify_password"))
+					return "redirect:/manager?menu=more&submenu=modify_password";
 			}
 			else {
 				return "redirect:/manager?menu=user&submenu=list";
 			}
+			
+			model.put("menu", menu);
+			model.put("submenu", submenu);
+			
 			return "MANAGER/admin";
 		}
 		return "MANAGER/censor";
 	}
 	
-	@RequestMapping("load/{displayDataPage}")
-	public String loadUserList(@PathVariable String displayDataPage) {
-		return "MANAGER/DATA/" + displayDataPage;
+	@RequestMapping("load/user_list")
+	public String loadUserList(ModelMap model) {
+		model.put("userList", uService.getUserList());
+		return "MANAGER/DATA/user-list";
 	}
 	
 }

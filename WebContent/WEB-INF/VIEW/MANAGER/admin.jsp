@@ -14,10 +14,9 @@ String basepath = request.getContextPath();
 $(document).ready(function() {
 	var menu = $("#hidden-menu").val();
 	var submenu = $("#hidden-submenu").val();
-	$("#menu-nav ul>li[menu='" + menu + "']").addClass("active");
-	var se = $("#submenu-nav ul[parent='" + menu + "']");
+	/**$("#menu-nav ul>li[menu='" + menu + "']").addClass("active");
 	$("#submenu-nav ul[parent='" + menu + "']").show();
-	$("#submenu-nav ul[parent='" + menu + "']>li[submenu='" + submenu + "']").addClass("active");
+	$("#submenu-nav ul[parent='" + menu + "']>li[submenu='" + submenu + "']").addClass("active");8**/
 	
 	$("#main-content").load("<%=basepath%>/manager/load/" + menu + "_" + submenu);
 });
@@ -57,23 +56,23 @@ $(document).ready(function() {
 			<li submenu="collection" role="presentation"><a href="<%=basepath%>/manager?menu=user&submenu=collection">收藏</a></li>
 		</ul>
 		<ul parent="article" class="nav nav-pills nav-stacked">
-			<li role="presentation"><a href="<%=basepath%>/manager?menu=article&submenu=list">列表</a></li>
-			<li role="presentation"><a href="<%=basepath%>/manager?menu=article&submenu=category">类型</a></li>
-			<li role="presentation"><a href="<%=basepath%>/manager?menu=article&submenu=tag">标签</a></li>
+			<li submenu="list" role="presentation"><a href="<%=basepath%>/manager?menu=article&submenu=list">列表</a></li>
+			<li submenu="category" role="presentation"><a href="<%=basepath%>/manager?menu=article&submenu=category">类型</a></li>
+			<li submenu="tag" role="presentation"><a href="<%=basepath%>/manager?menu=article&submenu=tag">标签</a></li>
 		</ul>
 		<ul parent="message" class="nav nav-pills nav-stacked">
-			<li role="presentation"><a href="<%=basepath%>/manager?menu=message&submenu=list">全部</a></li>
+			<li submenu="list" role="presentation"><a href="<%=basepath%>/manager?menu=message&submenu=list">全部</a></li>
 		</ul>
 		<ul parent="comment" class="nav nav-pills nav-stacked">
-			<li role="presentation"><a href="<%=basepath%>/manager?menu=comment&submenu=list">列表</a></li>
-			<li role="presentation"><a href="<%=basepath%>/manager?menu=comment&submenu=unhandled_list">未处理的举报</a></li>
-			<li role="presentation"><a href="<%=basepath%>/manager?menu=acomment&submenu=handled_list">已处理的举报</a></li>
+			<li submenu="list" role="presentation"><a href="<%=basepath%>/manager?menu=comment&submenu=list">列表</a></li>
+			<li submenu="unhandled_list" role="presentation"><a href="<%=basepath%>/manager?menu=comment&submenu=unhandled_list">未处理的举报</a></li>
+			<li submenu="handled_list" role="presentation"><a href="<%=basepath%>/manager?menu=acomment&submenu=handled_list">已处理的举报</a></li>
 		</ul>
 		<ul parent="authority" class="nav nav-pills nav-stacked">
-			<li role="presentation"><a href="<%=basepath%>/manager?menu=authority&submenu=list">已分配</a></li>
+			<li submenu="list" role="presentation"><a href="<%=basepath%>/manager?menu=authority&submenu=list">已分配</a></li>
 		</ul>
 		<ul parent="more" class="nav nav-pills nav-stacked">
-			<li role="presentation"><a href="<%=basepath%>/manager?menu=more&submenu=modify_password">修改用户密码</a></li>
+			<li submenu="modify_password" role="presentation"><a href="<%=basepath%>/manager?menu=more&submenu=modify_password">修改用户密码</a></li>
 		</ul>
 	</div>
 	<div id="main-content">

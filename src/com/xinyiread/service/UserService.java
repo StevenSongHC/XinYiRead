@@ -8,6 +8,8 @@ public interface UserService {
 
 	public long addUser(User user);
 	
+	public int updateUser(User user);
+	
 	public List<User> getUserList();
 	
 	public User getUserByName(String username);

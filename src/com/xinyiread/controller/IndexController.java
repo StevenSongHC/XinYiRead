@@ -139,10 +139,13 @@ public class IndexController {
 			}
 			else {		// 用邮箱登陆
 				if (MD5Util.authenticateInputPassword(loginUser.getPassword(), password)) {
-					model.addAttribute("USER_SESSION", loginUser);						// add session
+					model.addAttribute("USER_SESSION", loginUser);									// add session
 					if (rememberme) {
-						response.addCookie(CookieUtil.generateUserCookie(loginUser));	// add cookie
+						response.addCookie(CookieUtil.generateUserCookie(loginUser));				// add cookie
 					}
+					java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());	// update last login date
+					loginUser.setLastLoginDate(currentDate);
+					uService.updateUser(loginUser);
 					result.put("code", 1);
 				}
 				else {
@@ -156,6 +159,10 @@ public class IndexController {
 				if (rememberme) {
 					response.addCookie(CookieUtil.generateUserCookie(loginUser));
 				}
+				java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());	// update last login date
+				loginUser.setLastLoginDate(currentDate);
+				uService.updateUser(loginUser);
+				result.put("code", 1);
 				result.put("code", 1);
 			}
 			else {
