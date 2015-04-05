@@ -27,7 +27,7 @@ public class UserController {
 		
 		// if no login, redirect to login page
 		if (currentUser == null)
-			return "redirect:../login";
+			return "redirect:/login";
 		// else redirect to current user's homepage
 		return "redirect:/user/i/" + currentUser.getName();
 	}
@@ -74,7 +74,7 @@ public class UserController {
 		if (currentUser == null)
 			return "redirect:../login";
 		model.put("user", currentUser);
-		return "setting";
+		return "USER/setting";
 	}
 
 }

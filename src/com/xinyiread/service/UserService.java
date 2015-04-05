@@ -14,4 +14,6 @@ public interface UserService {
 	
 	public User getUserByEmail(String email);
 	
+	public List<Object> getUserAdministrativeCategoryById(long id);
+	
 }

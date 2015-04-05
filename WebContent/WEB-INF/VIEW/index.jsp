@@ -12,11 +12,11 @@ String basepath = request.getContextPath();
 <jsp:include page="top-bar.jsp" flush="true" />
 <script type="text/javascript">
 	$(document).ready(function() {
-		BootstrapDialog.show({
+		/**BootstrapDialog.show({
 			type: BootstrapDialog.TYPE_INFO,
 			title: "Greeting",
 			message: "欢迎访问 新意阅读网"
-		});
+		});**/
 	});
 	
 	function ajaxGreeting() {

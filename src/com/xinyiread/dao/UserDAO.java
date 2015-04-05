@@ -18,5 +18,7 @@ public interface UserDAO {
 	public User getUserByName(String username);
 	
 	public User getUserByEmail(String email);
+	
+	public List<Object> getUserAdministrativeCategoryById(long id);
 
 }

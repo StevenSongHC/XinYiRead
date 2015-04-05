@@ -30,5 +30,9 @@ public class UserServiceImpl implements UserService {
 	public User getUserByEmail(String email) {
 		return uDao.getUserByEmail(email);
 	}
+	
+	public List<Object> getUserAdministrativeCategoryById(long id) {
+		return uDao.getUserAdministrativeCategoryById(id);
+	}
 
 }

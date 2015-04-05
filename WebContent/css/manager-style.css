@@ -1,0 +1,29 @@
+.nav>li.disabled>a {
+	color: #ccc;
+}
+#menu-nav {
+	margin-left: 510px;
+}
+#menu-nav ul {
+	font-size: 18px;
+}
+#menu-nav li {
+	margin-right: 10px;
+}
+#submenu-nav {
+	width: 130px;
+	margin: 70px 40px 0 350px;
+	display: inline-block;
+	float: left;
+}
+#submenu-nav ul {
+	display: none;
+}
+#main-content {
+	display: inline-block;
+	margin: 70px 0 0 50px;
+	min-width: 700px;
+	min-height: 200px;
+	background-color: #ccc;
+	float: left;
+}

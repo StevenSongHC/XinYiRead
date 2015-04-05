@@ -19,7 +19,7 @@
         VALUES (#{uid},#{penName},#{contact},#{intro},#{currentProject},#{likeCount})
     </insert>
     
-    <select id="getWriterByPenName" parameterType="String" resultType="Writer" resultMap="writerResultMap">
+    <select id="getWriterByPenName" parameterType="String" resultMap="writerResultMap">
         SELECT * FROM writer WHERE w_pen_name=#{penName}
     </select>
     

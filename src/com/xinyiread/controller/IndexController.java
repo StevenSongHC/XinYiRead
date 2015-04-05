@@ -179,4 +179,16 @@ public class IndexController {
 		return result;
 	}
 	
+	
+	// STATIC INFO PAGES
+	@RequestMapping("404")
+	public String pageNotFound() {
+		return "STATIC/404";
+	}
+	
+	@RequestMapping("no_permission")
+	public String noPermission() {
+		return "STATIC/no-permission";
+	}
+	
 }

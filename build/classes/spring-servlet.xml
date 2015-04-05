@@ -36,11 +36,17 @@
 
     <!-- 拦截器 -->
     <mvc:interceptors>
+        <bean class="com.xinyiread.interceptor.BaseInterceptor" />
         <mvc:interceptor>
+            <mvc:mapping path="/user" />
             <mvc:mapping path="/user/*" />
             <bean class="com.xinyiread.interceptor.UserInterceptor" />
         </mvc:interceptor>
-        <bean class="com.xinyiread.interceptor.BaseInterceptor" />
+        <mvc:interceptor>
+            <mvc:mapping path="/manager" />
+            <mvc:mapping path="/manager/*" />
+            <bean class="com.xinyiread.interceptor.ManagerInterceptor" />
+        </mvc:interceptor>
     </mvc:interceptors>
     
     <!-- jsp 视图 -->

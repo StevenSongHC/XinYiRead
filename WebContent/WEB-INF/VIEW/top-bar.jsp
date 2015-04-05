@@ -73,7 +73,7 @@ function logout() {
 </script>
 <style type="text/css">
 body {
-	margin-top: 37px;
+	margin-top: 50px;
 }
 #top-bar {
 	position: absolute;
@@ -91,13 +91,26 @@ body {
 	width: 25px;
 	height: 25px;
 }
-#top-bar #user-title {
-	border: 1px #ccc solid;
+#top-bar .user-title {
+	border: 1px #000 solid;
 	padding: 3px;
+	font-size: 13px;
+	font-weight: bold;
+}
+#top-bar .user-title a {
+	color: #ccc;
+}
+#top-bar .user-title a:hover {
+	text-decoration: none;
+	color: #428BCA;
+}
+#top-bar #user-token {
+	border: 1px #ccc solid;
+	padding: 2px;
 	cursor: pointer;
 	font-weight: bold;
 }
-#top-bar #user-title .dropdown-menu {
+#top-bar #user-token .dropdown-menu {
 	font-size: 13px;
 }
 </style>
@@ -123,7 +136,10 @@ body {
 	</div>
 	</c:when>
 	<c:otherwise>
-		<div id="user-title" class="dropdown">
+		<div class="user-title">
+			<a href="<%=basepath%>/manager">M</a>
+		</div>
+		<div id="user-token" class="dropdown">
 			<a href="<%=basepath%>/user"><img alt="${sessionScope.USER_SESSION.name}的头像" title="前往我的主页" src="<%=basepath%>/${sessionScope.USER_SESSION.portrait}"></a>
 			<span class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
 				<span class="username"><c:out value="${sessionScope.USER_SESSION.name}" /></span>
@@ -132,7 +148,7 @@ body {
 			<ul class="dropdown-menu">
 				<li><a href="#">书签</a></li>
 				<li><a href="#">收藏</a></li>
-				<li><a href="#">设置</a></li>
+				<li><a href="<%=basepath%>/user/setting">设置</a></li>
 			</ul>
 		</div>
 		<div>
