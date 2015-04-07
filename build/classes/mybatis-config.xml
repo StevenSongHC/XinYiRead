@@ -25,5 +25,6 @@
     <typeAliases>
         <typeAlias alias="User" type="com.xinyiread.model.User" />
         <typeAlias alias="Writer" type="com.xinyiread.model.Writer" />
+        <typeAlias alias="Article" type="com.xinyiread.model.Article" />
     </typeAliases>
 </configuration>  

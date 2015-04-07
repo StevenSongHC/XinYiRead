@@ -1,13 +1,21 @@
 package com.xinyiread.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.xinyiread.model.User;
+import com.xinyiread.service.ArticleService;
 import com.xinyiread.service.UserService;
+import com.xinyiread.service.WriterService;
 
 @Controller
 @RequestMapping("manager")
@@ -15,6 +23,10 @@ public class ManagerController {
 
 	@Autowired
 	private UserService uService;
+	@Autowired
+	private WriterService wService;
+	@Autowired
+	private ArticleService aService;
 	
 	@RequestMapping
 	public String mainPage(ModelMap model,
@@ -70,6 +82,51 @@ public class ManagerController {
 	public String loadUserList(ModelMap model) {
 		model.put("userList", uService.getUserList());
 		return "MANAGER/DATA/user-list";
+	}
+
+	@RequestMapping("load/article_list")
+	public String loadArticleList(ModelMap model) {
+		
+		return "MANAGER/DATA/article-list";
+	}
+	
+	@RequestMapping("load/article_category")
+	public String loadArticleCategory(ModelMap model) {
+		model.put("categoryList", aService.getAllCategory());
+		return "MANAGER/DATA/article-category";
+	}
+	
+	@RequestMapping(value = "insert/category")
+	@ResponseBody
+	public Map<String, Object> insertCategory(String name) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<Object> cid = aService.getCatidByCategoryName(name);
+		
+		if (!cid.isEmpty()) {
+			result.put("code", 0);		// 已存在该分类记录
+		}
+		else {
+			aService.addCategory(name);
+			result.put("code", 1);		// 新建成功
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "update/category")
+	@ResponseBody
+	public Map<String, Object> updateCategory(int catid,
+											  String name) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<Object> cid = aService.getCatidByCategoryName(name);
+		
+		if (!cid.isEmpty()) {
+			result.put("code", 0);		// 已存在该分类记录
+		}
+		else {
+			aService.updateCategory(catid, name);
+			result.put("code", 1);		// 更新成功
+		}
+		return result;
 	}
 	
 }

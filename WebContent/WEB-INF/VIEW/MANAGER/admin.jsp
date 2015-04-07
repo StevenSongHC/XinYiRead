@@ -36,14 +36,7 @@ $(document).ready(function() {
 		<li menu="message" role="presentation"><a href="<%=basepath%>/manager?menu=message&submenu=list">消息</a></li>
 		<li menu="comment" role="presentation"><a href="<%=basepath%>/manager?menu=comment&submenu=list">评论</a></li>
 		<li menu="authority" role="presentation"><a href="<%=basepath%>/manager?menu=authority&submenu=list">权限</a></li>
-		<li menu="more" role="presentation" class="dropdown">
-			<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-			更多 <span class="caret"></span>
-			</a>
-			<ul class="dropdown-menu" role="menu">
-			    <li role="presentation"><a href="<%=basepath%>/manager?menu=user&submenu=modify_password">修改用户密码</a></li>
-			</ul>
-		</li>
+		<li menu="more" role="presentation"><a href="<%=basepath%>/manager?menu=more&submenu=modify_password">更多</a></li>
 	</ul>
 </div>
 <div>
@@ -57,7 +50,7 @@ $(document).ready(function() {
 		</ul>
 		<ul parent="article" class="nav nav-pills nav-stacked">
 			<li submenu="list" role="presentation"><a href="<%=basepath%>/manager?menu=article&submenu=list">列表</a></li>
-			<li submenu="category" role="presentation"><a href="<%=basepath%>/manager?menu=article&submenu=category">类型</a></li>
+			<li submenu="category" role="presentation"><a href="<%=basepath%>/manager?menu=article&submenu=category">分类</a></li>
 			<li submenu="tag" role="presentation"><a href="<%=basepath%>/manager?menu=article&submenu=tag">标签</a></li>
 		</ul>
 		<ul parent="message" class="nav nav-pills nav-stacked">

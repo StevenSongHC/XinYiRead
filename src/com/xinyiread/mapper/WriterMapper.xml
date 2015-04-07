@@ -20,7 +20,8 @@
     </insert>
     
     <select id="getWriterByPenName" parameterType="String" resultMap="writerResultMap">
-        SELECT * FROM writer WHERE w_pen_name=#{penName}
+        SELECT * FROM writer 
+        WHERE w_pen_name=#{penName}
     </select>
     
 </mapper>

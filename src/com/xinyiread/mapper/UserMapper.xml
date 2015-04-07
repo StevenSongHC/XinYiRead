@@ -39,15 +39,18 @@
     </select>
     
     <select id="getUserByName" parameterType="String" resultMap="userResultMap">
-        SELECT * FROM user WHERE u_name=#{username}
+        SELECT * FROM user 
+        WHERE u_name=#{username}
     </select>
     
     <select id="getUserByEmail" parameterType="String" resultMap="userResultMap">
-        SELECT * FROM user WHERE u_email=#{email}
+        SELECT * FROM user 
+        WHERE u_email=#{email}
     </select>
     
     <select id="getUserAdministrativeCategoryById" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        SELECT catid FROM administrative_member WHERE uid=#{id}
+        SELECT catid FROM administrative_member 
+        WHERE uid=#{id}
     </select>
     
 </mapper>
