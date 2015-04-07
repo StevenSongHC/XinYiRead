@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -108,6 +109,9 @@ public class ManagerController {
 		else {
 			aService.addCategory(name);
 			result.put("code", 1);		// 新建成功
+			// log
+			Logger log = Logger.getLogger("managerLogger");
+			log.info("Add category: " + name);
 		}
 		return result;
 	}
@@ -115,7 +119,8 @@ public class ManagerController {
 	@RequestMapping(value = "update/category")
 	@ResponseBody
 	public Map<String, Object> updateCategory(int catid,
-											  String name) {
+											  String name,
+											  String oldName) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<Object> cid = aService.getCatidByCategoryName(name);
 		
@@ -125,6 +130,9 @@ public class ManagerController {
 		else {
 			aService.updateCategory(catid, name);
 			result.put("code", 1);		// 更新成功
+			
+			Logger log = Logger.getLogger("managerLogger");
+			log.info("Modify category[№" + catid + "]: " + oldName + " -> " + name);
 		}
 		return result;
 	}

@@ -33,7 +33,8 @@ function confirmEdit(nomep) {
 				dataType: "JSON",
 				data: {
 					catid: nomep,
-					name: name
+					name: name,
+					oldName: $(editElement).attr("origin-name")
 				}
 			}).done(function( json ) {
 				switch (json.code) {
@@ -47,7 +48,7 @@ function confirmEdit(nomep) {
 						$(editElement).attr("origin-name", name);
 						break;
 					default:
-						alert("更新出错");
+						alert("服务器未正常响应");
 				}
 			}).fail(function() {
 				alert("更新时出错");
@@ -96,7 +97,7 @@ function confirmCreate() {
 						$(enRow).find("td:last").html(name);
 						break;
 					default:
-						alert("新建出错");
+						alert("服务器未正常响应");
 				}
 			}).fail(function() {
 				alert("新建时出错");
