@@ -140,15 +140,19 @@ body {
 			<a href="<%=basepath%>/manager">M</a>
 		</div>
 		<div id="user-token" class="dropdown">
-			<a href="<%=basepath%>/user"><img alt="${sessionScope.USER_SESSION.name}的头像" title="前往我的主页" src="<%=basepath%>/${sessionScope.USER_SESSION.portrait}"></a>
+			<a href="<%=basepath%>/user/i/${sessionScope.USER_SESSION.name}"><img alt="${sessionScope.USER_SESSION.name}的头像" title="前往我的主页" src="<%=basepath%>/${sessionScope.USER_SESSION.portrait}"></a>
 			<span class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
 				<span class="username"><c:out value="${sessionScope.USER_SESSION.name}" /></span>
 				<b class="caret"></b>
 			</span>
 			<ul class="dropdown-menu">
+				<li><a href="<%=basepath%>/user/i/${sessionScope.USER_SESSION.name}">个人主页</a></li>
+			<c:if test="${not empty sessionScope.WRITER_SESSION}">
+				<li><a href="<%=basepath%>/writer">写作空间</a></li>
+			</c:if>
+				<li><a href="<%=basepath%>/user/setting">资料设置</a></li>
 				<li><a href="#">书签</a></li>
 				<li><a href="#">收藏</a></li>
-				<li><a href="<%=basepath%>/user/setting">设置</a></li>
 			</ul>
 		</div>
 		<div>

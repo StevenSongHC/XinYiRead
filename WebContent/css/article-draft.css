@@ -1,0 +1,19 @@
+#main {
+	margin: auto;
+	width: 50%;
+}
+#draft-stage {
+	margin: 20px 0;
+	padding: 1em 2em;
+	border: 1px solid #ccc;
+	min-height: 500px;
+}
+#article-title {
+	width: 70%;
+	font-size: 20px;
+	padding: 5px;
+	margin: 20px 0 10px 0;
+}
+#draft-stage p {
+	text-indent: 2em;
+}

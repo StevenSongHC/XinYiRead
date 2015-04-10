@@ -23,6 +23,14 @@ public class ArticleServiceImpl implements ArticleService {
 	public long updateArticle(Article article) {
 		return aDao.update(article);
 	}
+	
+	public Article getArticleById(long id) {
+		return aDao.getArticleById(id);
+	}
+	
+	public Article getArticleByTitle(String title) {
+		return aDao.getArticleByTitle(title);
+	}
 
 	public int updateCategory(int catid, String name) {
 		return aDao.updateCategoryName(catid, name);
@@ -38,6 +46,10 @@ public class ArticleServiceImpl implements ArticleService {
 
 	public List<Object> getCatidByCategoryName(String name) {
 		return aDao.getCatidByCategoryName(name);
+	}
+	
+	public List<Map<String, Object>> getAllTag() {
+		return aDao.getAllTag();
 	}
 	
 }

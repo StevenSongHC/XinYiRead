@@ -9,13 +9,17 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xinyiread.model.User;
+import com.xinyiread.model.Writer;
 import com.xinyiread.service.UserService;
+import com.xinyiread.service.WriterService;
 import com.xinyiread.util.CookieUtil;
 
 public class BaseInterceptor implements HandlerInterceptor {
 	
 	@Autowired
 	UserService uService;
+	@Autowired
+	WriterService wService;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
@@ -33,17 +37,20 @@ public class BaseInterceptor implements HandlerInterceptor {
 						if (user != null) {
 							String password = cookie.getValue().split(",")[2];
 							
-							cookie.setValue("");											// remove the old cookie first
+							cookie.setValue("");												// remove the old cookie first
 							cookie.setMaxAge(0);
 							cookie.setPath("/");
 							response.addCookie(cookie);
 							
 							if (password.equals(user.getPassword())) {
-								request.getSession().setAttribute("USER_SESSION", user);	// add user session
+								request.getSession().setAttribute("USER_SESSION", user);		// add user session
+								Writer writer = wService.getWriterByUid(user.getId());
+								if (writer != null)
+									request.getSession().setAttribute("WRITER_SESSION", writer);	// add writer session
 								
-								response.addCookie(CookieUtil.generateUserCookie(user));	// add the new cookie
+								response.addCookie(CookieUtil.generateUserCookie(user));		// add the new cookie
 							}
-							if (request.getSession().getAttribute("USER_SESSION") != null)  // don't know why the heck does it run 4 times
+							if (request.getSession().getAttribute("USER_SESSION") != null)  	// don't know why the heck does it run 4 times
 								break;
 						}
 						else {

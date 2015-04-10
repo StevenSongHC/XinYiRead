@@ -23,7 +23,7 @@ import com.xinyiread.util.CookieUtil;
 import com.xinyiread.util.MD5Util;
 
 @Controller
-@SessionAttributes("USER_SESSION")
+@SessionAttributes(value={"USER_SESSION","WRITER_SESSION"})
 @RequestMapping
 public class IndexController {
 	
@@ -69,6 +69,7 @@ public class IndexController {
 		
 		newbie.setName(name);
 		newbie.setPassword(MD5Util.encryptCode(password));
+		newbie.setPortrait("images/portrait/default.png");
 		if (!email.equals(""))
 			newbie.setEmail(email);
 		java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
@@ -87,6 +88,8 @@ public class IndexController {
 				
 				// 新建用户和作者并成功
 				if (newWriter.getId() != 0) {
+					// add writer session
+					model.addAttribute("WRITER_SESSION", newWriter);
 					result.put("code", 1);
 				}
 				// 仅成功地新建了用户
@@ -96,7 +99,7 @@ public class IndexController {
 			// 仅仅新建用户并成功
 			else
 				result.put("code", 1);
-			// add session
+			// add user session
 			model.addAttribute("USER_SESSION", newbie);
 			result.put("username", newbie.getName());
 		}
@@ -139,7 +142,10 @@ public class IndexController {
 			}
 			else {		// 用邮箱登陆
 				if (MD5Util.authenticateInputPassword(loginUser.getPassword(), password)) {
-					model.addAttribute("USER_SESSION", loginUser);									// add session
+					model.addAttribute("USER_SESSION", loginUser);									// add user session
+					Writer loginWriter = wService.getWriterByUid(loginUser.getId());
+					if (loginWriter != null)
+						model.addAttribute("WRITER_SESSION", loginWriter);							// add writer session
 					if (rememberme) {
 						response.addCookie(CookieUtil.generateUserCookie(loginUser));				// add cookie
 					}
@@ -156,6 +162,9 @@ public class IndexController {
 		else {			// 用用户名登陆
 			if (MD5Util.authenticateInputPassword(loginUser.getPassword(), password)) {
 				model.addAttribute("USER_SESSION", loginUser);
+				Writer loginWriter = wService.getWriterByUid(loginUser.getId());
+				if (loginWriter != null)
+					model.addAttribute("WRITER_SESSION", loginWriter);
 				if (rememberme) {
 					response.addCookie(CookieUtil.generateUserCookie(loginUser));
 				}

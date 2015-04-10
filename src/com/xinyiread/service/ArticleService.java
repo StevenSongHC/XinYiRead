@@ -10,6 +10,10 @@ public interface ArticleService {
 	public long addArticle(Article article);
 	
 	public long updateArticle(Article article);
+	
+	public Article getArticleById(long id);
+	
+	public Article getArticleByTitle(String title);
 
 	public int addCategory(String name);
 	
@@ -18,5 +22,7 @@ public interface ArticleService {
 	public List<Map<String, Object>> getAllCategory();
 
 	public List<Object> getCatidByCategoryName(String name);
+	
+	public List<Map<String, Object>> getAllTag();
 	
 }

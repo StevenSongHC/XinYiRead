@@ -6,6 +6,8 @@ public interface WriterService {
 	
 	public long addWriter(Writer writer);
 	
+	public Writer getWriterByUid(long uid);
+	
 	public Writer getWriterByPenName(String penName);
 
 }

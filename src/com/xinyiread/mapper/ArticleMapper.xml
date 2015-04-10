@@ -10,6 +10,7 @@
         <result column="catid" property="catid" />
         <result column="a_title" property="title" />
         <result column="a_intro" property="intro" />
+        <result column="a_content" property="content" />
         <result column="a_recommand" property="recommand" />
         <result column="a_read_count" property="readCount" />
         <result column="a_like_count" property="likeCount" />
@@ -21,26 +22,39 @@
     </resultMap>
     
     <insert id="insert" parameterType="Article" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO article(wid,catid,a_title,a_intro,a_recommand,a_read_count,a_like_count,a_dislike_count,a_publish_date,a_is_complete,a_is_writer_show,a_is_censored)
-        VALUES (#{wid},#{catid},#{title},#{intro},#{recommand},#{readCount},#{likeCount},#{dislikeCount},#{publishDate},#{isComplete},#{isWriterShow},#{isCensored})
+        INSERT INTO article(wid,catid,a_title,a_intro,a_content,a_recommand,a_read_count,a_like_count,a_dislike_count,a_publish_date,a_is_complete,a_is_writer_show,a_is_censored)
+        VALUES (#{wid},#{catid},#{title},#{intro},#{content},#{recommand},#{readCount},#{likeCount},#{dislikeCount},#{publishDate},#{isComplete},#{isWriterShow},#{isCensored})
     </insert>
     
      <update id="update" parameterType="Article">
         UPDATE article SET
-            wid=#wid},
+            wid=#{wid},
             catid=#{catid},
             a_title=#{title},
             a_intro=#{intro},
+            a_content=#{content},
             a_recommand=#{recommand},
             a_read_count=#{readCount},
             a_like_count=#{likeCount},
             a_dislike_count=#{dislikeCount},
-            a_publish_datee=#{publishDate},
+            a_publish_date=#{publishDate},
             a_is_complete=#{isComplete},
             a_is_writer_show=#{isWriterShow},
             a_is_censored=#{isCensored}
-        WHERE uid=#{id}
+        WHERE aid=#{id}
     </update>
+    
+     <select id="getArticleById"  parameterType="java.lang.Long" resultMap="articleResultMap">
+        SELECT *
+		FROM article
+		WHERE aid=#{id}
+    </select>
+    
+     <select id="getArticleByTitle"  parameterType="java.lang.String" resultMap="articleResultMap">
+        SELECT *
+		FROM article
+		WHERE a_title=#{title}
+    </select>
     
      <insert id="insertCategory" useGeneratedKeys="true">
         INSERT INTO category(cat_name)
@@ -64,6 +78,13 @@
         SELECT catid
         FROM category
         WHERE cat_name=#{name}
+    </select>
+    
+    <select id="getAllTag" resultType="java.util.Map">
+        SELECT tag.tagid AS id, tag.tag_name AS name, COUNT( article_tag_map.aid ) AS article_count
+		FROM tag
+		LEFT JOIN article_tag_map ON tag.tagid = article_tag_map.tagid
+		GROUP BY tag.tagid
     </select>
     
 </mapper>

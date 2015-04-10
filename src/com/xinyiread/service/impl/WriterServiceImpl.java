@@ -17,6 +17,10 @@ public class WriterServiceImpl implements WriterService {
 		return wDao.insert(writer);
 	}
 
+	public Writer getWriterByUid(long uid) {
+		return wDao.getWriterByUid(uid);
+	}
+	
 	public Writer getWriterByPenName(String penName) {
 		return wDao.getWriterByPenName(penName);
 	}

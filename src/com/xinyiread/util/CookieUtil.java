@@ -9,7 +9,7 @@ import com.xinyiread.model.User;
 
 public class CookieUtil {
 	
-	public final static int COOKIE_MAX_AGE = 60 * 60;			// cookie 最大生命值, cookie's max life = 1 hour
+	public final static int COOKIE_MAX_AGE = 60 * 60 * 24;			// cookie 最大生命值, cookie's max life = 1 day
 	
 	// 生成包含用户信息的 cookie
 	public static Cookie generateUserCookie(User user) {

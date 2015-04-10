@@ -10,6 +10,8 @@ import com.xinyiread.model.Writer;
 public interface WriterDAO {
 	
 	public long insert(Writer writer);
+	
+	public Writer getWriterByUid(long uid);
 
 	public Writer getWriterByPenName(String penName);
 	

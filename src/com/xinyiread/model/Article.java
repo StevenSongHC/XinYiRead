@@ -9,6 +9,7 @@ public class Article {
 	private int catid;
 	private String title;
 	private String intro;
+	private String content;
 	private String recommand;
 	private int readCount;
 	private int likeCount;
@@ -47,6 +48,12 @@ public class Article {
 	}
 	public void setIntro(String intro) {
 		this.intro = intro;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public String getRecommand() {
 		return recommand;

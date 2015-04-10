@@ -97,6 +97,12 @@ public class ManagerController {
 		return "MANAGER/DATA/article-category";
 	}
 	
+	@RequestMapping("load/article_tag")
+	public String loadArticleTag(ModelMap model) {
+		model.put("tagList", aService.getAllTag());
+		return "MANAGER/DATA/article-tag";
+	}
+	
 	@RequestMapping(value = "insert/category")
 	@ResponseBody
 	public Map<String, Object> insertCategory(String name) {

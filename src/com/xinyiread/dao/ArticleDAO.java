@@ -17,6 +17,10 @@ public interface ArticleDAO {
 	
 	public long update(Article article);
 	
+	public Article getArticleById(long id);
+	
+	public Article getArticleByTitle(String title);
+	
 	public int insertCategory(@Param("name") String name);
 
 	public int updateCategoryName(@Param("catid") int catid, @Param("name") String name);
@@ -24,5 +28,7 @@ public interface ArticleDAO {
 	public List<Map<String, Object>> getAllCategory();
 
 	public List<Object> getCatidByCategoryName(String name);
+	
+	public List<Map<String, Object>> getAllTag();
 	
 }
