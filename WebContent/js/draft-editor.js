@@ -19,22 +19,46 @@ $(document).ready(function() {
 		$("#draft-stage").focus();
 	});*/
 	$("#draft-stage").bind("input oninput", function(e) {
-		/*$("#tmp").val($(this).find("p:last").html());
-		//$("#draft-stage>p:last").html($("#tmp").val());
-		$(this).find("p:last").html("");
-		var newContent = $("#tmp").val();
-		console.log(newContent);
-		if (newContent == "<br>")
-			$(this).find("p:last").html(newContent);
-		else
-			$(this).find("p:last").html(newContent.replace(/<[^>]+>/g, ""));
-		*/
-		//$(this).focusEnd();
-		console.log(e);
-		console.log($("#draft-stage").html());
+		//$("#tmp").val($(this).html().trim().replace(/<(?!br|p).*?>/ig, ""));
+		/*$(this).find("*").each(function() {
+			$("#tmp").val($("#tmp").val() + "<p>" + $(this).html().replace(/<(?!br).*?>/ig, "") + "</p>");
+		});*/
+		/*$(this).find("*").each(function() {
+			$("#tmp").val($("#tmp").val() + $(this).html().replace(/<(?!br).*?>/ig, ""));
+		});*/
+		
+		$(this).find("*:not(br,p)").each(function() {
+			var str = stripMark($(this));
+			$(this).after("<p>" + str + "</p>");
+			$(this).remove();
+			//$(this).html("<p>" + $(this).html().replace(/<(?!br).*?>/ig, "") + "</p>");
+			//$(this).html(stripMark($(this)));
+		});
+		//$(this).html($("#tmp").val());
+		
+		//$("#tmp").val($(this).text());
+		/*stripMark($(this));
+		console.log($(this).html());*/
 	});
 });
 
+/*function stripMark(e) {
+	$(e).find("*:not(br,p)").each(function() {
+		$(this).after("<p>" + $(this).html() + "</p>");
+		$(this).remove();
+	});
+	stripMark(e);
+}*/
+
+function stripMark(e) {
+	var str = $(e).html();
+	$(e).find("*").each(function() {
+		console.log($(this).html());
+		str += stripMark($(this));
+		$(this).remove();
+	});
+	return str;
+}
 
 /*$.fn.setCursorPosition = function(position){  
     if(this.lengh == 0) return this;  

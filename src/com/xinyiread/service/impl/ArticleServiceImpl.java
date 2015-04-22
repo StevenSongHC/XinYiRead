@@ -48,8 +48,28 @@ public class ArticleServiceImpl implements ArticleService {
 		return aDao.getCatidByCategoryName(name);
 	}
 	
+	public int createTag(String tagName) {
+		return aDao.insertTag(tagName);
+	}
+	
+	public int addArticleTag(long id, int tagid) {
+		return aDao.insertArticleTag(id, tagid);
+	}
+	
+	public int removeArticleTag(long id) {
+		return aDao.deleteArticleTag(id);
+	}
+	
 	public List<Map<String, Object>> getAllTag() {
 		return aDao.getAllTag();
+	}
+
+	public List<Map<String, Object>> getArticleTagById(long id) {
+		return aDao.getArticleTagById(id);
+	}
+
+	public List<Object> getTagidByTagName(String tagName) {
+		return aDao.getTagidByTagName(tagName);
 	}
 	
 }

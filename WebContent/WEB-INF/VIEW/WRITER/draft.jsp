@@ -19,10 +19,68 @@ $(document).ready(function() {
 	$("select").selectpicker();
 	$("#article-category").find("option[value='" + ${article.catid} + "']").attr("selected", "selected");
 	$("#article-category").selectpicker("refresh");
+	
 });
 
+function addTag() {
+	var newTag = "<div class='tag-item'>";
+	newTag += "<img src='<%=basepath%>/images/tag.png'>";
+	newTag += "<input type='text'>";
+	newTag += "<span class='glyphicon glyphicon-ok' onclick='saveTag($(this))'></span>";
+	newTag += "<span class='glyphicon glyphicon-trash' onclick='deleteTag($(this))'></span>";
+	newTag += "</div>";
+	$(".tag-block>.panel-body").prepend(newTag);
+}
+function saveTag(ele) {
+	var tagName = ele.parent().children("input").val().trim();
+	if (tagName != "") {
+		if (tagName.length <= 10) {
+			var newTag = "<img src='<%=basepath%>/images/tag.png'>";
+			newTag += "<span class='tag-name'>" + tagName + "</span>";
+			newTag += "<span class='glyphicon glyphicon-pencil' onclick='editTag($(this))'></span>";
+			newTag += "<span class='glyphicon glyphicon-trash' onclick='deleteTag($(this))'></span>";
+			ele.parent().html("").append(newTag);
+		}
+		else {
+			alert("标签名必须小于10个汉字");
+		}
+	}
+	else {
+		alert("标签名不得为空");
+	}
+}
+function editTag(ele) {
+	var tagName = ele.parent().children(".tag-name").html();
+	var newTag = "<img src='<%=basepath%>/images/tag.png'>";
+	newTag += "<input type='text' value='" + tagName + "'>";
+	newTag += "<span class='glyphicon glyphicon-ok' onclick='saveTag($(this))'></span>";
+	newTag += "<span class='glyphicon glyphicon-trash' onclick='deleteTag($(this))'></span>";
+	ele.parent().html("").append(newTag);
+}
+function deleteTag(ele) {
+	if (confirm("确定要删除该标签 ？")) {
+		ele.parent().remove();
+	}
+}
 
 function saveArticle() {
+	// parse tag into string array
+	var tagArr = new Array();
+	$(".tag-item").each(function(i, e) {
+		var tag = $(this).children(".tag-name").html();
+		if (tag != null) {
+			// delete repeated tag
+			if (tagArr.indexOf(tag) == -1)
+				tagArr.push(tag);
+			else
+				$(this).remove();
+		}
+		else {
+			alert("有未保存修改的标签，系统将不会提交未保存的标签！");
+			$(this).children("input").focus();
+		}
+	});
+	console.log(tagArr);
 	$.ajax( {
 		url: "<%=basepath%>/article/draft/save",
 		type: "POST",
@@ -31,7 +89,8 @@ function saveArticle() {
 			aid: $("#article-aid").val(),
 			title: $("#article-title").val().trim(),
 			content: $("#draft-stage").html().trim(),
-			catid: $("#article-category").children("option:selected").val()
+			catid: $("#article-category").children("option:selected").val(),
+			"tags[]": tagArr
 		}
 	}).done(function(json) {
 		switch (json.status) {
@@ -57,19 +116,6 @@ function saveArticle() {
 	}).fail(function() {
 		alert("failed to save");
 	});
-	
-	console.log($("#tmp").val());
-}
-
-function clearContentStyle() {
-	/* $("#tmp").val($("#draft-stage>p:last").html().trim());
-	$("#draft-stage>p:last").html($("#tmp").val());
-	console.log($("#draft-stage>p:last").html()); */
-	$("#tmp").val($("#draft-stage>*:last").html().trim());
-	$("#draft-stage>p:last").html($("#tmp").val().replace(/<[^>]+>/g, ""));
-	console.log($("#draft-stage").html());
-	//$("#draft-stage").html($("#tmp").val());
-	//console.log($("#draft-stage").html().trim().replace(/<[^>]+>/g, ""));
 }
 </script>
 <title>Draft here</title>
@@ -86,6 +132,19 @@ function clearContentStyle() {
 			</select>
 		</div>
 	</div>
+	<div class="panel panel-default tag-block">
+		<div class="panel-body">
+		<c:forEach items="${tagList}" var="tag">
+			<div class="tag-item">
+				<img src="<%=basepath%>/images/tag.png">
+				<span class="tag-name">${tag.name}</span>
+				<span class="glyphicon glyphicon-pencil" onclick="editTag($(this))"></span>
+				<span class="glyphicon glyphicon-trash" onclick="deleteTag($(this))"></span>
+			</div>
+		</c:forEach>
+			<button class="btn btn-default btn-sm" onclick="addTag()"><img src="<%=basepath%>/images/add.png" alt="添加标签" title="添加标签"></button>
+		</div>
+	</div>
 	<c:choose>
 	<c:when test="${empty requestScope.article}">
 		<input type="hidden" id="article-aid" value="0">
@@ -96,11 +155,16 @@ function clearContentStyle() {
 	</c:choose>
 	<input type="text" id="article-title" value="${article.title}">
 	<div contentEditable="true" id="draft-stage">
-		${article.content}
+	<c:choose>
+	<c:when test="${empty requestScope.article.content}">
 		<p><br></p>
+	</c:when>
+	<c:otherwise>
+		${article.content}
+	</c:otherwise>
+	</c:choose>	
 	</div>
 	<button class="btn btn-default" onclick="saveArticle()">Save</button>
-	<textarea id="tmp" rows="4" cols="100"></textarea>
 </div>
 </body>
 </html>

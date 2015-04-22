@@ -2,6 +2,30 @@
 	margin: auto;
 	width: 50%;
 }
+.tag-block img {
+	width: 20px;
+	height: 20px;
+}
+.tag-item {
+	display: inline-block;
+	padding: 7px;
+	margin: 0 15px 15px 0;
+	background-color: #f5f5f5;
+	border: 1px solid #ccc;
+}
+.tag-item input {
+	margin-left: 7px;
+}
+.tag-item span {
+	padding: 3px;
+	margin-left: 5px;
+	border: 1px solid #ccc;
+	cursor: pointer;
+}
+.tag-item .tag-name {
+	background-color: none;
+	border: none;
+}
 #draft-stage {
 	margin: 20px 0;
 	padding: 1em 2em;

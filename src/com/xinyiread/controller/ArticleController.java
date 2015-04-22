@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xinyiread.model.Article;
@@ -64,6 +65,7 @@ public class ArticleController {
 		
 		model.put("categoryList", aService.getAllCategory());
 		model.put("article", article);
+		model.put("tagList", aService.getArticleTagById(aid));
 		
 		return "WRITER/draft";
 	}
@@ -74,9 +76,12 @@ public class ArticleController {
 										   long aid,
 										   String title,
 										   String content,
-										   int catid) {
+										   int catid,
+										   @RequestParam(value="tags[]", required=false) String[] tags) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		Writer currentWriter = (Writer) session.getAttribute("WRITER_SESSION");
+		
+		System.out.println(tags);
 		
 		if (currentWriter == null) {
 			result.put("status", -2);
@@ -97,6 +102,9 @@ public class ArticleController {
 			newArticle.setContent(content);
 			newArticle.setCatid(catid);
 			aService.addArticle(newArticle);
+			
+			// update aid
+			aid = newArticle.getId();
 			
 			long addr = aService.getArticleByTitle(title).getId(); 
 			if (addr != 0) {
@@ -126,10 +134,23 @@ public class ArticleController {
 			article.setCatid(catid);
 			// update article
 			aService.updateArticle(article);
-			result.put("status", 0);			// save succedd
+			result.put("status", 0);			// save succeed
 		}
-		/*content.replaceAll("\n", "<br>");
-		content.replaceAll("\r", "<br>");*/
+
+		// remove all tags of the article
+		aService.removeArticleTag(aid);
+		
+		if (tags != null) {
+			for (String tag: tags) {
+				// create new tag if match no tag record
+				if (aService.getTagidByTagName(tag).isEmpty()) {
+					aService.createTag(tag);
+				}
+				// add article tag
+				aService.addArticleTag(aid, (int) aService.getTagidByTagName(tag).get(0));
+			}
+		}
+		
 		return result;
 	}
 	

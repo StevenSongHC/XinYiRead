@@ -18,11 +18,21 @@ public interface ArticleService {
 	public int addCategory(String name);
 	
 	public int updateCategory(int catid, String name);
+	
+	public int createTag(String tagName);
+	
+	public int addArticleTag(long id, int tagid);
+	
+	public int removeArticleTag(long id);
 
 	public List<Map<String, Object>> getAllCategory();
 
 	public List<Object> getCatidByCategoryName(String name);
 	
 	public List<Map<String, Object>> getAllTag();
+	
+	public List<Map<String, Object>> getArticleTagById(long id);
+	
+	public List<Object> getTagidByTagName(String tagName);
 	
 }
