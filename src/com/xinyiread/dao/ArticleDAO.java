@@ -14,13 +14,19 @@ import com.xinyiread.model.Article;
 public interface ArticleDAO {
 	
 	// 插入新的文章
-	public long insert(Article article);
+	public long insertArticle(Article article);
 	
 	// 更新文章
-	public long update(Article article);
+	public long updateArticle(Article article);
 	
 	// 通过主键找到文章
 	public Article getArticleById(long id);
+	
+	// 得到文章所有信息详细列表
+	public List<Map<String, Object>> getArticleDetailList();
+	
+	// 通过主键查找文章详细信息
+	public Map<String, Object> getArticleDetailById(long id);
 	
 	// 通过标题找到文章
 	public Article getArticleByTitle(String title);
@@ -50,7 +56,7 @@ public interface ArticleDAO {
 	public List<Map<String, Object>> getAllTag();
 	
 	// 通过主键获得文章的标签列表
-	public List<Map<String, Object>> getArticleTagById(long id);
+	public List<Map<String, Object>> getArticleTagsById(long id);
 	
 	// 通过标签id获得标签名字
 	public List<Object> getTagidByTagName(String tagName);

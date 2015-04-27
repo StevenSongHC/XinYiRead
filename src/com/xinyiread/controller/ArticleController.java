@@ -56,16 +56,15 @@ public class ArticleController {
 		if (currentWriter == null)
 			return "redirect:/login";
 		
-		Article article = aService.getArticleById(aid);
+		Map<String, Object> article = aService.getArticleDetailById(aid);
 		if (article == null)
 			return "STATIC/404";
 		
-		if (currentWriter.getId() != article.getWid())
+		if (currentWriter.getId() != Long.valueOf(article.get("wid").toString()))
 			return "STATIC/no-permission";
 		
 		model.put("categoryList", aService.getAllCategory());
 		model.put("article", article);
-		model.put("tagList", aService.getArticleTagById(aid));
 		
 		return "WRITER/draft";
 	}
@@ -132,6 +131,8 @@ public class ArticleController {
 			article.setTitle(title);
 			article.setContent(content);
 			article.setCatid(catid);
+			java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
+			article.setPublishDate(currentDate);
 			// update article
 			aService.updateArticle(article);
 			result.put("status", 0);			// save succeed

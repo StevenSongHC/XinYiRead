@@ -6,12 +6,21 @@
 	
     <resultMap type="Writer" id="writerResultMap">
         <id column="wid" property="id" />
-        <result column="uid" property="uid" />
         <result column="w_pen_name" property="penName" />
         <result column="w_contact" property="contact" />
         <result column="w_intro" property="intro" />
         <result column="w_current_project" property="currentProject" />
         <result column="w_like_count" property="likeCount" />
+        <association column="uid" property="user" javaType="User">
+            <id column="uid" property="id" />
+            <result column="u_name" property="name" />
+	        <result column="u_password" property="password" />
+	        <result column="u_portrait" property="portrait" />
+	        <result column="u_email" property="email" />
+	        <result column="u_is_email_show" property="isEmailShow" />
+	        <result column="u_join_date" property="joinDate" />
+	        <result column="u_last_login_date" property="lastLoginDate" />
+        </association>
     </resultMap>
     
     <insert id="insert" parameterType="Writer" keyProperty="id" useGeneratedKeys="true">
@@ -19,9 +28,9 @@
         VALUES (#{uid},#{penName},#{contact},#{intro},#{currentProject},#{likeCount})
     </insert>
     
-    <select id="getWriterByUid" parameterType="java.lang.Long" resultMap="writerResultMap">
+    <select id="getWriterByUser" parameterType="User" resultMap="writerResultMap">
         SELECT * FROM writer 
-        WHERE uid=#{uid}
+        WHERE uid=#{id}
     </select>
     
     <select id="getWriterByPenName" parameterType="java.lang.String" resultMap="writerResultMap">

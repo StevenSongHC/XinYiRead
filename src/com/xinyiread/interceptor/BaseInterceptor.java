@@ -44,7 +44,7 @@ public class BaseInterceptor implements HandlerInterceptor {
 							
 							if (password.equals(user.getPassword())) {
 								request.getSession().setAttribute("USER_SESSION", user);		// add user session
-								Writer writer = wService.getWriterByUid(user.getId());
+								Writer writer = wService.getWriterByUser(user);
 								if (writer != null)
 									request.getSession().setAttribute("WRITER_SESSION", writer);	// add writer session
 								

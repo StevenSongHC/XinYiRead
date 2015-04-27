@@ -3,7 +3,7 @@ package com.xinyiread.model;
 public class Writer {
 	
 	private long id;
-	private long uid;
+	private User user;
 	private String penName;
 	private String contact;
 	private String intro;
@@ -16,11 +16,11 @@ public class Writer {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public long getUid() {
-		return uid;
+	public User getUser() {
+		return user;
 	}
-	public void setUid(long uid) {
-		this.uid = uid;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public String getPenName() {
 		return penName;

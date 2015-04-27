@@ -81,7 +81,7 @@ public class IndexController {
 		if (newbie.getId() != 0) {
 			if (!penName.equals("")) {
 				Writer newWriter = new Writer();
-				newWriter.setUid(newbie.getId());
+				newWriter.setUser(newbie);
 				newWriter.setPenName(penName);
 				
 				wService.addWriter(newWriter);
@@ -143,7 +143,7 @@ public class IndexController {
 			else {		// 用邮箱登陆
 				if (MD5Util.authenticateInputPassword(loginUser.getPassword(), password)) {
 					model.addAttribute("USER_SESSION", loginUser);									// add user session
-					Writer loginWriter = wService.getWriterByUid(loginUser.getId());
+					Writer loginWriter = wService.getWriterByUser(loginUser);
 					if (loginWriter != null)
 						model.addAttribute("WRITER_SESSION", loginWriter);							// add writer session
 					if (rememberme) {
@@ -162,7 +162,7 @@ public class IndexController {
 		else {			// 用用户名登陆
 			if (MD5Util.authenticateInputPassword(loginUser.getPassword(), password)) {
 				model.addAttribute("USER_SESSION", loginUser);
-				Writer loginWriter = wService.getWriterByUid(loginUser.getId());
+				Writer loginWriter = wService.getWriterByUser(loginUser);
 				if (loginWriter != null)
 					model.addAttribute("WRITER_SESSION", loginWriter);
 				if (rememberme) {

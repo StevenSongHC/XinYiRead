@@ -13,6 +13,10 @@ public interface ArticleService {
 	
 	public Article getArticleById(long id);
 	
+	public List<Map<String, Object>> getArticleDetailList();
+	
+	public Map<String, Object> getArticleDetailById(long id);
+	
 	public Article getArticleByTitle(String title);
 
 	public int addCategory(String name);
@@ -31,7 +35,7 @@ public interface ArticleService {
 	
 	public List<Map<String, Object>> getAllTag();
 	
-	public List<Map<String, Object>> getArticleTagById(long id);
+	public List<Map<String, Object>> getArticleTagsById(long id);
 	
 	public List<Object> getTagidByTagName(String tagName);
 	

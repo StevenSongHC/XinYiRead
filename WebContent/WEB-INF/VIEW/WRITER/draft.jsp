@@ -80,7 +80,6 @@ function saveArticle() {
 			$(this).children("input").focus();
 		}
 	});
-	console.log(tagArr);
 	$.ajax( {
 		url: "<%=basepath%>/article/draft/save",
 		type: "POST",
@@ -134,7 +133,7 @@ function saveArticle() {
 	</div>
 	<div class="panel panel-default tag-block">
 		<div class="panel-body">
-		<c:forEach items="${tagList}" var="tag">
+		<c:forEach items="${article.tags}" var="tag">
 			<div class="tag-item">
 				<img src="<%=basepath%>/images/tag.png">
 				<span class="tag-name">${tag.name}</span>
@@ -165,6 +164,9 @@ function saveArticle() {
 	</c:choose>	
 	</div>
 	<button class="btn btn-default" onclick="saveArticle()">Save</button>
+<c:if test="${not empty requestScope.article}">
+	<button class="btn btn-default" onclick="submitArticle()">Submit</button>
+</c:if>
 </div>
 </body>
 </html>

@@ -10,20 +10,21 @@
 #menu-nav li {
 	margin-right: 10px;
 }
+#container {
+	width: 1500px;
+}
 #submenu-nav {
-	width: 130px;
-	margin: 70px 40px 0 250px;
-	display: inline-block;
+	width: 150px;
 	float: left;
+	margin: 70px 100px 0 250px;
 }
 #submenu-nav ul {
 	display: none;
 }
 #main-content {
-	display: inline-block;
-	margin: 70px 0 0 50px;
-	width: 900px;
+	width: 1000px;
 	float: left;
+	margin-top: 70px;
 }
 .edit-property {
 	text-align: center;

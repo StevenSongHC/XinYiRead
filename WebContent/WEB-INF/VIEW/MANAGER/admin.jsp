@@ -39,7 +39,7 @@ $(document).ready(function() {
 		<li menu="more" role="presentation"><a href="<%=basepath%>/manager?menu=more&submenu=modify_password">更多</a></li>
 	</ul>
 </div>
-<div>
+<div id="container">
 	<div id="submenu-nav">
 		<ul parent="user" class="nav nav-pills nav-stacked">
 			<li submenu="list" role="presentation"><a href="<%=basepath%>/manager?menu=user&submenu=list">列表</a></li>

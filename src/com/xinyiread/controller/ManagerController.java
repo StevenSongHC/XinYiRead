@@ -87,7 +87,7 @@ public class ManagerController {
 
 	@RequestMapping("load/article_list")
 	public String loadArticleList(ModelMap model) {
-		
+		model.put("articleList", aService.getArticleDetailList());
 		return "MANAGER/DATA/article-list";
 	}
 	

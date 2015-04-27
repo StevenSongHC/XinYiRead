@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xinyiread.dao.WriterDAO;
+import com.xinyiread.model.User;
 import com.xinyiread.model.Writer;
 import com.xinyiread.service.WriterService;
 
@@ -17,8 +18,8 @@ public class WriterServiceImpl implements WriterService {
 		return wDao.insert(writer);
 	}
 
-	public Writer getWriterByUid(long uid) {
-		return wDao.getWriterByUid(uid);
+	public Writer getWriterByUser(User user) {
+		return wDao.getWriterByUser(user);
 	}
 	
 	public Writer getWriterByPenName(String penName) {

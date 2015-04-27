@@ -17,15 +17,30 @@ public class ArticleServiceImpl implements ArticleService {
 	ArticleDAO aDao;
 
 	public long addArticle(Article article) {
-		return aDao.insert(article);
+		return aDao.insertArticle(article);
 	}
 
 	public long updateArticle(Article article) {
-		return aDao.update(article);
+		return aDao.updateArticle(article);
 	}
 	
 	public Article getArticleById(long id) {
 		return aDao.getArticleById(id);
+	}
+	
+	public List<Map<String, Object>> getArticleDetailList() {
+		List<Map<String, Object>> articleList = aDao.getArticleDetailList();
+		// add tag list
+		for (Map<String, Object> article : articleList) {
+			article.put("tags", aDao.getArticleTagsById(Integer.parseInt(article.get("id").toString())));
+		}
+		return articleList;
+	}
+	
+	public Map<String, Object> getArticleDetailById(long id) {
+		Map<String, Object> article = aDao.getArticleDetailById(id);
+		article.put("tags", aDao.getArticleTagsById(Integer.parseInt(article.get("id").toString())));
+		return article;
 	}
 	
 	public Article getArticleByTitle(String title) {
@@ -63,10 +78,11 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<Map<String, Object>> getAllTag() {
 		return aDao.getAllTag();
 	}
-
-	public List<Map<String, Object>> getArticleTagById(long id) {
-		return aDao.getArticleTagById(id);
+	
+	public List<Map<String, Object>> getArticleTagsById(long id) {
+		return aDao.getArticleTagsById(id);
 	}
+	
 
 	public List<Object> getTagidByTagName(String tagName) {
 		return aDao.getTagidByTagName(tagName);

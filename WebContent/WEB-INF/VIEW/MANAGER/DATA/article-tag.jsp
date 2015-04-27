@@ -19,7 +19,7 @@ $(document).ready(function() {
 </style>
 </head>
 <body>
-<table class="table table-hover" style="text-align: center; width: 50%; font-size: 18px;">
+<table class="table table-hover" style="text-align: center; font-size: 18px;">
 		<tr>
 			<td width="20%">ID</td>
 			<td width="45%">标签名</td>
