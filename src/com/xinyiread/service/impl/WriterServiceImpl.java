@@ -1,5 +1,7 @@
 package com.xinyiread.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,10 @@ public class WriterServiceImpl implements WriterService {
 	
 	public long addWriter(Writer writer) {
 		return wDao.insert(writer);
+	}
+	
+	public List<Writer> getWriterList() {
+		return wDao.getWriterList();
 	}
 
 	public Writer getWriterByUser(User user) {

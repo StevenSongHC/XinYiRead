@@ -84,6 +84,12 @@ public class ManagerController {
 		model.put("userList", uService.getUserList());
 		return "MANAGER/DATA/user-list";
 	}
+	
+	@RequestMapping("load/user_writer")
+	public String loadUserWriter(ModelMap model) {
+		model.put("writerList", wService.getWriterList());
+		return "MANAGER/DATA/user-writer";
+	}
 
 	@RequestMapping("load/article_list")
 	public String loadArticleList(ModelMap model) {

@@ -42,7 +42,6 @@ public class ArticleController {
 			return "redirect:/login";
 		
 		model.put("categoryList", aService.getAllCategory());	// load all categories
-		model.put("writer", currentWriter);
 		
 		return "WRITER/draft";
 	}
@@ -75,6 +74,7 @@ public class ArticleController {
 										   long aid,
 										   String title,
 										   String content,
+										   int isWriterShow,
 										   int catid,
 										   @RequestParam(value="tags[]", required=false) String[] tags) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -99,6 +99,7 @@ public class ArticleController {
 			newArticle.setWid(currentWriter.getId());
 			newArticle.setTitle(title);
 			newArticle.setContent(content);
+			newArticle.setIsWriterShow(isWriterShow);
 			newArticle.setCatid(catid);
 			aService.addArticle(newArticle);
 			
@@ -130,6 +131,7 @@ public class ArticleController {
 			}
 			article.setTitle(title);
 			article.setContent(content);
+			article.setIsWriterShow(isWriterShow);
 			article.setCatid(catid);
 			java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
 			article.setPublishDate(currentDate);

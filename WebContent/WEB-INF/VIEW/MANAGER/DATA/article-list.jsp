@@ -48,7 +48,7 @@ $(document).ready(function() {
 			<td width="5%">消极数</td>
 			<td width="10%">发布（最后更新）日期</td>
 			<td width="2%">是否完成</td>
-			<td width="2%">匿名发表</td>
+			<td width="2%">显示作者</td>
 			<td width="2%">是否审核</td>
 		</tr>
 	<c:forEach items="${articleList}" var="a">

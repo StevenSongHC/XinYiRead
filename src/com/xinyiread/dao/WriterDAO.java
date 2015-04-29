@@ -1,5 +1,7 @@
 package com.xinyiread.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +13,8 @@ import com.xinyiread.model.Writer;
 public interface WriterDAO {
 	
 	public long insert(Writer writer);
+	
+	public List<Writer> getWriterList();
 	
 	public Writer getWriterByUser(User user);
 

@@ -17,7 +17,15 @@ String basepath = request.getContextPath();
 <script type="text/javascript">
 $(document).ready(function() {
 	$("select").selectpicker();
-	$("#article-category").find("option[value='" + ${article.catid} + "']").attr("selected", "selected");
+	
+	if ($("#article-aid").val() != 0) {
+		$("input[type='radio'][name='showWriter'][value=" + ${article.is_writer_show} + "]").attr("checked", "checked").parent().addClass("active");
+		$("#article-category").find("option[value=" + ${article.catid} + "]").attr("selected", "selected");
+	}
+	else {
+		$("input[type='radio'][name='showWriter'][value=1]").attr("checked", "checked").parent().addClass("active");
+		$("#article-category").find("option[value=0]").attr("selected", "selected");
+	}
 	$("#article-category").selectpicker("refresh");
 	
 });
@@ -88,6 +96,7 @@ function saveArticle() {
 			aid: $("#article-aid").val(),
 			title: $("#article-title").val().trim(),
 			content: $("#draft-stage").html().trim(),
+			isWriterShow: $("input[type='radio'][name='showWriter']:checked").val(),
 			catid: $("#article-category").children("option:selected").val(),
 			"tags[]": tagArr
 		}
@@ -121,7 +130,15 @@ function saveArticle() {
 </head>
 <body>
 <div id="main">
-	<div class="panel panel-default">
+	<div class="btn-group" data-toggle="buttons">
+		<label class="btn btn-info">
+			<input type="radio" name="showWriter" value=1>以 [${sessionScope.WRITER_SESSION.penName}] 发表
+		</label>
+		<label class="btn btn-info">
+			<input type="radio" name="showWriter" value=0>匿名发表
+		</label>
+	</div>
+	<div class="panel panel-default" style="margin-top: 40px;">
 		<div class="panel-body">
 			<select id="article-category" class="selectpicker" title="文章分类" data-live-search="true">
 				<option value="0"></option>
