@@ -1,6 +1,7 @@
 package com.xinyiread.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -55,32 +56,45 @@ public class ArticleController {
 		if (currentWriter == null)
 			return "redirect:/login";
 		
-		Map<String, Object> article = aService.getArticleDetailById(aid);
-		if (article == null)
+		List<Map<String, Object>> article = aService.getArticleDetailById(aid);
+		if (article.isEmpty())
 			return "STATIC/404";
 		
-		if (currentWriter.getId() != Long.valueOf(article.get("wid").toString()))
+		if (currentWriter.getId() != Long.valueOf(article.get(0).get("wid").toString()))
 			return "STATIC/no-permission";
 		
 		model.put("categoryList", aService.getAllCategory());
-		model.put("article", article);
+		model.put("article", article.get(0));
 		
 		return "WRITER/draft";
 	}
 	
-	@RequestMapping(value = "draft/save")
+	/** 
+	 * submit the update, publish action included
+	 * 提交文章更新
+	 * 
+	 * @param session
+	 * @param aid
+	 * @param title
+	 * @param content
+	 * @param isWriterShow
+	 * @param isComplete
+	 * @param catid
+	 * @param tags
+	 * @return
+	 */
+	@RequestMapping(value = "draft/submit")
 	@ResponseBody
 	public Map<String, Object> saveArticle(HttpSession session,
 										   long aid,
 										   String title,
 										   String content,
 										   int isWriterShow,
+										   int isComplete,
 										   int catid,
 										   @RequestParam(value="tags[]", required=false) String[] tags) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		Writer currentWriter = (Writer) session.getAttribute("WRITER_SESSION");
-		
-		System.out.println(tags);
 		
 		if (currentWriter == null) {
 			result.put("status", -2);
@@ -101,6 +115,9 @@ public class ArticleController {
 			newArticle.setContent(content);
 			newArticle.setIsWriterShow(isWriterShow);
 			newArticle.setCatid(catid);
+			java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
+			newArticle.setPublishDate(currentDate);
+			newArticle.setIsComplete(isComplete);
 			aService.addArticle(newArticle);
 			
 			// update aid
@@ -109,10 +126,13 @@ public class ArticleController {
 			long addr = aService.getArticleByTitle(title).getId(); 
 			if (addr != 0) {
 				result.put("addr", addr);
-				result.put("status", 1);		// redirect to editing page
+				if (isComplete == 0)				// just add
+					result.put("status", 0);		// redirect to editing page
+				else
+					result.put("status", 2);		// directly publish
 			}
 			else
-				result.put("status", -1);		// failed to save
+				result.put("status", -1);			// failed to save
 		}
 		// save old article
 		else {
@@ -135,9 +155,13 @@ public class ArticleController {
 			article.setCatid(catid);
 			java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
 			article.setPublishDate(currentDate);
+			article.setIsComplete(isComplete);
 			// update article
 			aService.updateArticle(article);
-			result.put("status", 0);			// save succeed
+			if (isComplete == 0)					// just save
+				result.put("status", 1);			// save succeed
+			else
+				result.put("status", 2);			// publish, redirect to default writer page
 		}
 
 		// remove all tags of the article

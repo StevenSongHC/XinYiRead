@@ -71,25 +71,51 @@ function deleteTag(ele) {
 	}
 }
 
-function saveArticle() {
-	// parse tag into string array
-	var tagArr = new Array();
-	$(".tag-item").each(function(i, e) {
-		var tag = $(this).children(".tag-name").html();
-		if (tag != null) {
-			// delete repeated tag
-			if (tagArr.indexOf(tag) == -1)
-				tagArr.push(tag);
-			else
-				$(this).remove();
+function submitArticle(isComplete) {
+	if ($("#article-title").val().trim() != "") {
+		// parse tag into string array
+		var tagArr = new Array();
+		$(".tag-item").each(function(i, e) {
+			var tag = $(this).children(".tag-name").html();
+			if (tag != null) {
+				// delete repeated tag
+				if (tagArr.indexOf(tag) == -1)
+					tagArr.push(tag);
+				else
+					$(this).remove();
+			}
+			else {
+				alert("有未保存修改的标签，系统将不会提交未保存的标签！");
+				$(this).children("input").focus();
+			}
+		});
+		if (isComplete == 1) {
+			var msg = "";
+			if ($("input[type='radio'][name='showWriter']:checked").val() == 0)
+				msg += "你将以 [匿名（管理员可见）] 方式发表！";
+			if ($("#article-category").children("option:selected").val() == 0)
+				msg += "\n该篇文章未分类，不利于读者根据兴趣看到这篇文章！";
+			if (tagArr.length == 0)
+				msg += "\n未添加任何标签，将使本文章难以根据关键字被检索到！";
+			msg += "\n\n确定继续？";
+	
+			if (msg == "\n\n确定继续？")
+				msg = "确定提交文章？";
+			
+			if (confirm(msg)) {
+				doSubmit(isComplete, tagArr);
+			};
 		}
-		else {
-			alert("有未保存修改的标签，系统将不会提交未保存的标签！");
-			$(this).children("input").focus();
-		}
-	});
+		else
+			doSubmit(isComplete, tagArr);
+	}
+	else
+		alert("标题不得为空");
+}
+
+function doSubmit(isComplete, tagArr) {
 	$.ajax( {
-		url: "<%=basepath%>/article/draft/save",
+		url: "<%=basepath%>/article/draft/submit",
 		type: "POST",
 		dataType: "JSON",
 		data: {
@@ -98,6 +124,7 @@ function saveArticle() {
 			content: $("#draft-stage").html().trim(),
 			isWriterShow: $("input[type='radio'][name='showWriter']:checked").val(),
 			catid: $("#article-category").children("option:selected").val(),
+			isComplete: isComplete,
 			"tags[]": tagArr
 		}
 	}).done(function(json) {
@@ -113,10 +140,13 @@ function saveArticle() {
 				alert("操作失败");
 				break;
 			case 0:
-				console.log("saved succedd");
+				window.location.href="<%=basepath%>/article/draft/" + json.addr;
 				break;
 			case 1:
-				window.location.href="<%=basepath%>/article/draft/" + json.addr;
+				console.log("saved succeed");
+				break;
+			case 2:
+				window.location.href="<%=basepath%>/writer";
 				break;
 			default:
 				alert("未知错误");
@@ -180,10 +210,11 @@ function saveArticle() {
 	</c:otherwise>
 	</c:choose>	
 	</div>
-	<button class="btn btn-default" onclick="saveArticle()">Save</button>
-<c:if test="${not empty requestScope.article}">
-	<button class="btn btn-default" onclick="submitArticle()">Submit</button>
-</c:if>
+	<button class="btn btn-default fl-l" onclick="submitArticle(0)">Save</button>
+	<button class="btn btn-default fl-r" onclick="submitArticle(1)">Submit</button>
+<%-- <c:if test="${not empty requestScope.article}">
+	<button class="btn btn-default fl-r" onclick="submitArticle(1)">Submit</button>
+</c:if> --%>
 </div>
 </body>
 </html>

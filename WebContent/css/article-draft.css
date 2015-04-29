@@ -41,3 +41,9 @@
 #draft-stage p {
 	text-indent: 2em;
 }
+.fl-l {
+	flaot: left;
+}
+.fl-r {
+	float: right;
+}

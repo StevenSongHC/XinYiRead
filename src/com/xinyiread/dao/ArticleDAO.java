@@ -26,7 +26,7 @@ public interface ArticleDAO {
 	public List<Map<String, Object>> getArticleDetailList();
 	
 	// 通过主键查找文章详细信息
-	public Map<String, Object> getArticleDetailById(long id);
+	public List<Map<String, Object>> getArticleDetailById(long id);
 	
 	// 通过标题找到文章
 	public Article getArticleByTitle(String title);

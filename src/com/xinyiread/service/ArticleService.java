@@ -15,7 +15,7 @@ public interface ArticleService {
 	
 	public List<Map<String, Object>> getArticleDetailList();
 	
-	public Map<String, Object> getArticleDetailById(long id);
+	public List<Map<String, Object>> getArticleDetailById(long id);
 	
 	public Article getArticleByTitle(String title);
 

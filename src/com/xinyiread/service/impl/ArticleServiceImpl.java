@@ -37,9 +37,10 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleList;
 	}
 	
-	public Map<String, Object> getArticleDetailById(long id) {
-		Map<String, Object> article = aDao.getArticleDetailById(id);
-		article.put("tags", aDao.getArticleTagsById(Integer.parseInt(article.get("id").toString())));
+	public List<Map<String, Object>> getArticleDetailById(long id) {
+		List<Map<String, Object>> article = aDao.getArticleDetailById(id);
+		if (!article.isEmpty())
+			article.get(0).put("tags", aDao.getArticleTagsById(Integer.parseInt(article.get(0).get("id").toString())));
 		return article;
 	}
 	
