@@ -90,10 +90,13 @@
     </update>
      
      <select id="getAllCategory" resultType="java.util.Map">
-        SELECT category.catid AS id, category.cat_name AS name, COUNT( article.aid ) AS article_count
-		FROM category
-		LEFT JOIN article ON category.catid=article.catid
-		GROUP BY category.catid
+        SELECT user.uid, user.u_name, administrative_member.catid, category.cat_name, COUNT( article.aid ) AS cat_article_count
+		FROM user
+		RIGHT JOIN administrative_member ON administrative_member.uid=user.uid
+		LEFT JOIN category ON category.catid=administrative_member.catid
+		LEFT JOIN article ON article.catid=administrative_member.catid
+		GROUP BY administrative_member.catid
+		ORDER BY user.uid ASC 
     </select>
     
     <select id="getCatidByCategoryName" parameterType="java.lang.String" resultType="java.lang.Integer">

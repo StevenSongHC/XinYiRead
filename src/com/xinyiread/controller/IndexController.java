@@ -131,7 +131,7 @@ public class IndexController {
 		if (currentUser != null)
 			CookieUtil.removeCookie(request, response, "USER_COOKIE");
 		
-		// 尝试用用户名登陆
+		// 先尝试用用户名登陆
 		User loginUser = new User();
 		loginUser = uService.getUserByName(account);
 		if (loginUser == null) {
@@ -171,7 +171,6 @@ public class IndexController {
 				java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());	// update last login date
 				loginUser.setLastLoginDate(currentDate);
 				uService.updateUser(loginUser);
-				result.put("code", 1);
 				result.put("code", 1);
 			}
 			else {

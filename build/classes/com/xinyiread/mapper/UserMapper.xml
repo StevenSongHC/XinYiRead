@@ -48,6 +48,14 @@
         WHERE u_email=#{email}
     </select>
     
+    <select id="getAuthorityList" resultType="java.util.Map">
+        SELECT user.uid, user.u_name, administrative_member.catid, category.cat_name
+		FROM user
+		RIGHT JOIN administrative_member ON administrative_member.uid=user.uid
+		LEFT JOIN category ON category.catid=administrative_member.catid
+		ORDER BY user.uid ASC 
+    </select>
+    
     <select id="getUserAdministrativeCategoryById" parameterType="java.lang.Long" resultType="java.lang.Integer">
         SELECT catid FROM administrative_member 
         WHERE uid=#{id}
