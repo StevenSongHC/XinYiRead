@@ -1,6 +1,7 @@
 package com.xinyiread.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,5 +23,15 @@ public interface UserDAO {
 	public User getUserByEmail(String email);
 	
 	public List<Object> getUserAdministrativeCategoryById(long id);
+	
+	public List<Map<String, Object>> getAllUserRoleList();
+	
+	public List<Map<String, Object>> getUserRoleListById(long id);
+	
+	public List<Map<String, Object>> getAllRolePrivilegeList();
+	
+	public List<Map<String, Object>> getRoleList();
+	
+	public List<Map<String, Object>> getPrivilegeList();
 
 }

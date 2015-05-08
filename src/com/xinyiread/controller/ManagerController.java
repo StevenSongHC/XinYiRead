@@ -39,7 +39,7 @@ public class ManagerController {
 		if (uService.getUserAdministrativeCategoryById(currentUser.getId()).contains(0)) {
 			// go to default page while receiving illegal data
 			if (menu == null || (!menu.equals("user") && !menu.equals("article") && 
-					!menu.equals("message") && !menu.equals("comment") && !menu.equals("authority") && !menu.equals("more")))
+					!menu.equals("message") && !menu.equals("comment") && !menu.equals("permission") && !menu.equals("more")))
 				return "redirect:/manager?menu=user&submenu=list";
 			
 			if (menu.equals("user")) {
@@ -59,9 +59,9 @@ public class ManagerController {
 				if (submenu== null || (!submenu.equals("list") && !submenu.equals("unhandled_list") && !submenu.equals("handled_list")))
 					return "redirect:/manager?menu=comment&submenu=list";
 			}
-			else if (menu.equals("authority")) {
-				if (submenu== null || !submenu.equals("list"))
-					return "redirect:/manager?menu=authority&submenu=list";
+			else if (menu.equals("permission")) {
+				if (submenu== null || (!submenu.equals("user_role") && !submenu.equals("role_privilege") && !submenu.equals("role_list") && !submenu.equals("privilege_list")))
+					return "redirect:/manager?menu=permission&submenu=user_role";
 			}
 			else if (menu.equals("more")) {
 				if (submenu== null || !submenu.equals("modify_password"))
@@ -109,10 +109,28 @@ public class ManagerController {
 		return "MANAGER/DATA/article-tag";
 	}
 	
-	@RequestMapping("load/authority_list")
-	public String loadAuthorityList(ModelMap model) {
-		model.put("tagList", aService.getAllTag());
-		return "MANAGER/DATA/authority-list";
+	@RequestMapping("load/permission_user_role")
+	public String loadUserRole(ModelMap model) {
+		model.put("userRoleList", uService.getAllUserRoleList());
+		return "MANAGER/DATA/permission-user-role";
+	}
+	
+	@RequestMapping("load/permission_role_privilege")
+	public String loadRolePrivilege(ModelMap model) {
+		model.put("rolePrivilegeList", uService.getAllRolePrivilegeList());
+		return "MANAGER/DATA/permission-role-privilege";
+	}
+	
+	@RequestMapping("load/permission_role_list")
+	public String loadRoleList(ModelMap model) {
+		model.put("roleList", uService.getRoleList());
+		return "MANAGER/DATA/permission-role-list";
+	}
+	
+	@RequestMapping("load/permission_privilege_list")
+	public String loadPrivilegeList(ModelMap model) {
+		model.put("privilegeList", uService.getPrivilegeList());
+		return "MANAGER/DATA/permission-privilege-list";
 	}
 	
 	@RequestMapping(value = "insert/category")

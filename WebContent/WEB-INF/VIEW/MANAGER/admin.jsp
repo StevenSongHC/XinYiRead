@@ -35,7 +35,7 @@ $(document).ready(function() {
 		<li menu="novel" role="presentation" class="disabled"><a href="">小说</a></li>
 		<li menu="message" role="presentation"><a href="<%=basepath%>/manager?menu=message&submenu=list">消息</a></li>
 		<li menu="comment" role="presentation"><a href="<%=basepath%>/manager?menu=comment&submenu=list">评论</a></li>
-		<li menu="authority" role="presentation"><a href="<%=basepath%>/manager?menu=authority&submenu=list">权限</a></li>
+		<li menu="permission" role="presentation"><a href="<%=basepath%>/manager?menu=permission&submenu=user_role">权限</a></li>
 		<li menu="more" role="presentation"><a href="<%=basepath%>/manager?menu=more&submenu=modify_password">更多</a></li>
 	</ul>
 </div>
@@ -58,14 +58,17 @@ $(document).ready(function() {
 		</ul>
 		<ul parent="comment" class="nav nav-pills nav-stacked">
 			<li submenu="list" role="presentation"><a href="<%=basepath%>/manager?menu=comment&submenu=list">列表</a></li>
-			<li submenu="unhandled_list" role="presentation"><a href="<%=basepath%>/manager?menu=comment&submenu=unhandled_list">未处理的举报</a></li>
-			<li submenu="handled_list" role="presentation"><a href="<%=basepath%>/manager?menu=acomment&submenu=handled_list">已处理的举报</a></li>
+			<li submenu="unhandled-list" role="presentation"><a href="<%=basepath%>/manager?menu=comment&submenu=unhandled_list">未处理的举报</a></li>
+			<li submenu="handled-list" role="presentation"><a href="<%=basepath%>/manager?menu=acomment&submenu=handled_list">已处理的举报</a></li>
 		</ul>
-		<ul parent="authority" class="nav nav-pills nav-stacked">
-			<li submenu="list" role="presentation"><a href="<%=basepath%>/manager?menu=authority&submenu=list">已分配</a></li>
+		<ul parent="permission" class="nav nav-pills nav-stacked">
+			<li submenu="user-role" role="presentation"><a href="<%=basepath%>/manager?menu=permission&submenu=user_role">用户角色</a></li>
+			<li submenu="role-privilege" role="presentation"><a href="<%=basepath%>/manager?menu=permission&submenu=role_privilege">角色权限</a></li>
+			<li submenu="role-list" role="presentation"><a href="<%=basepath%>/manager?menu=permission&submenu=role_list">角色列表</a></li>
+			<li submenu="privilege-list" role="presentation"><a href="<%=basepath%>/manager?menu=permission&submenu=privilege_list">权限列表</a></li>
 		</ul>
 		<ul parent="more" class="nav nav-pills nav-stacked">
-			<li submenu="modify_password" role="presentation"><a href="<%=basepath%>/manager?menu=more&submenu=modify_password">修改用户密码</a></li>
+			<li submenu="modify-password" role="presentation"><a href="<%=basepath%>/manager?menu=more&submenu=modify_password">修改用户密码</a></li>
 		</ul>
 	</div>
 	<div id="main-content">

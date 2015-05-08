@@ -1,6 +1,7 @@
 package com.xinyiread.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,26 @@ public class UserServiceImpl implements UserService {
 	
 	public List<Object> getUserAdministrativeCategoryById(long id) {
 		return uDao.getUserAdministrativeCategoryById(id);
+	}
+	
+	public List<Map<String, Object>> getAllUserRoleList() {
+		return uDao.getAllUserRoleList();
+	}
+
+	public List<Map<String, Object>> getUserRoleListById(long id) {
+		return uDao.getUserRoleListById(id);
+	}
+	
+	public List<Map<String, Object>> getAllRolePrivilegeList() {
+		return uDao.getAllRolePrivilegeList();
+	}
+
+	public List<Map<String, Object>> getRoleList() {
+		return uDao.getRoleList();
+	}
+
+	public List<Map<String, Object>> getPrivilegeList() {
+		return uDao.getPrivilegeList();
 	}
 
 }
