@@ -36,7 +36,7 @@ public class ManagerController {
 						   String submenu) {
 		User currentUser = (User) session.getAttribute("USER_SESSION");
 		// go to admin page
-		if (uService.getUserAdministrativeCategoryById(currentUser.getId()).contains(0)) {
+		if (uService.getUserRoleListById(currentUser.getId()).contains(1)) {
 			// go to default page while receiving illegal data
 			if (menu == null || (!menu.equals("user") && !menu.equals("article") && 
 					!menu.equals("message") && !menu.equals("comment") && !menu.equals("permission") && !menu.equals("more")))
@@ -76,7 +76,10 @@ public class ManagerController {
 			
 			return "MANAGER/admin";
 		}
-		return "MANAGER/censor";
+		else {
+			model.put("userRoles", uService.getUserRoleListById(currentUser.getId()));
+			return "MANAGER/censor";
+		}
 	}
 	
 	@RequestMapping("load/user_list")

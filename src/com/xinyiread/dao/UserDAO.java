@@ -22,11 +22,11 @@ public interface UserDAO {
 	
 	public User getUserByEmail(String email);
 	
-	public List<Object> getUserAdministrativeCategoryById(long id);
-	
 	public List<Map<String, Object>> getAllUserRoleList();
 	
-	public List<Map<String, Object>> getUserRoleListById(long id);
+	public List<Object> getUserRoleListById(long id);
+	
+	public List<Object> getUserPrivilegeListById(long id);
 	
 	public List<Map<String, Object>> getAllRolePrivilegeList();
 	

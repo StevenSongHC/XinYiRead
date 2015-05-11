@@ -36,16 +36,16 @@ public class UserServiceImpl implements UserService {
 		return uDao.getUserByEmail(email);
 	}
 	
-	public List<Object> getUserAdministrativeCategoryById(long id) {
-		return uDao.getUserAdministrativeCategoryById(id);
-	}
-	
 	public List<Map<String, Object>> getAllUserRoleList() {
 		return uDao.getAllUserRoleList();
 	}
 
-	public List<Map<String, Object>> getUserRoleListById(long id) {
+	public List<Object> getUserRoleListById(long id) {
 		return uDao.getUserRoleListById(id);
+	}
+	
+	public List<Object> getUserPrivilegeListById(long id) {
+		return uDao.getUserPrivilegeListById(id);
 	}
 	
 	public List<Map<String, Object>> getAllRolePrivilegeList() {

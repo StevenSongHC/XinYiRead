@@ -25,8 +25,9 @@ public class ManagerInterceptor implements HandlerInterceptor {
 			return false;
 		}
 		// redirect to the warning page
-		if (uService.getUserAdministrativeCategoryById(currentUser.getId()).isEmpty()) {
+		if (uService.getUserRoleListById(currentUser.getId()).isEmpty()) {
 			response.sendRedirect(request.getContextPath() + "/no_permission");
+			return false;
 		}
 		
 		return true;

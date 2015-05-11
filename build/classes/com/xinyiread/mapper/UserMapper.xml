@@ -48,19 +48,6 @@
         WHERE u_email=#{email}
     </select>
     
-    <select id="getAuthorityList" resultType="java.util.Map">
-        SELECT user.uid, user.u_name, administrative_member.catid, category.cat_name
-		FROM user
-		RIGHT JOIN administrative_member ON administrative_member.uid=user.uid
-		LEFT JOIN category ON category.catid=administrative_member.catid
-		ORDER BY user.uid ASC 
-    </select>
-    
-    <select id="getUserAdministrativeCategoryById" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        SELECT catid FROM administrative_member 
-        WHERE uid=#{id}
-    </select>
-    
     <select id="getAllUserRoleList" resultType="java.util.Map">
         SELECT user.uid, user.u_name, role.*, user_role.ur_add_date
 		FROM user_role
@@ -68,11 +55,19 @@
 		LEFT JOIN role ON role.rid=user_role.rid
     </select>
     
-    <select id="getUserRoleListById" parameterType="java.lang.Long" resultType="java.util.Map">
-        SELECT user_role.*, role.r_title, r_remark
+    <select id="getUserRoleListById" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT rid
 		FROM user_role
-		LEFT JOIN role ON role.rid=user_role.rid
-		WHERE user_role.uid=#{id}
+		WHERE uid=#{id}
+		ORDER BY rid ASC
+    </select>
+    
+    <select id="getUserPrivilegeListById" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT role_privilege.plgid
+		FROM role_privilege, user_role
+		WHERE role_privilege.rid=user_role.rid
+			AND user_role.uid=#{id}
+		ORDER BY role_privilege.plgid ASC
     </select>
     
     <select id="getAllRolePrivilegeList" resultType="java.util.Map">
