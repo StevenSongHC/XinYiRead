@@ -44,6 +44,10 @@ public class ArticleServiceImpl implements ArticleService {
 		return article;
 	}
 	
+	public List<Map<String, Object>> getUncensoredArticleDetailList() {
+		return aDao.getUncensoredArticleDetailList();
+	}
+	
 	public Article getArticleByTitle(String title) {
 		return aDao.getArticleByTitle(title);
 	}

@@ -28,6 +28,9 @@ public interface ArticleDAO {
 	// 通过主键查找文章详细信息
 	public List<Map<String, Object>> getArticleDetailById(long id);
 	
+	// 查询未审核的文章详细列表
+	public List<Map<String, Object>> getUncensoredArticleDetailList();
+	
 	// 通过标题找到文章
 	public Article getArticleByTitle(String title);
 	

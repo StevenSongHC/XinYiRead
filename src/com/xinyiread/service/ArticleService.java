@@ -17,6 +17,8 @@ public interface ArticleService {
 	
 	public List<Map<String, Object>> getArticleDetailById(long id);
 	
+	public List<Map<String, Object>> getUncensoredArticleDetailList();
+	
 	public Article getArticleByTitle(String title);
 
 	public int addCategory(String name);

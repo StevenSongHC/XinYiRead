@@ -21,6 +21,13 @@ $(document).ready(function() {
 	$.each(roleArr, function(i, n) {
 		$(".nav-menu-item[role-id=" + n + "]").show();
 	});
+	
+	$(".content-item").each(function() {
+		var bc = $(this).find(".brief-content").text();
+		bc = bc.substr(0,110);
+		bc += "<span class='preview-content' title='" + $(this).find(".brief-content").text() + "'>...</span>";
+		$(this).find(".brief-content").html("").html(bc);
+	});
 });
 </script>
 <link rel="stylesheet" href="<%=basepath%>/css/censor-style.css" type="text/css" />
@@ -28,7 +35,7 @@ $(document).ready(function() {
 </head>
 <body>
 <div class="nav-menu">
-	<div class="nav-menu-item" role-id="3">
+	<div class="nav-menu-item" role-id=3>
 		<div class="list-group">
 			<a href="#" class="list-group-item active">
 				<h4 class="list-group-item-heading">未审核的文章 <span class="badge">0</span></h4>
@@ -46,7 +53,7 @@ $(document).ready(function() {
 			</a>
 		</div>
 	</div>
-	<div class="nav-menu-item" role-id="4">
+	<div class="nav-menu-item" role-id=4>
 		<div class="list-group">
 			<a href="#" class="list-group-item">
 				<h4 class="list-group-item-heading">被举报的评论 <span class="badge">0</span></h4>
@@ -56,7 +63,7 @@ $(document).ready(function() {
 			</a>
 		</div>
 	</div>
-	<div class="nav-menu-item" role-id="5">
+	<div class="nav-menu-item" role-id=5>
 		<div class="list-group">
 			<a href="#" class="list-group-item">
 				<h4 class="list-group-item-heading">检索消息 </h4>
@@ -68,7 +75,33 @@ $(document).ready(function() {
 	</div>
 </div>
 <div id="main-content">
-
+	<div class="content-list" role-id=3>
+		<c:forEach items="${articleList}" var="a">
+		<div class="content-item">
+			<div class="left-wrapper">
+				<h4>${a.title}</h4>
+				<span class="brief-content">${a.content}</span>
+				<span class="submit-date">${a.publish_date}</span>
+			</div>
+			<div class="right-wrapper">
+				<span class="writer-title">
+				<c:choose>
+				<c:when test="${a.is_writer_show == 1}">
+					<a href="<%=basepath%>/writer/i/${a.writer_name}" target=_blank>${a.writer_name}</a>
+				</c:when>
+				<c:otherwise>
+					* 匿名 *
+				</c:otherwise>
+				</c:choose>
+				</span>
+				<span class="action">
+					<button type="button" class="btn btn-info btn-lg">开始审核</button>
+				</span>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+		</c:forEach>
+	</div>
 </div>
 </body>
 </html>

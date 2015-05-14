@@ -77,7 +77,25 @@ public class ManagerController {
 			return "MANAGER/admin";
 		}
 		else {
-			model.put("userRoles", uService.getUserRoleListById(currentUser.getId()));
+			List<Object> userRoles = uService.getUserRoleListById(currentUser.getId());
+			model.put("userRoles", userRoles);
+			
+			// load default data depends upon user's first role, since the list item ordered by the sequence of role's id
+			int firstRole = Integer.parseInt(userRoles.get(0).toString());
+			switch (firstRole) {
+				case 3:
+					System.out.println(3);
+					model.put("articleList", aService.getUncensoredArticleDetailList());
+					break;
+				case 4:
+					System.out.println(4);
+					break;
+				case 5:
+					System.out.println(5);
+					break;
+				default:
+					return "redirect:/no_permission";	// consider it as a second check
+			}
 			return "MANAGER/censor";
 		}
 	}

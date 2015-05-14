@@ -10,6 +10,55 @@
 	float:left;
 	width: 50%;
 	margin-top: 50px;
-	height: 300px;
-	background-color: #ccc;
+}
+
+.content-item {
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 30px;
+	background-color: #fdf9ec;
+}
+.content-item h4 {
+	font-weight: bold;
+	margin-left: 30px;
+	cursor: pointer;
+}
+.content-item .left-wrapper {
+	float: left;
+	width: 60%
+}
+.content-item .right-wrapper {
+	float: right;
+	width: 40%;
+}
+.brief-content {
+	display: block;
+	padding: 5px;
+	border: 1px solid #f4cf59;
+	background-color: #f8fdec;
+}
+.preview-content {
+	font-weight: bold;
+	color: #428bca;
+	cursor: pointer;
+}
+.submit-date {
+	display: block;
+	font-style: italic;
+	margin: 7px 0 0 10px;
+	cursor: default;
+}
+.writer-title {
+	display: block;
+	text-align: center;
+	font-size: 20px;
+	color: #777;
+}
+.writer-title a {
+	color: #333;
+}
+.action {
+	display: block;
+	text-align: center;
+	margin-top: 10px;
 }
