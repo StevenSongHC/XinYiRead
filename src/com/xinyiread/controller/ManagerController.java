@@ -10,7 +10,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xinyiread.model.User;
@@ -33,7 +35,8 @@ public class ManagerController {
 	public String mainPage(ModelMap model,
 						   HttpSession session,
 						   String menu,
-						   String submenu) {
+						   String submenu,
+						   @RequestParam(value="query_data", required=false) String queryData) {
 		User currentUser = (User) session.getAttribute("USER_SESSION");
 		// go to admin page
 		if (uService.getUserRoleListById(currentUser.getId()).contains(1)) {
@@ -79,22 +82,71 @@ public class ManagerController {
 		else {
 			List<Object> userRoles = uService.getUserRoleListById(currentUser.getId());
 			model.put("userRoles", userRoles);
-			
-			// load default data depends upon user's first role, since the list item ordered by the sequence of role's id
+
 			int firstRole = Integer.parseInt(userRoles.get(0).toString());
+			String redirectPage = "";
+
+			/*
+			 * 根据用户第一个角色（列表按照角色id顺序排）载入默认的数据项
+			 * load default data, which means redirect to a default page, base on the user's first role, since the list item ordered by the sequence of role's id
+			 */ 
 			switch (firstRole) {
 				case 3:
-					System.out.println(3);
-					model.put("articleList", aService.getUncensoredArticleDetailList());
+					redirectPage = "redirect:/manager?query_data=uncensored_article";
 					break;
 				case 4:
-					System.out.println(4);
+					redirectPage = "redirect:/manager?query_data=reported_comment";
 					break;
 				case 5:
-					System.out.println(5);
+					redirectPage = "redirect:/manager?query_data=message";
 					break;
 				default:
-					return "redirect:/no_permission";	// consider it as a second check
+					redirectPage = "redirect:/no_permission";		// consider it as a second check
+			}
+			
+			// load default data
+			if (queryData == null)
+				return redirectPage;
+			
+			if (queryData != null) {
+				// count
+				model.put("variesAmount", aService.countVariesDataAmount());
+				
+				if (queryData.equals("uncensored_article")) {
+					// make sure that user requires the proper data
+					if (userRoles.contains(3)) {
+						System.out.println("LOAD UNCENSORED_ARTICLE");
+						model.put("dataPage", "uncensored_article");
+					}
+					else
+						return redirectPage;	// or load default data
+				}
+				else if (queryData.equals("censored_article")) {
+					if (userRoles.contains(3)) {
+						System.out.println("LOAD CENSORED_ARTICLE");
+						model.put("dataPage", "censored_article");
+					}
+					else
+						return redirectPage;
+				}
+				else if (queryData.equals("reported_comment")) {
+					if (userRoles.contains(4)) {
+						System.out.println("LOAD REPORTED_COMMENT");
+						model.put("dataPage", "reported_comment");
+					}
+					else
+						return redirectPage;
+				}
+				else if (queryData.equals("message")) {
+					if (userRoles.contains(5)) {
+						System.out.println("LOAD MESSAGE");
+						model.put("dataPage", "message");
+					}
+					else
+						return redirectPage;
+				}
+				else
+					return redirectPage;		// illegal queryData, load default data
 			}
 			return "MANAGER/censor";
 		}
@@ -152,6 +204,41 @@ public class ManagerController {
 	public String loadPrivilegeList(ModelMap model) {
 		model.put("privilegeList", uService.getPrivilegeList());
 		return "MANAGER/DATA/permission-privilege-list";
+	}
+	
+	@RequestMapping("load/uncensored_article")
+	public String loadUncensoredArticle(ModelMap model) {
+		model.put("articleList", aService.getUncensoredArticleDetailList());
+		return "MANAGER/DATA/uncensored-article";
+	}
+	
+	@RequestMapping("load/censored_article")
+	public String loadCensoredArticle(ModelMap model) {
+		model.put("articleList", aService.getCensoredArticleDetailList());
+		return "MANAGER/DATA/censored-article";
+	}
+	
+	@RequestMapping("censorship/article/{aid}")
+	public String mainPage(ModelMap model,
+						   HttpSession session,
+						   @PathVariable long aid) {
+		User currentUser = (User) session.getAttribute("USER_SESSION");
+		// requires admin or censor role
+		System.out.println(uService.getUserRoleListById(currentUser.getId()));
+		if (!uService.getUserRoleListById(currentUser.getId()).contains(1) &&
+				!uService.getUserRoleListById(currentUser.getId()).contains(2) &&
+				!uService.getUserRoleListById(currentUser.getId()).contains(3)) {
+			return "redirect:/no_permission";
+		}
+		
+		Map<String, Object> article = aService.getArticleDetailById(aid);
+		
+		if (article == null)
+			return "STATIC/404";
+		
+		model.put("article", article);
+		
+		return "MANAGER/article-censorship";
 	}
 	
 	@RequestMapping(value = "insert/category")

@@ -31,6 +31,9 @@ public interface ArticleDAO {
 	// 查询未审核的文章详细列表
 	public List<Map<String, Object>> getUncensoredArticleDetailList();
 	
+	// 查询审核过的文章详细列表
+	public List<Map<String, Object>> getCensoredArticleDetailList();
+	
 	// 通过标题找到文章
 	public Article getArticleByTitle(String title);
 	
@@ -63,5 +66,8 @@ public interface ArticleDAO {
 	
 	// 通过标签id获得标签名字
 	public List<Object> getTagidByTagName(String tagName);
+	
+	// 统计一些记录数
+	public List<Map<String, Object>> countVariesDataAmount();
 	
 }

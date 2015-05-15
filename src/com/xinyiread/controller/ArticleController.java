@@ -1,7 +1,6 @@
 package com.xinyiread.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -56,11 +55,11 @@ public class ArticleController {
 		if (currentWriter == null)
 			return "redirect:/login";
 		
-		List<Map<String, Object>> article = aService.getArticleDetailById(aid);
-		if (article.isEmpty())
+		Map<String, Object> article = aService.getArticleDetailById(aid);
+		if (article == null)
 			return "STATIC/404";
 		
-		if (currentWriter.getId() != Long.valueOf(article.get(0).get("wid").toString()))
+		if (currentWriter.getId() != Long.valueOf(article.get("wid").toString()))
 			return "STATIC/no-permission";
 		
 		model.put("categoryList", aService.getAllCategory());

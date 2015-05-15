@@ -15,9 +15,11 @@ public interface ArticleService {
 	
 	public List<Map<String, Object>> getArticleDetailList();
 	
-	public List<Map<String, Object>> getArticleDetailById(long id);
+	public Map<String, Object> getArticleDetailById(long id);
 	
 	public List<Map<String, Object>> getUncensoredArticleDetailList();
+	
+	public List<Map<String, Object>> getCensoredArticleDetailList();
 	
 	public Article getArticleByTitle(String title);
 
@@ -40,5 +42,7 @@ public interface ArticleService {
 	public List<Map<String, Object>> getArticleTagsById(long id);
 	
 	public List<Object> getTagidByTagName(String tagName);
+	
+	public Map<String, Object> countVariesDataAmount();
 	
 }

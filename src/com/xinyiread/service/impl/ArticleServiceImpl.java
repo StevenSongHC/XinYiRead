@@ -37,15 +37,22 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleList;
 	}
 	
-	public List<Map<String, Object>> getArticleDetailById(long id) {
+	public Map<String, Object> getArticleDetailById(long id) {
 		List<Map<String, Object>> article = aDao.getArticleDetailById(id);
-		if (!article.isEmpty())
+		if (!article.isEmpty()) {
 			article.get(0).put("tags", aDao.getArticleTagsById(Integer.parseInt(article.get(0).get("id").toString())));
-		return article;
+			return article.get(0);
+		}
+		else
+			return null;
 	}
 	
 	public List<Map<String, Object>> getUncensoredArticleDetailList() {
 		return aDao.getUncensoredArticleDetailList();
+	}
+	
+	public List<Map<String, Object>> getCensoredArticleDetailList() {
+		return aDao.getCensoredArticleDetailList();
 	}
 	
 	public Article getArticleByTitle(String title) {
@@ -91,6 +98,10 @@ public class ArticleServiceImpl implements ArticleService {
 
 	public List<Object> getTagidByTagName(String tagName) {
 		return aDao.getTagidByTagName(tagName);
+	}
+	
+	public Map<String, Object> countVariesDataAmount() {
+		return aDao.countVariesDataAmount().get(0);
 	}
 	
 }
