@@ -81,6 +81,7 @@
 		LEFT JOIN writer ON article.wid = writer.wid
 		LEFT JOIN category ON article.catid = category.catid
 		WHERE article.a_is_censored=0
+			AND article.a_is_complete=1
 		ORDER BY article.aid ASC
     </select>
     
@@ -166,6 +167,7 @@
 	        (SELECT COUNT(*) AS uncensored_article_amount
 			FROM article
 			WHERE a_is_censored=0
+				AND a_is_complete=1
 			)amount1, 
 			(SELECT COUNT(*) AS censored_article_amount
 			FROM article

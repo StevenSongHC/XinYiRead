@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xinyiread.model.Article;
 import com.xinyiread.model.User;
 import com.xinyiread.service.ArticleService;
 import com.xinyiread.service.UserService;
@@ -219,12 +220,12 @@ public class ManagerController {
 	}
 	
 	@RequestMapping("censorship/article/{aid}")
-	public String mainPage(ModelMap model,
+	public String censorArticlePage(ModelMap model,
 						   HttpSession session,
 						   @PathVariable long aid) {
 		User currentUser = (User) session.getAttribute("USER_SESSION");
+		
 		// requires admin or censor role
-		System.out.println(uService.getUserRoleListById(currentUser.getId()));
 		if (!uService.getUserRoleListById(currentUser.getId()).contains(1) &&
 				!uService.getUserRoleListById(currentUser.getId()).contains(2) &&
 				!uService.getUserRoleListById(currentUser.getId()).contains(3)) {
@@ -240,6 +241,150 @@ public class ManagerController {
 		
 		return "MANAGER/article-censorship";
 	}
+	
+	@RequestMapping("precensor/article")
+	@ResponseBody
+	public Map<String, Object> prepareCensor(ModelMap model,
+										     HttpSession session,
+										     long aid) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		User currentUser = (User) session.getAttribute("USER_SESSION");
+		
+		if (currentUser == null) {
+			result.put("code", -1);		// null user
+		}
+		
+		List<Object> roles = uService.getUserRoleListById(currentUser.getId());
+		if (!roles.contains(1) && !roles.contains(2) && !roles.contains(3)) {
+			result.put("code", -3);		// no permission
+			return result;
+		}
+		
+		Article article = aService.getArticleById(aid);
+		
+		if (article == null) {
+			result.put("code", 0);		// article not existed
+			return result;
+		}
+		
+		if (article.getIsCensored() == -2) {
+			result.put("code", -2);		// article locked
+			return result;
+		}
+		
+		// censored already
+		if (article.getIsCensored() == -1) {
+			result.put("code", 2);
+			result.put("result", "未通过");
+			return result;
+		}
+		if (article.getIsCensored() == 1) {
+			result.put("code", 2);
+			result.put("result", "已通过");
+			return result;
+		}
+		
+		article.setIsCensored(-2);		// lock article
+		aService.updateArticle(article);
+		result.put("code", 1);			// good
+		return result;
+	}
+	
+	@RequestMapping("docensor/article")
+	@ResponseBody
+	public Map<String, Object> doCensor(ModelMap model,
+									    HttpSession session,
+									    long aid,
+									    int isPass) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		User currentUser = (User) session.getAttribute("USER_SESSION");
+		
+		if (!uService.getUserRoleListById(currentUser.getId()).contains(1) &&
+				!uService.getUserRoleListById(currentUser.getId()).contains(2) &&
+				!uService.getUserRoleListById(currentUser.getId()).contains(3)) {
+			result.put("status", -1);	// no permission
+			return result;
+		}
+		
+		Article article = aService.getArticleById(aid);
+		
+		if (article == null) {
+			result.put("status", 0);	// article not existed
+			return result;
+		}
+		
+		article.setIsCensored(isPass);
+		aService.updateArticle(article);
+		result.put("status", 1);
+		return result;
+	}
+	
+	@RequestMapping("setArticleLocker")
+	@ResponseBody
+	public Map<String, Object> setArticleLocker(long aid,
+												int censorStatus) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		Article article = aService.getArticleById(aid);
+		if (article != null) {
+			article.setIsCensored(censorStatus);
+			aService.updateArticle(article);
+		}
+		return result;
+	}
+	
+	/*@RequestMapping("getArticleLocker")
+	@ResponseBody
+	public Map<String, Object> getArticleLocker(long aid) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		return result;
+	}
+	
+	@RequestMapping("setArticleLocker")
+	@ResponseBody
+	public Map<String, Object> setArticleLocker(long aid,
+												int censorStatus) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		return result;
+	}*/
+	
+	/*
+	 * 给文章进行上锁与解锁，防止文章被多人同时进行审核操作从而有可能带来数据上混淆
+	 * 状态在statu1和status2之间切换，假设初始的状态不是二者任意之一，且为上锁转态
+	 * 为防止锁死文章不给审核，需进行初始化到0未审核状态
+	 
+	@RequestMapping("toggleArticleCensorStatus")
+	@ResponseBody
+	public Map<String, Object> lockAndUnlockArticle(long aid,
+													int status1,
+													int status2) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		Article article = aService.getArticleById(aid);
+		
+		if (article == null) {
+			result.put("code", 0);				// null article
+			return result;
+		}
+		
+		if (article.getIsCensored() == status1) {
+			article.setIsCensored(status2);
+			result.put("code", 1);
+		}
+		else if (article.getIsCensored() == status2) {
+			article.setIsCensored(status1);
+			result.put("code", 1);
+		}
+		else if (article.getIsCensored() == -2) {
+			article.setIsCensored(0);
+			result.put("code", -1);				// reset article censor status
+		}
+		aService.updateArticle(article);
+		return result;
+	}*/
 	
 	@RequestMapping(value = "insert/category")
 	@ResponseBody

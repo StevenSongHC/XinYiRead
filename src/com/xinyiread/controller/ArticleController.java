@@ -63,7 +63,7 @@ public class ArticleController {
 			return "STATIC/no-permission";
 		
 		model.put("categoryList", aService.getAllCategory());
-		model.put("article", article.get(0));
+		model.put("article", article);
 		
 		return "WRITER/draft";
 	}
