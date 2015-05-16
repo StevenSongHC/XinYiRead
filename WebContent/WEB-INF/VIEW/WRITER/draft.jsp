@@ -28,6 +28,23 @@ $(document).ready(function() {
 	}
 	$("#article-category").selectpicker("refresh");
 	
+	/*
+	 * make every editable element uneditable
+	 * when artivle was published
+	 */
+	if ($("#hidden-complete-flag").length > 0) {
+		$("#btn-save").attr("disabled", "disabled");
+		$("#btn-submit").attr("disabled", "disabled");
+		$("#article-category").attr("disabled", "disabled");
+		$("#article-title").attr("readOnly", true);
+		$("#add-tag").hide();
+		$("#draft-stage").removeAttr("contenteditable");
+		if ($("#hidden-not-anonymous").val() == 1)
+			$("#anonymous-label").attr("disabled", "disabled");
+		else
+			$("#pen-name-label").attr("disabled", "disabled");
+		$(".tag-item").children("span:not(.tag-name)").remove();
+	}
 });
 
 function addTag() {
@@ -129,6 +146,13 @@ function doSubmit(isComplete, tagArr) {
 		}
 	}).done(function(json) {
 		switch (json.status) {
+			case -5:
+				alert("您已提交该文章，请再成功撤回提交后再保存");
+				break;
+			case -4:
+				alert("保存的文章不存在！！！");
+				window.location.href="<%=basepath%>/writer";
+				break;
 			case -3:
 				alert("标题已存在，请更换");
 				$("#article-title").focus();
@@ -155,16 +179,28 @@ function doSubmit(isComplete, tagArr) {
 		alert("failed to save");
 	});
 }
+
+function rollbackPublish() {
+	alert("roll back");
+}
 </script>
 <title>Draft here</title>
 </head>
 <body>
 <div id="main">
+<c:if test="${article.is_complete == 1}">
+	<div class="jumbotron">
+		<p>您已提交本文章，在成功撤回文章提交申请后，才可进行进一步的编辑</p>
+		<p><button class="btn btn-primary btn-lg" onclick="javascript:rollbackPublish()">撤销提交</button></p>
+	</div>
+	<input type="hidden" id="hidden-complete-flag">
+	<input type="hidden" id="hidden-not-anonymous" value="${article.is_writer_show}">
+</c:if>
 	<div class="btn-group" data-toggle="buttons">
-		<label class="btn btn-info">
+		<label id="pen-name-label" class="btn btn-info">
 			<input type="radio" name="showWriter" value=1>以 [${sessionScope.WRITER_SESSION.penName}] 发表
 		</label>
-		<label class="btn btn-info">
+		<label id="anonymous-label" class="btn btn-info">
 			<input type="radio" name="showWriter" value=0>匿名发表
 		</label>
 	</div>
@@ -188,7 +224,7 @@ function doSubmit(isComplete, tagArr) {
 				<span class="glyphicon glyphicon-trash" onclick="deleteTag($(this))"></span>
 			</div>
 		</c:forEach>
-			<button class="btn btn-default btn-sm" onclick="addTag()"><img src="<%=basepath%>/images/add.png" alt="添加标签" title="添加标签"></button>
+			<button id="add-tag" class="btn btn-default btn-sm" onclick="addTag()"><img src="<%=basepath%>/images/add.png" alt="添加标签" title="添加标签"></button>
 		</div>
 	</div>
 	<c:choose>
@@ -210,11 +246,8 @@ function doSubmit(isComplete, tagArr) {
 	</c:otherwise>
 	</c:choose>	
 	</div>
-	<button class="btn btn-default fl-l" onclick="submitArticle(0)">Save</button>
-	<button class="btn btn-default fl-r" onclick="submitArticle(1)">Submit</button>
-<%-- <c:if test="${not empty requestScope.article}">
-	<button class="btn btn-default fl-r" onclick="submitArticle(1)">Submit</button>
-</c:if> --%>
+	<button id="btn-save" class="btn btn-default fl-l" onclick="submitArticle(0)">Save</button>
+	<button id="btn-submit" class="btn btn-default fl-r" onclick="submitArticle(1)">Submit</button>
 </div>
 </body>
 </html>

@@ -82,7 +82,7 @@
 		LEFT JOIN category ON article.catid = category.catid
 		WHERE article.a_is_censored=0
 			AND article.a_is_complete=1
-		ORDER BY article.aid ASC
+		ORDER BY article.a_publish_date ASC
     </select>
     
      <select id="getCensoredArticleDetailList" resultType="java.util.Map">
@@ -94,7 +94,7 @@
 		LEFT JOIN writer ON article.wid = writer.wid
 		LEFT JOIN category ON article.catid = category.catid
 		WHERE article.a_is_censored=-1 OR article.a_is_censored=1
-		ORDER BY article.aid ASC
+		ORDER BY article.a_publish_date DESC
     </select>
     
      <select id="getArticleByTitle" parameterType="java.lang.String" resultMap="articleResultMap">

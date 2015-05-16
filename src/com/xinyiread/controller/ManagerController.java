@@ -316,8 +316,12 @@ public class ManagerController {
 		}
 		
 		article.setIsCensored(isPass);
+		if (isPass == 1) {				// passage granted date as publish date
+			java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
+			article.setPublishDate(currentDate);
+		}
 		aService.updateArticle(article);
-		result.put("status", 1);
+		result.put("status", 1);		// succeed
 		return result;
 	}
 	

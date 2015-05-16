@@ -142,6 +142,11 @@ public class ArticleController {
 				result.put("status", -4);		
 				return result;
 			}
+			// completed article
+			if (article.getIsComplete() == 1) {
+				result.put("status", -5);
+				return result;
+			}
 			// existed title
 			Article articleByTitle = aService.getArticleByTitle(title);
 			if (articleByTitle != null && articleByTitle.getId() != article.getId()) {
