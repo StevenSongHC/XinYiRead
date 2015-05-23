@@ -34,12 +34,27 @@ public class ArticleController {
 	}
 	
 	@RequestMapping("{aid}")
-	public String readArticle(ModelMap model,
+	public String readArticle(HttpSession session,
+							  ModelMap model,
 							  @PathVariable long aid) {
 		Map<String, Object> article = aService.getArticleDetailById(aid);
 		
-		if (article == null)
+		if (article == null)													// article does not existed
 			return "STATIC/404";
+		
+		if (Integer.parseInt(article.get("is_complete").toString()) == 0) {		// article not finished yet
+			Writer currentWriter = (Writer) session.getAttribute("WRITER_SESSION");
+			if (currentWriter != null && currentWriter.getId() == Integer.parseInt(article.get("wid").toString()))
+				return "redirect:/article/draft/" + aid;						// redirect the writer who writes the article to draft page
+			return "STATIC/404";												// or redirect to the 404
+		}
+		
+		if (Integer.parseInt(article.get("is_censored").toString()) != 1) {		// article did not pass the audition
+			Writer currentWriter = (Writer) session.getAttribute("WRITER_SESSION");
+			if (currentWriter != null && currentWriter.getId() == Integer.parseInt(article.get("wid").toString()))
+				return "redirect:/article/draft/" + aid;						// redirect the writer who writes the article to draft page
+			return "STATIC/404";												// or redirect to the 404
+		}
 		
 		model.put("article", article);
 		
