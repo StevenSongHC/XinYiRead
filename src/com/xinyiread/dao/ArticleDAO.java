@@ -67,6 +67,9 @@ public interface ArticleDAO {
 	// 通过标签id获得标签名字
 	public List<Object> getTagidByTagName(String tagName);
 	
+	// 记录文章审核结果
+	public int recordCensor(@Param("aid") long aid, @Param("uid") long uid, @Param("cr_is_pass") int isPass, @Param("time") java.sql.Timestamp time);
+	
 	// 统计一些记录数
 	public List<Map<String, Object>> countVariesDataAmount();
 	

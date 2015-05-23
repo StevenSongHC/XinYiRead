@@ -43,6 +43,8 @@ public interface ArticleService {
 	
 	public List<Object> getTagidByTagName(String tagName);
 	
+	public int recordCensor(long aid, long uid, int isPass, java.sql.Timestamp time);
+	
 	public Map<String, Object> countVariesDataAmount();
 	
 }

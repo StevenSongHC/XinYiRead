@@ -321,6 +321,11 @@ public class ManagerController {
 			article.setPublishDate(currentDate);
 		}
 		aService.updateArticle(article);
+		
+		// record this censor result
+		java.sql.Timestamp currentTime = new java.sql.Timestamp(new java.util.Date().getTime());
+		aService.recordCensor(aid, currentUser.getId(), isPass, currentTime);
+		
 		result.put("status", 1);		// succeed
 		return result;
 	}
@@ -337,58 +342,6 @@ public class ManagerController {
 		}
 		return result;
 	}
-	
-	/*@RequestMapping("getArticleLocker")
-	@ResponseBody
-	public Map<String, Object> getArticleLocker(long aid) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		
-		return result;
-	}
-	
-	@RequestMapping("setArticleLocker")
-	@ResponseBody
-	public Map<String, Object> setArticleLocker(long aid,
-												int censorStatus) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		
-		return result;
-	}*/
-	
-	/*
-	 * 给文章进行上锁与解锁，防止文章被多人同时进行审核操作从而有可能带来数据上混淆
-	 * 状态在statu1和status2之间切换，假设初始的状态不是二者任意之一，且为上锁转态
-	 * 为防止锁死文章不给审核，需进行初始化到0未审核状态
-	 
-	@RequestMapping("toggleArticleCensorStatus")
-	@ResponseBody
-	public Map<String, Object> lockAndUnlockArticle(long aid,
-													int status1,
-													int status2) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		
-		Article article = aService.getArticleById(aid);
-		
-		if (article == null) {
-			result.put("code", 0);				// null article
-			return result;
-		}
-		
-		if (article.getIsCensored() == status1) {
-			article.setIsCensored(status2);
-			result.put("code", 1);
-		}
-		else if (article.getIsCensored() == status2) {
-			article.setIsCensored(status1);
-			result.put("code", 1);
-		}
-		else if (article.getIsCensored() == -2) {
-			article.setIsCensored(0);
-			result.put("code", -1);				// reset article censor status
-		}
-		aService.updateArticle(article);
-		return result;
-	}*/
 	
 	@RequestMapping(value = "insert/category")
 	@ResponseBody

@@ -95,9 +95,12 @@ public class ArticleServiceImpl implements ArticleService {
 		return aDao.getArticleTagsById(id);
 	}
 	
-
 	public List<Object> getTagidByTagName(String tagName) {
 		return aDao.getTagidByTagName(tagName);
+	}
+	
+	public int recordCensor(long aid, long uid, int isPass, java.sql.Timestamp time) {
+		return aDao.recordCensor(aid, uid, isPass, time);
 	}
 	
 	public Map<String, Object> countVariesDataAmount() {

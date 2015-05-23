@@ -33,6 +33,23 @@ public class ArticleController {
 		return "STATIC/404";
 	}
 	
+	@RequestMapping("{aid}")
+	public String readArticle(ModelMap model,
+							  @PathVariable long aid) {
+		Map<String, Object> article = aService.getArticleDetailById(aid);
+		
+		if (article == null)
+			return "STATIC/404";
+		
+		model.put("article", article);
+		
+		// read count + 1
+		
+		return "article";
+	}
+	
+	
+	
 	@RequestMapping("draft/new")
 	public String newArticle(HttpSession session,
 							 ModelMap model) {
@@ -181,6 +198,50 @@ public class ArticleController {
 				aService.addArticleTag(aid, (int) aService.getTagidByTagName(tag).get(0));
 			}
 		}
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "cancel_publish")
+	@ResponseBody
+	public Map<String, Object> cancelPublish(HttpSession session,
+											 long aid ) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		Writer currentWriter = (Writer) session.getAttribute("WRITER_SESSION");
+		
+		if (currentWriter == null) {
+			result.put("status", -1);		// empty writer session
+			return result;
+		}
+		
+		Article article = aService.getArticleById(aid);
+		
+		if (article == null) {
+			result.put("status", 0);		// article does not existed
+			return result;
+		}
+		
+		if (currentWriter.getId() != article.getWid()) {
+			result.put("status", -3);		// not the writer
+			return result;
+		}
+		
+		if (article.getIsCensored() == -2) {
+			result.put("status", -2);		// locked article
+			return result;
+		}
+		
+		// reset isComplete & isCensored
+		article.setIsComplete(0);	
+		article.setIsCensored(0);
+		aService.updateArticle(article);
+
+		// check is article updated
+		Article art = aService.getArticleById(aid);
+		if (art.getIsComplete() == 0 && art.getIsCensored() == 0)
+			result.put("status", 1);		// update failed
+		else
+			result.put("status", -4);		// update succeed
 		
 		return result;
 	}

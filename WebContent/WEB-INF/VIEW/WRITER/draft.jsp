@@ -180,8 +180,47 @@ function doSubmit(isComplete, tagArr) {
 	});
 }
 
-function rollbackPublish() {
-	alert("roll back");
+function cancelPublish() {
+	if (confirm("确定继续？")) {
+		$.ajax( {
+			url: "<%=basepath%>/article/cancel_publish",
+			type: "POST",
+			dataType: "JSON",
+			data: {
+				aid: $("#article-aid").val()
+			}
+		}).done(function(json) {
+			switch (json.status) {
+				case -4:
+					alert("文章状态更改失败，请重新操作");
+					window.location.reload();
+					break;
+				case -3:
+					window.location.href="<%=basepath%>/no_permission";
+					break;
+				case -2:
+					alert("该文章审核中，暂时无法撤销！");
+					$("#cp-block").html("<button class='btn btn-primary btn-lg' disabled='disabled'>不可用</button>");
+					break;
+				case -1:
+					alert("登陆信息已失效，请重新登陆");
+					window.location.href="<%=basepath%>/login";
+					break;
+				case 0:
+					alert("文章不存在？！");
+					window.location.reload();
+					break;
+				case 1:
+					alert("提交成功");
+					window.location.reload();
+					break;
+				default:
+					alert("未知错误");
+			}
+		}).fail(function() {
+			alert("failed to apply");
+		});
+	}
 }
 </script>
 <title>Draft here</title>
@@ -190,8 +229,22 @@ function rollbackPublish() {
 <div id="main">
 <c:if test="${article.is_complete == 1}">
 	<div class="jumbotron">
-		<p>您已提交本文章，在成功撤回文章提交申请后，才可进行进一步的编辑</p>
-		<p><button class="btn btn-primary btn-lg" onclick="javascript:rollbackPublish()">撤销提交</button></p>
+	<c:choose>
+		<c:when test="${article.is_censored == 0}">
+			<p>您已提交本文章，在成功撤回文章发布申请后，才可进行进一步的编辑</p>
+			<p id="cp-block"><button class="btn btn-primary btn-lg" onclick="javascript:cancelPublish()">撤销发布</button></p>
+		</c:when>
+		<c:otherwise>
+			<c:if test="${article.is_censored == 1}">
+			<p>本文章已通过审核，并与读者见面啦，点<a href="<%=basepath%>/article/${article.id}">此处</a>转到文章阅读页</p>
+			<p id="cp-block">或者你想<button class="btn btn-primary btn-lg" onclick="javascript:cancelPublish()">继续完善</button></p>
+			</c:if>
+			<c:if test="${article.is_censored == -1}">
+			<p>很遗憾，本文章并未通过审核，点击下方按钮即可重新编辑并重新提交</p>
+			<p id="cp-block"><button class="btn btn-primary btn-lg" onclick="javascript:cancelPublish()">重新修改</button></p>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
 	</div>
 	<input type="hidden" id="hidden-complete-flag">
 	<input type="hidden" id="hidden-not-anonymous" value="${article.is_writer_show}">
