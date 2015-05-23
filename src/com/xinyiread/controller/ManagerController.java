@@ -238,6 +238,7 @@ public class ManagerController {
 			return "STATIC/404";
 		
 		model.put("article", article);
+		model.put("censorRecord", aService.getCensorRecordByAid(aid));
 		
 		return "MANAGER/article-censorship";
 	}

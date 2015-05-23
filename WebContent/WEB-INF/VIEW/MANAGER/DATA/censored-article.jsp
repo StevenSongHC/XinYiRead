@@ -31,7 +31,17 @@ $(document).ready(function() {
 	<c:forEach items="${articleList}" var="a">
 	<div class="content-item">
 		<div class="left-wrapper">
-			<h4>${a.title}</h4>
+			<h4>
+				${a.title}
+				<c:choose>
+				<c:when test="${a.is_censored == 1}">
+					<span class="label label-success">通过</span>
+				</c:when>
+				<c:otherwise>
+					<span class="label label-warning">未通过</span>
+				</c:otherwise>
+				</c:choose>
+			</h4>
 			<span class="brief-content">${a.content}</span>
 			<span class="submit-date">${a.publish_date}</span>
 		</div>
@@ -43,16 +53,6 @@ $(document).ready(function() {
 			</c:when>
 			<c:otherwise>
 				* 匿名 *
-			</c:otherwise>
-			</c:choose>
-			</span>
-			<span class="result">
-			<c:choose>
-			<c:when test="${a.is_censored == 1}">
-				<span class="label label-success">通过</span>
-			</c:when>
-			<c:otherwise>
-				<span class="label label-warning">未通过</span>
 			</c:otherwise>
 			</c:choose>
 			</span>

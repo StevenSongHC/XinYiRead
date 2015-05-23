@@ -70,6 +70,9 @@ public interface ArticleDAO {
 	// 记录文章审核结果
 	public int recordCensor(@Param("aid") long aid, @Param("uid") long uid, @Param("cr_is_pass") int isPass, @Param("time") java.sql.Timestamp time);
 	
+	// 查询文章审核记录
+	public List<Map<String, Object>> getCensorRecordByAid(long aid);
+	
 	// 统计一些记录数
 	public List<Map<String, Object>> countVariesDataAmount();
 	

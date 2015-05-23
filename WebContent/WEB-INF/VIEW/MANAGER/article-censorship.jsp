@@ -49,6 +49,15 @@ $(document).ready(function() {
 #censor-container .tag-item {
 	margin: 0 5px;
 }
+#censor-container .censor-record {
+	margin: 5px;
+	padding: 3px;
+	border: 1px dotted #ccc;
+	cursor: default;
+}
+#censor-container .censor-record .item {
+	display: block;
+}
 </style>
 <div id="censor-container">
 	<h3>${article.title}</h3>
@@ -80,6 +89,26 @@ $(document).ready(function() {
 		无标签
 	</c:otherwise>
 	</c:choose>
-	
+		<div class="censor-record">
+		<c:choose>
+		<c:when test="${not empty censorRecord}">
+			<c:forEach items="${censorRecord}" var="cr">
+			<span class="item">
+				审核员【${cr.auditor_name}】于 ${cr.time} 
+				<c:if test="${cr.is_pass == 1}">
+					【通过】
+				</c:if>
+				<c:if test="${cr.is_pass == -1}">
+					【否决】
+				</c:if>
+				了该文章
+			</span>
+			</c:forEach>
+		</c:when>
+		<c:otherwise>
+		无审核记录
+		</c:otherwise>
+		</c:choose>
+		</div>
 	</div>
 </div>

@@ -45,6 +45,8 @@ public interface ArticleService {
 	
 	public int recordCensor(long aid, long uid, int isPass, java.sql.Timestamp time);
 	
+	public List<Map<String, Object>> getCensorRecordByAid(long aid);
+	
 	public Map<String, Object> countVariesDataAmount();
 	
 }

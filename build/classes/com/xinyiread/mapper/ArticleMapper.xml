@@ -167,6 +167,15 @@
         VALUES (#{aid},#{uid},#{cr_is_pass},#{time})
     </insert>
     
+    <select id="getCensorRecordByAid" parameterType="java.lang.Long" resultType="java.util.Map">
+        SELECT censor_record.aid AS article_id, censor_record.uid AS auditor_id, censor_record.cr_is_pass AS is_pass, censor_record.cr_time AS time,
+        	article.a_title AS article_title, user.u_name AS auditor_name
+		FROM censor_record, article, user
+		WHERE article.aid=censor_record.aid
+			AND user.uid=censor_record.uid
+			AND censor_record.aid=#{aid}
+    </select>
+    
     <select id="countVariesDataAmount" parameterType="java.lang.String" resultType="java.util.Map">
         SELECT * FROM
 	        (SELECT COUNT(*) AS uncensored_article_amount

@@ -52,8 +52,6 @@ function login() {
 		}
 	}).fail(function() {
 		alert("failed to login");
-	}).error(function (XMLHttpRequest, textStatus, errorThrown) {
-		alert("failed to login");
 	});
 }
 function logout() {

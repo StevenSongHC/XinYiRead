@@ -103,6 +103,10 @@ public class ArticleServiceImpl implements ArticleService {
 		return aDao.recordCensor(aid, uid, isPass, time);
 	}
 	
+	public List<Map<String, Object>> getCensorRecordByAid(long aid) {
+		return aDao.getCensorRecordByAid(aid);
+	}
+	
 	public Map<String, Object> countVariesDataAmount() {
 		return aDao.countVariesDataAmount().get(0);
 	}
