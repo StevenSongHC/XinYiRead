@@ -26,6 +26,40 @@ $(document).ready(function() {
 		$(this).find(".brief-content").html("").html(bc);
 	});
 });
+
+function recensor(aid) {
+	if (confirm("确定继续？")) {
+		$.ajax( {
+			url: "<%=basepath%>/manager/docensor/article",
+			type: "POST",
+			dataType: "JSON",
+			data: {
+				aid: aid,
+				isPass: 0
+			}
+		}).done(function(json) {
+			switch (json.status) {
+				case -1:
+					alert("无此权限");
+					window.location.href="<%=basepath%>";
+					break;
+				case 0:
+					alert("检索文章失效，请重新尝试");
+					break;
+				case 1:
+					alert("操作成功");
+					$(".content-item .action[aid=" + aid + "]").html("<button type='button' class='btn btn-info btn-sm' disabled='disabled'>已移入未审核列表</button>");
+					break;
+				default:
+					alert("通信失败");
+			}
+			// prevent restore
+			$("#hidden-current-article").val("");
+		}).fail(function() {
+			alert("通信失败");
+		});
+	}
+}
 </script>
 <div class="content-list" role-id=3>
 	<c:forEach items="${articleList}" var="a">
@@ -56,8 +90,8 @@ $(document).ready(function() {
 			</c:otherwise>
 			</c:choose>
 			</span>
-			<span class="action">
-				<button type="button" class="btn btn-info btn-sm">重新审核</button>
+			<span class="action" aid="${a.id}">
+				<button type="button" class="btn btn-info btn-sm" onclick="javascrip:recensor(${a.id})">重新审核</button>
 			</span>
 		</div>
 		<div style="clear: both;"></div>

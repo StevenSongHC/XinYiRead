@@ -98,6 +98,9 @@ $(document).ready(function() {
 				<c:if test="${cr.is_pass == 1}">
 					【通过】
 				</c:if>
+				<c:if test="${cr.is_pass == 0}">
+					【重置】
+				</c:if>
 				<c:if test="${cr.is_pass == -1}">
 					【否决】
 				</c:if>
