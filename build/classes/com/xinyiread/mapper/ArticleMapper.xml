@@ -190,4 +190,22 @@
 			)amount2
     </select>
     
+    <update id="addReadCount" parameterType="java.lang.Long">
+        UPDATE article SET
+            a_read_count=a_read_count+1
+        WHERE aid=#{id}
+    </update>
+    
+    <update id="addLikeCount" parameterType="java.lang.Long">
+        UPDATE article SET
+            a_like_count=a_like_count+1
+        WHERE aid=#{id}
+    </update>
+    
+    <update id="addDislikeCount" parameterType="java.lang.Long">
+        UPDATE article SET
+            a_dislike_count=a_dislike_count+1
+        WHERE aid=#{id}
+    </update>
+    
 </mapper>

@@ -56,9 +56,14 @@ public class ArticleController {
 			return "STATIC/404";												// or redirect to the 404
 		}
 		
+		// article content
 		model.put("article", article);
 		
 		// read count + 1
+		aService.addReadCount(aid);
+		
+		// category list
+		model.put("categoryList", aService.getAllCategory());
 		
 		return "article";
 	}

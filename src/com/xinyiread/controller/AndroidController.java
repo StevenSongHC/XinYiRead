@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xinyiread.model.User;
 import com.xinyiread.model.Writer;
+import com.xinyiread.service.ArticleService;
 import com.xinyiread.service.UserService;
 import com.xinyiread.service.WriterService;
 import com.xinyiread.util.MD5Util;
@@ -22,6 +23,8 @@ public class AndroidController {
 	private UserService uService;
 	@Autowired
 	private WriterService wService;
+	@Autowired
+	private ArticleService aService;
 	
 	@ResponseBody
 	@RequestMapping("login")
@@ -69,6 +72,33 @@ public class AndroidController {
 				result.put("code", -1);
 			}
 		}
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("get_article")
+	public Map<String, Object> readArticle(long aid) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		Map<String, Object> article = aService.getArticleDetailById(aid);
+		
+		if (article == null) {
+			result.put("code", 0);		// 文章不存在
+			return result;
+		}
+		
+		if (Integer.parseInt(article.get("is_complete").toString()) == 0) {
+			result.put("code", -1);		// 文章未完成状态
+			return result;
+		}
+		
+		if (Integer.parseInt(article.get("is_censored").toString()) != 1) {
+			result.put("code", -2);		// 文章还未通过审核
+			return result;
+		}
+		
+		result.put("article", article);	// 传入文章数据
+		result.put("code", 1);			// 获取成功
 		return result;
 	}
 	

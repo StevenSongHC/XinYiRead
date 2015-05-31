@@ -111,4 +111,16 @@ public class ArticleServiceImpl implements ArticleService {
 		return aDao.countVariesDataAmount().get(0);
 	}
 	
+	public int addReadCount(long id) {
+		return aDao.addReadCount(id);
+	}
+	
+	public int addLikeCount(long id) {
+		return aDao.addLikeCount(id);
+	}
+	
+	public int addDislikeCount(long id) {
+		return aDao.addDislikeCount(id);
+	}
+	
 }

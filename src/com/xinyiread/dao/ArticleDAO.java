@@ -76,4 +76,13 @@ public interface ArticleDAO {
 	// 统计一些记录数
 	public List<Map<String, Object>> countVariesDataAmount();
 	
+	// 阅读量+1
+	public int addReadCount(long id);
+	
+	// 喜欢量+1
+	public int addLikeCount(long id);
+	
+	// 不喜欢量+1
+	public int addDislikeCount(long id);
+	
 }

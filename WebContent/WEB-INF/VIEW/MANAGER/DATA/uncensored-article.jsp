@@ -179,7 +179,7 @@ function restoreArticleLocker(aid) {
 	<c:forEach items="${articleList}" var="a">
 	<div class="content-item">
 		<div class="left-wrapper">
-			<h4>${a.title}</h4>
+			<h4 title="[${a.id}]">${a.title}</h4>
 			<span class="brief-content">${a.content}</span>
 			<span class="submit-date">${a.publish_date}</span>
 		</div>

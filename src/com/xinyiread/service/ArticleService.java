@@ -49,4 +49,10 @@ public interface ArticleService {
 	
 	public Map<String, Object> countVariesDataAmount();
 	
+	public int addReadCount(long id);
+	
+	public int addLikeCount(long id);
+	
+	public int addDislikeCount(long id);
+	
 }

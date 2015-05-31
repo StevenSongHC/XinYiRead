@@ -65,7 +65,7 @@ function recensor(aid) {
 	<c:forEach items="${articleList}" var="a">
 	<div class="content-item">
 		<div class="left-wrapper">
-			<h4>
+			<h4 title="[${a.id}]">
 				${a.title}
 				<c:choose>
 				<c:when test="${a.is_censored == 1}">
