@@ -12,7 +12,24 @@ String basepath = request.getContextPath();
 <jsp:include page="top-bar.jsp" flush="true" />
 <link rel="shortcut icon" href="<%=basepath%>/images/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="<%=basepath%>/css/article-style.css">
-<title>${article.title} - 新意阅读</title>
+<script type="text/javascript">
+function ratingArticle(rating) {
+	$.ajax( {
+		url: "<%=basepath%>/article/rating_article",
+		type: "POST",
+		dataType: "JSON",
+		data: {
+			aid: ${article.id},
+			rating: rating
+		}
+	}).done(function(json) {
+		alert(json.status);
+	}).fail(function() {
+		alert("评价失败");
+	});
+}
+</script>
+<title>${article.title} | 新意阅读</title>
 </head>
 <body>
 <div id="main">
@@ -22,12 +39,25 @@ String basepath = request.getContextPath();
 		<li class="active">${article.title}</li>
 	</ol>
 	<h1>${article.title}</h1>
-	作者：<a href="<%=basepath%>/writer/i/${article.writer_name}" target=_blank title="访问${article.writer_name}的个人主页">${article.writer_name}</a>
-	发布时间：${article.publish_date}
-	阅读量：${article.read_count}
+	<div class="info">
+		<span>作者：<a href="<%=basepath%>/writer/i/${article.writer_name}" target=_blank title="访问${article.writer_name}的个人主页">${article.writer_name}</a></span>
+		<span>发布时间：${article.publish_date}</span>
+		<span>阅读量：${article.read_count}</span>
+	</div>
 	<div class="content">
 		${article.content}
 	</div>
+	<div class="tags">
+		<c:forEach items="${article.tags}" var="tag">
+			<span class="item"><a href="#" title="${tag.id}">${tag.name}</a></span>
+		</c:forEach>
+	</div>
 </div>
+<div class="rating">
+	<button type="button" class="btn btn-success" style="float: left;" onclick="javascript:ratingArticle('up')"><span class="glyphicon glyphicon-thumbs-up"></span> 写得不错 <span class="badge">${article.like_count}</span></button>
+	<button type="button" class="btn btn-warning" style="float: right;" onclick="javascript:ratingArticle('dowm')"><span class="glyphicon glyphicon-thumbs-down"></span> 马马虎虎 <span class="badge">${article.dislike_count}</span></button>
+	<div style="clear: both;"></div>
+</div>
+<div style="clear: both;"></div>
 </body>
 </html>

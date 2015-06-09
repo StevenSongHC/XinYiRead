@@ -99,6 +99,9 @@ public class AndroidController {
 		
 		result.put("article", article);	// 传入文章数据
 		result.put("code", 1);			// 获取成功
+		
+		aService.addReadCount(aid);		// 阅读量+1
+		
 		return result;
 	}
 	

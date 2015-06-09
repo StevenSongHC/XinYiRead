@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xinyiread.model.Article;
+import com.xinyiread.model.User;
 import com.xinyiread.model.Writer;
 import com.xinyiread.service.ArticleService;
 import com.xinyiread.service.WriterService;
@@ -119,7 +120,7 @@ public class ArticleController {
 	 * @param tags
 	 * @return
 	 */
-	@RequestMapping(value = "draft/submit")
+	@RequestMapping("draft/submit")
 	@ResponseBody
 	public Map<String, Object> saveArticle(HttpSession session,
 										   long aid,
@@ -222,10 +223,10 @@ public class ArticleController {
 		return result;
 	}
 	
-	@RequestMapping(value = "cancel_publish")
+	@RequestMapping("cancel_publish")
 	@ResponseBody
 	public Map<String, Object> cancelPublish(HttpSession session,
-											 long aid ) {
+											 long aid) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		Writer currentWriter = (Writer) session.getAttribute("WRITER_SESSION");
 		
@@ -265,5 +266,32 @@ public class ArticleController {
 		
 		return result;
 	}
+	
+	@RequestMapping("rating_article")
+	@ResponseBody
+	public Map<String, Object> ratingArticle(HttpSession session,
+			 								 long aid,
+			 								 String rating) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		System.out.println(aid + " - " + rating);
+		
+		User currentUser = (User) session.getAttribute("User_SESSION");
+		
+		if (currentUser == null) {
+			result.put("status", -1);		// login user required
+			return result;
+		}
+		
+		if (aService.getArticleById(aid) == null) {
+			result.put("status", 0);		// article does not existed
+			return result;
+		}
+		
+		
+		
+		result.put("status", 1);
+		return result;
+	}
+	
 	
 }

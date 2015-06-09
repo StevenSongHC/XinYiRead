@@ -1,11 +1,51 @@
+body {
+	background-color: #f1f1f1;
+}
 #main {
 	margin: auto;
 	width: 45%;
-	background-color: #f1f1f1;
+	background-color: #fff;
+	font-size: 17px;
+}
+h1 {
+	text-align: center;
+}
+.info {
+	text-align: center;
+}
+.info span {
+	display: inline-block;
+	margin-left: 10px;
 }
 .content p {
 	text-indent: 2em;
 }
 .content {
-	
+	padding: 2em 3em;
+}
+.tags {
+	margin-left: 50px;
+}
+.tags .item {
+	display: inline-block;
+	margin: 2px 7px;
+	padding: 5px 7px;
+	background-color: #ccc;
+	border: 1px solid #808080;
+}
+.tags .item a {
+	text-decoration: none;
+	color: #333;
+	font-size: 15px;
+	font-weight: bold;
+}
+.rating {
+	width: 45%;
+	margin: auto;
+	margin-top: 50px;
+	padding: 20px;
+	background-color: #fff;
+}
+.rating button {
+	padding: 5px;
 }
