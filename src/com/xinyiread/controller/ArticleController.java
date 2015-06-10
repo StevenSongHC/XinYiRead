@@ -286,12 +286,12 @@ public class ArticleController {
 			return result;
 		}
 		
-		if (!aService.getUserRatingArticleHistory(aid, currentUser.getId()).isEmpty()) {
+		if (!aService.getUserRatingArticleHistory(currentUser.getId(), aid).isEmpty()) {
 			result.put("status", 2);		// user already rated
 			return result;
 		}
 		
-		if (aService.ratingArticle(aid, currentUser.getId(), rating) == 0) {
+		if (aService.ratingArticle(currentUser.getId(), aid, rating) == 0) {
 			result.put("status", -2);		// illegal rating
 			return result;
 		}

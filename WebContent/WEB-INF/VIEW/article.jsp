@@ -33,7 +33,7 @@ function ratingArticle(rating) {
 				$("body").animate({scrollTop: $("#top-bar").offset().top}, 500);
 				$("#top-bar #login-account").focus();
 				break;
-			case -0:
+			case 0:
 				alert("评价的文章不存在！？");
 				window.location.reload();
 				break;

@@ -3,7 +3,6 @@ package com.xinyiread.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -116,18 +115,18 @@ public class ArticleServiceImpl implements ArticleService {
 		return aDao.addReadCount(id);
 	}
 	
-	public List<Map<String, Object>> getUserRatingArticleHistory(@Param("aid") long aid, @Param("uid") long uid) {
-		return aDao.getUserRatingArticleHistory(aid, uid);
+	public List<Map<String, Object>> getUserRatingArticleHistory(long uid, long aid) {
+		return aDao.getUserRatingArticleHistory(uid, aid);
 	}
 
-	public int ratingArticle(long aid, long uid, String rating) {
+	public int ratingArticle(long uid, long aid, String rating) {
 		if (rating.equals("up")) {					// like
 			aDao.addLikeCount(aid);
-			aDao.insertRatingHistory(aid, uid, 1);	// record like
+			aDao.insertRatingHistory(uid, aid, 1);	// record like
 		}
 		else if (rating.equals("down")) {			// dislike
 			aDao.addDislikeCount(aid);
-			aDao.insertRatingHistory(aid, uid, 0);	// record dislike
+			aDao.insertRatingHistory(uid, aid, 0);	// record dislike
 		}
 		else
 			return 0;

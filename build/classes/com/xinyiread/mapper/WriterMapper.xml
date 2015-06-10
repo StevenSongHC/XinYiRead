@@ -28,10 +28,27 @@
         VALUES (#{user.uid},#{penName},#{contact},#{intro},#{currentProject},#{likeCount})
     </insert>
     
+    <update id="update">
+        UPDATE writer SET
+            w_pen_name=#{penName},
+            w_contact=#{contact},
+            w_intro=#{intro},
+            w_current_project=#{currentProject},
+            w_like_count=#{likeCount},
+        WHERE wid=#{id}
+    </update>
+    
     <select id="getWriterList" resultMap="writerResultMap">
 		SELECT writer.*, user.* 
 		FROM writer, user
 		WHERE user.uid=writer.uid
+    </select>
+    
+    <select id="getWriterById" parameterType="java.lang.Long" resultMap="writerResultMap">
+        SELECT writer.*, user.* 
+		FROM writer, user
+		WHERE user.uid=writer.uid
+        	AND writer.wid=#{id}
     </select>
     
     <select id="getWriterByUser" parameterType="User" resultMap="writerResultMap">
@@ -47,5 +64,23 @@
 		WHERE user.uid=writer.uid
         	AND writer.w_pen_name=#{penName}
     </select>
+    
+    <update id="addLikeCount" parameterType="java.lang.Long">
+        UPDATE writer SET
+            w_like_count=w_like_count+1
+        WHERE wid=#{id}
+    </update>
+    
+    <select id="getUserCommendWriterHistory" resultType="java.util.Map">
+        SELECT *
+		FROM commend_writer_history
+		WHERE uid=#{uid}
+        	AND wid=#{wid}
+    </select>
+    
+    <insert id="insertCommendHistory">
+        INSERT INTO commend_writer_history(uid,wid)
+        VALUES (#{uid},#{wid})
+    </insert>
     
 </mapper>
