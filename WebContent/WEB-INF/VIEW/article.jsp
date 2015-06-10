@@ -23,7 +23,30 @@ function ratingArticle(rating) {
 			rating: rating
 		}
 	}).done(function(json) {
-		alert(json.status);
+		switch (json.status) {
+			case -2:
+				alert("非法格式");
+				window.location.reload();
+				break;
+			case -1:
+				alert("请先登录再进行评价");
+				$("body").animate({scrollTop: $("#top-bar").offset().top}, 500);
+				$("#top-bar #login-account").focus();
+				break;
+			case -0:
+				alert("评价的文章不存在！？");
+				window.location.reload();
+				break;
+			case 1:
+				alert("感谢您的评价 :)");
+				window.location.reload();
+				break;
+			case 2:
+				alert("您已评价过该文章哦");
+				break;
+			default:
+				alert("评价失败！");
+		}
 	}).fail(function() {
 		alert("评价失败");
 	});
@@ -55,7 +78,7 @@ function ratingArticle(rating) {
 </div>
 <div class="rating">
 	<button type="button" class="btn btn-success" style="float: left;" onclick="javascript:ratingArticle('up')"><span class="glyphicon glyphicon-thumbs-up"></span> 写得不错 <span class="badge">${article.like_count}</span></button>
-	<button type="button" class="btn btn-warning" style="float: right;" onclick="javascript:ratingArticle('dowm')"><span class="glyphicon glyphicon-thumbs-down"></span> 马马虎虎 <span class="badge">${article.dislike_count}</span></button>
+	<button type="button" class="btn btn-warning" style="float: right;" onclick="javascript:ratingArticle('down')"><span class="glyphicon glyphicon-thumbs-down"></span> 马马虎虎 <span class="badge">${article.dislike_count}</span></button>
 	<div style="clear: both;"></div>
 </div>
 <div style="clear: both;"></div>

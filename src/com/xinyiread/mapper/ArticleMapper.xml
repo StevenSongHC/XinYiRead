@@ -208,4 +208,16 @@
         WHERE aid=#{id}
     </update>
     
+    <select id="getUserRatingArticleHistory" resultType="java.util.Map">
+        SELECT *
+        FROM rating_history
+        WHERE uid=#{uid}
+        	AND aid=#{aid}
+    </select>
+    
+    <insert id="insertRatingHistory">
+        INSERT INTO rating_history(uid,aid,down_or_up)
+        VALUES (#{uid},#{aid},#{rating})
+    </insert>
+    
 </mapper>

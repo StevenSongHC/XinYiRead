@@ -3,6 +3,8 @@ package com.xinyiread.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.xinyiread.model.Article;
 
 public interface ArticleService {
@@ -51,8 +53,8 @@ public interface ArticleService {
 	
 	public int addReadCount(long id);
 	
-	public int addLikeCount(long id);
+	public List<Map<String, Object>> getUserRatingArticleHistory(@Param("aid") long aid, @Param("uid") long uid);
 	
-	public int addDislikeCount(long id);
+	public int ratingArticle(long aid, long uid, String rating);
 	
 }

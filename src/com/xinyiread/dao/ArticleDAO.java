@@ -85,4 +85,10 @@ public interface ArticleDAO {
 	// 不喜欢量+1
 	public int addDislikeCount(long id);
 	
+	// 检查用户是否已评价文章
+	public List<Map<String, Object>> getUserRatingArticleHistory(@Param("aid") long aid, @Param("uid") long uid);
+	
+	// 插入文章评价文章记录
+	public int insertRatingHistory(@Param("aid") long aid, @Param("uid") long uid, @Param("rating") int rating);
+	
 }

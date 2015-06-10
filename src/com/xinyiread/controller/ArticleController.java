@@ -273,9 +273,8 @@ public class ArticleController {
 			 								 long aid,
 			 								 String rating) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		System.out.println(aid + " - " + rating);
 		
-		User currentUser = (User) session.getAttribute("User_SESSION");
+		User currentUser = (User) session.getAttribute("USER_SESSION");
 		
 		if (currentUser == null) {
 			result.put("status", -1);		// login user required
@@ -287,9 +286,17 @@ public class ArticleController {
 			return result;
 		}
 		
+		if (!aService.getUserRatingArticleHistory(aid, currentUser.getId()).isEmpty()) {
+			result.put("status", 2);		// user already rated
+			return result;
+		}
 		
-		
-		result.put("status", 1);
+		if (aService.ratingArticle(aid, currentUser.getId(), rating) == 0) {
+			result.put("status", -2);		// illegal rating
+			return result;
+		}
+
+		result.put("status", 1);			// rating succeed
 		return result;
 	}
 	
