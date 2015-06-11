@@ -326,7 +326,7 @@ public class ArticleController {
 		}
 		
 		// a new comment instance
-		/*Comment comment = new Comment();
+		Comment comment = new Comment();
 		comment.setArticle(article);
 		comment.setNid(0);
 		comment.setUser(currentUser);
@@ -335,7 +335,7 @@ public class ArticleController {
 		java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
 		comment.setSubmitDate(currentDate);
 		// save the new comment
-		cmtService.addComment(comment);*/
+		cmtService.addComment(comment);
 
 		result.put("status", 1);			// comment succeed
 		return result;

@@ -10,9 +10,18 @@ String basepath = request.getContextPath();
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="include.jsp" flush="true" />
 <jsp:include page="top-bar.jsp" flush="true" />
+<script type="text/javascript"	src="<%=basepath%>/js/jquery.cookie.js"></script>
 <link rel="shortcut icon" href="<%=basepath%>/images/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="<%=basepath%>/css/article-style.css">
 <script type="text/javascript">
+$(document).ready(function() {
+	// fill comment input box by related cookie
+	if ($.cookie("ARTICLE_${article.id}_" + $.cookie("USER_COOKIE").split(",")[1] + "_COMMENT_WORD")) {
+		$("#input-comment").val($.cookie("ARTICLE_${article.id}_" + $.cookie("USER_COOKIE").split(",")[1] + "_COMMENT_WORD"));
+	}
+	
+});
+
 function ratingArticle(rating) {
 	$.ajax( {
 		url: "<%=basepath%>/article/rating_article",
@@ -47,7 +56,7 @@ function ratingArticle(rating) {
 				alert("评价失败！");
 		}
 	}).fail(function() {
-		alert("评价失败");
+		alert("评价失败！");
 	});
 }
 
@@ -76,8 +85,9 @@ function submitComment() {
 		}).done(function(json) {
 			switch (json.status) {
 				case -1:
-					alert("请先登录再进行评论");
+					alert("请先登录再进行评论！");
 					goLogin();
+					storeCommentToCookie();
 					break;
 				case 0:
 					alert("评论的文章不存在！？");
@@ -85,19 +95,31 @@ function submitComment() {
 					break;
 				case 1:
 					alert("感谢您参与评论");
-					window.location.href = "<%=basepath%>/article/${article.id}/#comment";
+					removeCommentCookie();
+					<%-- window.location.href = "<%=basepath%>/article/${article.id}/#comment"; --%>
+					window.location.reload();
 					break;
 				default:
-					alert("评论失败！");
+					alert("评论失败！您所输入的评论仍会保存30天，不用担心 :)");
+					storeCommentToCookie();
 			}
 		}).fail(function() {
-			alert("评价失败");
+			alert("评论失败！您所输入的评论仍会保存30天，不用担心 :)");
+			storeCommentToCookie();
 		});
 	}
 	else {
 		alert("字数太少！！！");
 		$("#input-comment").focus();
 	}
+}
+
+function storeCommentToCookie() {
+	// last 30 days
+	$.cookie("ARTICLE_${article.id}_" + $.cookie("USER_COOKIE").split(",")[1] + "_COMMENT_WORD", $("#input-comment").val().trim(), {expires: 30, path: "/"});
+}
+function removeCommentCookie() {
+	$.removeCookie("ARTICLE_${article.id}_" + $.cookie("USER_COOKIE").split(",")[1] + "_COMMENT_WORD", {path: "/"});
 }
 </script>
 <title>${article.title} | 新意阅读</title>
