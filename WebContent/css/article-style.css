@@ -49,3 +49,50 @@ h1 {
 .rating button {
 	padding: 5px;
 }
+.comment {
+	width: 45%;
+	margin: auto;
+	margin-top: 50px;
+	padding: 15px;
+}
+.empty-comment {
+	padding: 0 0 10px 10px;
+	margin-bottom: 20px;
+}
+.comment-list {
+	margin-bottom: 40px;
+}
+.comment-list .item {
+	margin-top: 20px;
+}
+.comment-list .item img {
+	width: 50px;
+	height: 50px;
+}
+.comment-list .item .username {
+	color: #333;
+	cursor: default;
+}
+.comment-list .item .submit-date {
+	color: #777;
+	font-style: italic;
+}
+.comment-mask {
+	background-color: #eee;
+	text-align: center;
+	padding: 35px 0;
+}
+.submit-block {
+	margin-top: 20px;
+	float: right;
+}
+#anonymous-option {
+	display: inline-block;
+}
+#anonymous-option span {
+	display: none;
+	cursor: pointer;
+}
+#anonymous-option span.yep {
+	display: inline-block;
+}

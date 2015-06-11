@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xinyiread.dao.CommentDAO">  
+	
+    <resultMap type="Comment" id="commentResultMap">
+        <id column="cmtid" property="id" />
+        <result column="nid" property="nid" />
+        <result column="cmt_word" property="word" />
+        <result column="cmt_is_anonymous" property="isAnonymous" />
+        <result column="cmt_is_display" property="isDisplay" />
+        <result column="cmt_submit_date" property="submitDate" />
+        <association column="uid" property="user" javaType="User">
+            <id column="uid" property="id" />
+            <result column="u_name" property="name" />
+	        <result column="u_password" property="password" />
+	        <result column="u_portrait" property="portrait" />
+	        <result column="u_email" property="email" />
+	        <result column="u_is_email_show" property="isEmailShow" />
+	        <result column="u_join_date" property="joinDate" />
+	        <result column="u_last_login_date" property="lastLoginDate" />
+        </association>
+        <association column="aid" property="article" javaType="Article">
+	        <id column="aid" property="id" />
+	        <result column="wid" property="wid" />
+	        <result column="catid" property="catid" />
+	        <result column="a_title" property="title" />
+	        <result column="a_intro" property="intro" />
+	        <result column="a_content" property="content" />
+	        <result column="a_recommand" property="recommand" />
+	        <result column="a_read_count" property="readCount" />
+	        <result column="a_like_count" property="likeCount" />
+	        <result column="a_dislike_count" property="dislikeCount" />
+	        <result column="a_publish_date" property="publishDate" />
+	        <result column="a_is_complete" property="isComplete" />
+	        <result column="a_is_writer_show" property="isWriterShow" />
+	        <result column="a_is_censored" property="isCensored" />
+        </association>
+    </resultMap>
+    
+    <insert id="insert" parameterType="Comment" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO comments(uid,aid,nid,cmt_word,cmt_is_anonymous,cmt_is_display,cmt_submit_date)
+        VALUES (#{user.id},#{article.id},#{nid},#{word},#{isAnonymous},#{isDisplay},#{submitDate})
+    </insert>
+    
+    <select id="getBasicCommentListByAid" resultType="java.util.Map">
+        SELECT comments.cmtid AS id, comments.cmt_word AS word, comments.cmt_is_anonymous AS is_anonymous, comments.cmt_is_display AS is_display, comments.cmt_submit_date AS submit_date,
+			user.u_name AS username, user.u_portrait AS user_portrait
+		FROM comments, user
+		WHERE user.uid=comments.uid
+			AND comments.aid=#{aid}
+    </select>
+    
+</mapper>

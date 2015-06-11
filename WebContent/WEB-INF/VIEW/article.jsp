@@ -30,8 +30,7 @@ function ratingArticle(rating) {
 				break;
 			case -1:
 				alert("请先登录再进行评价");
-				$("body").animate({scrollTop: $("#top-bar").offset().top}, 500);
-				$("#top-bar #login-account").focus();
+				goLogin();
 				break;
 			case 0:
 				alert("评价的文章不存在！？");
@@ -50,6 +49,55 @@ function ratingArticle(rating) {
 	}).fail(function() {
 		alert("评价失败");
 	});
+}
+
+function goLogin() {
+	$("body").animate({scrollTop: $("#top-bar").offset().top}, 500);
+	$("#top-bar #login-account").focus();
+}
+
+function toggleAnonymous(e) {
+	var daddy = e.parent();
+	$(daddy).children(":not(.yep)").addClass("yep");
+	$(e).removeClass("yep");
+}
+
+function submitComment() {
+	if ($("#input-comment").val().trim().length > 5) {
+		$.ajax( {
+			url: "<%=basepath%>/article/comment_article",
+			type: "POST",
+			dataType: "JSON",
+			data: {
+				aid: ${article.id},
+				word: $("#input-comment").val().trim(),
+				isAnonymous: $("#anonymous-option>span.yep").attr("is-anonymous")
+			}
+		}).done(function(json) {
+			switch (json.status) {
+				case -1:
+					alert("请先登录再进行评论");
+					goLogin();
+					break;
+				case 0:
+					alert("评论的文章不存在！？");
+					window.location.reload();
+					break;
+				case 1:
+					alert("感谢您参与评论");
+					window.location.href = "<%=basepath%>/article/${article.id}/#comment";
+					break;
+				default:
+					alert("评论失败！");
+			}
+		}).fail(function() {
+			alert("评价失败");
+		});
+	}
+	else {
+		alert("字数太少！！！");
+		$("#input-comment").focus();
+	}
 }
 </script>
 <title>${article.title} | 新意阅读</title>
@@ -80,6 +128,75 @@ function ratingArticle(rating) {
 	<button type="button" class="btn btn-success" style="float: left;" onclick="javascript:ratingArticle('up')"><span class="glyphicon glyphicon-thumbs-up"></span> 写得不错 <span class="badge">${article.like_count}</span></button>
 	<button type="button" class="btn btn-warning" style="float: right;" onclick="javascript:ratingArticle('down')"><span class="glyphicon glyphicon-thumbs-down"></span> 马马虎虎 <span class="badge">${article.dislike_count}</span></button>
 	<div style="clear: both;"></div>
+</div>
+<div class="comment panel panel-default">
+	<div class="panel-heading">
+		<h2 class="panel-title"><b>评论</b></h2>
+	</div>
+	<div class="panel-body">
+		<div id="comment">
+		<c:choose>
+		<c:when test="${not empty requestScope.commentList}">
+			<div class="comment-list">
+			<c:forEach items="${commentList}" var="cmt">
+				<div class="item">
+				<c:choose>
+				<c:when test="${cmt.is_anonymous == 0}">
+					<div class="media">
+						<a class="pull-left" href="<%=basepath%>/user/i/${cmt.username}" target="_blank">
+							<img class="media-object img-rounded" alt="${cmt.username}" title="${cmt.username}" src="<%=basepath%>/${cmt.user_portrait}">
+						</a>
+						<div class="media-body">
+							<h6 class="media-heading"><span class="username">${cmt.username}</span> <b>·</b> <span class="submit-date">${cmt.submit_date}</span></h6>
+							<p>${cmt.word}<p>
+						</div>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="media">
+						<a class="pull-left" href="javascript:void(0)">
+							<img class="media-object img-rounded" alt="anonymous" title="匿名用户" src="<%=basepath%>/images/portrait/anonymous.png">
+						</a>
+						<div class="media-body">
+							<h6 class="media-heading"><span class="username"><u>*匿名用户*</u></span> <b>·</b> <span class="submit-date">${cmt.submit_date}</span></h6>
+							<p>${cmt.word}<p>
+						</div>
+					</div>
+				</c:otherwise>
+				</c:choose>
+					
+				</div>
+			</c:forEach>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div class="empty-comment">
+				暂无评论
+			</div>
+		</c:otherwise>
+		</c:choose>
+		</div>
+		<c:choose>
+		<c:when test="${empty sessionScope.USER_SESSION}">
+			<div class="comment-mask">
+				<p>请先<a href="javascript:goLogin()">登录</a>再发表评论</p>
+				<p>没有账号请先<a href="<%=basepath%>/join" target="_blank">注册</a></p>
+				<p>登陆后可<u>匿名评论</u></p>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<textarea id="input-comment" class="form-control" rows="6" placeholder="在此输入评论"></textarea>
+			<div class="submit-block">
+				<div id="anonymous-option">
+					<span is-anonymous=0 class="glyphicon glyphicon-unchecked yep" onclick="javascript:toggleAnonymous($(this))"></span>
+					<span is-anonymous=1 class="glyphicon glyphicon-check" onclick="javascript:toggleAnonymous($(this))"></span>
+					匿名
+				</div>
+				<button type="button" class="btn btn-default" onclick="javascript:submitComment()">发表评论</button>
+			</div>
+		</c:otherwise>
+		</c:choose>
+	</div>
 </div>
 <div style="clear: both;"></div>
 </body>

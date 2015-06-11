@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xinyiread.model.Article;
+import com.xinyiread.model.Comment;
 import com.xinyiread.model.User;
 import com.xinyiread.model.Writer;
 import com.xinyiread.service.ArticleService;
+import com.xinyiread.service.CommentService;
 import com.xinyiread.service.WriterService;
 
 @Controller
@@ -27,6 +29,8 @@ public class ArticleController {
 	private ArticleService aService;
 	@Autowired
 	private WriterService wService;
+	@Autowired
+	private CommentService cmtService;
 	
 	@RequestMapping
 	public String browse(ModelMap model) {
@@ -66,10 +70,11 @@ public class ArticleController {
 		// category list
 		model.put("categoryList", aService.getAllCategory());
 		
+		// comment list
+		model.put("commentList", cmtService.getCommentListByAid(aid));
+		
 		return "article";
 	}
-	
-	
 	
 	@RequestMapping("draft/new")
 	public String newArticle(HttpSession session,
@@ -300,5 +305,40 @@ public class ArticleController {
 		return result;
 	}
 	
+	@RequestMapping("comment_article")
+	@ResponseBody
+	public Map<String, Object> commentArticle(HttpSession session,
+			 								  long aid,
+			 								  String word,
+			 								  int isAnonymous) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		User currentUser = (User) session.getAttribute("USER_SESSION");
+		if (currentUser == null) {
+			result.put("status", -1);		// login user required
+			return result;
+		}
+		
+		Article article = aService.getArticleById(aid);
+		if (article == null) {
+			result.put("status", 0);		// article does not existed
+			return result;
+		}
+		
+		// a new comment instance
+		/*Comment comment = new Comment();
+		comment.setArticle(article);
+		comment.setNid(0);
+		comment.setUser(currentUser);
+		comment.setWord(word);
+		comment.setIsAnonymous(isAnonymous);
+		java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
+		comment.setSubmitDate(currentDate);
+		// save the new comment
+		cmtService.addComment(comment);*/
+
+		result.put("status", 1);			// comment succeed
+		return result;
+	}
 	
 }
