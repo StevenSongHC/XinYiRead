@@ -46,7 +46,7 @@
     
     <select id="getBasicCommentListByAid" resultType="java.util.Map">
         SELECT comments.cmtid AS id, comments.cmt_word AS word, comments.cmt_is_anonymous AS is_anonymous, comments.cmt_is_display AS is_display, comments.cmt_submit_date AS submit_date,
-			user.u_name AS username, user.u_portrait AS user_portrait
+			user.uid AS uid, user.u_name AS username, user.u_portrait AS user_portrait
 		FROM comments, user
 		WHERE user.uid=comments.uid
 			AND comments.aid=#{aid}

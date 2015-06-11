@@ -69,6 +69,11 @@ function toggleAnonymous(e) {
 	var daddy = e.parent();
 	$(daddy).children(":not(.yep)").addClass("yep");
 	$(e).removeClass("yep");
+	// display warning message when anonoymous comment is enabled
+	if ($(daddy).children(".yep").attr("is-anonymous") == 1)
+		$("#warning-message").show();
+	else
+		$("#warning-message").hide();
 }
 
 function submitComment() {
@@ -169,7 +174,14 @@ function removeCommentCookie() {
 							<img class="media-object img-rounded" alt="${cmt.username}" title="${cmt.username}" src="<%=basepath%>/${cmt.user_portrait}">
 						</a>
 						<div class="media-body">
-							<h6 class="media-heading"><span class="username">${cmt.username}</span> <b>·</b> <span class="submit-date">${cmt.submit_date}</span></h6>
+							<h6 class="media-heading">
+								<span class="username">
+									${cmt.username}
+									<c:if test="${cmt.uid == requestScope.article.writer_uid}">
+										<span class="label label-default">作者</span>
+									</c:if>
+								</span>
+								 <b>·</b> <span class="submit-date">${cmt.submit_date}</span></h6>
 							<p>${cmt.word}<p>
 						</div>
 					</div>
@@ -209,6 +221,7 @@ function removeCommentCookie() {
 		<c:otherwise>
 			<textarea id="input-comment" class="form-control" rows="6" placeholder="在此输入评论"></textarea>
 			<div class="submit-block">
+				<span id="warning-message" class="alert alert-warning" role="alert">匿名发布后，管理员仍能查看评论发布者的信息，所以你懂的啦</span>
 				<div id="anonymous-option">
 					<span is-anonymous=0 class="glyphicon glyphicon-unchecked yep" onclick="javascript:toggleAnonymous($(this))"></span>
 					<span is-anonymous=1 class="glyphicon glyphicon-check" onclick="javascript:toggleAnonymous($(this))"></span>
