@@ -1,5 +1,6 @@
 body {
 	background-color: #f1f1f1;
+	min-width: 1280px;
 }
 #main {
 	margin: auto;
@@ -63,7 +64,11 @@ h1 {
 	margin-bottom: 40px;
 }
 .comment-list .item {
-	margin-top: 20px;
+	margin-top: 15px;
+	padding: 5px;
+	width: 80%;
+	display: inline-block;
+	border: 0 solid #ccc;
 }
 .comment-list .item img {
 	width: 50px;
@@ -76,6 +81,15 @@ h1 {
 .comment-list .item .submit-date {
 	color: #777;
 	font-style: italic;
+}
+.comment-list .report-comment {
+	width: 15%;
+	float: right;
+	margin-top: 30px;
+	margin-right: 10px;
+}
+.comment-list .report-comment a {
+	color: #c0c0c0;
 }
 .comment-mask {
 	background-color: #eee;

@@ -20,6 +20,12 @@ $(document).ready(function() {
 		$("#input-comment").val($.cookie("ARTICLE_${article.id}_" + $.cookie("USER_COOKIE").split(",")[1] + "_COMMENT_WORD"));
 	}
 	
+	// hover effect for report-comment link
+	$(".comment-list .report-comment").hover(function() {
+		$(this).prev().animate({borderWidth: "2px"}, "fast");
+	}, function() {
+		$(this).prev().animate({borderWidth: "0"}, "fast");
+	});
 });
 
 function ratingArticle(rating) {
@@ -198,7 +204,9 @@ function removeCommentCookie() {
 					</div>
 				</c:otherwise>
 				</c:choose>
-					
+				</div>
+				<div class="report-comment">
+					<a href="ajvascript:void(0)">举报</a>
 				</div>
 			</c:forEach>
 			</div>
