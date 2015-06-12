@@ -132,6 +132,10 @@ function storeCommentToCookie() {
 function removeCommentCookie() {
 	$.removeCookie("ARTICLE_${article.id}_" + $.cookie("USER_COOKIE").split(",")[1] + "_COMMENT_WORD", {path: "/"});
 }
+
+function reportComment(cmtid) {
+	
+}
 </script>
 <title>${article.title} | 新意阅读</title>
 </head>
@@ -205,9 +209,11 @@ function removeCommentCookie() {
 				</c:otherwise>
 				</c:choose>
 				</div>
+				<c:if test="${not empty sessionScope.USER_SESSION}">
 				<div class="report-comment">
-					<a href="ajvascript:void(0)">举报</a>
+					<a href="javascript:reportComment(${cmt.id})">举报</a>
 				</div>
+				</c:if>
 			</c:forEach>
 			</div>
 		</c:when>
@@ -221,8 +227,8 @@ function removeCommentCookie() {
 		<c:choose>
 		<c:when test="${empty sessionScope.USER_SESSION}">
 			<div class="comment-mask">
-				<p>请先<a href="javascript:goLogin()">登录</a>再发表评论</p>
-				<p>没有账号请先<a href="<%=basepath%>/join" target="_blank">注册</a></p>
+				<p><a href="javascript:goLogin()">登录</a>后才能发表评论</p>
+				<p>没有账号要先<a href="<%=basepath%>/join" target="_blank">注册</a></p>
 				<p>登陆后可<u>匿名评论</u></p>
 			</div>
 		</c:when>
