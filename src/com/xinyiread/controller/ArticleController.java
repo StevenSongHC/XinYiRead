@@ -341,4 +341,36 @@ public class ArticleController {
 		return result;
 	}
 	
+	@RequestMapping("report_comment")
+	@ResponseBody
+	public Map<String, Object> reportComment(HttpSession session,
+			 								 long cmtid) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		User currentUser = (User) session.getAttribute("USER_SESSION");
+		if (currentUser == null) {
+			result.put("status", -1);		// login user required
+			return result;
+		}
+		
+		Comment comment = cmtService.getCommentById(cmtid);
+		if (comment == null) {
+			result.put("status", 0);		// comment does not existed
+			return result;
+		}
+		
+		// already reported
+		if (!cmtService.getUserReportCommentRecord(currentUser.getId(), comment.getId()).isEmpty()) {
+			result.put("status", -2);
+			return result;
+		}
+		
+		// commit report
+		java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
+		cmtService.reportComment(comment.getId(), currentUser.getId(), currentDate, 0);
+
+		result.put("status", 1);			// report succeed
+		return result;
+	}
+	
 }

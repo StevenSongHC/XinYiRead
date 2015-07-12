@@ -20,8 +20,20 @@ public class CommentServiceImpl implements CommentService {
 		return cmtDao.insert(comment);
 	}
 
+	public Comment getCommentById(long id) {
+		return cmtDao.getCommentById(id);
+	}
+
 	public List<Map<String, Object>> getCommentListByAid(long aid) {
 		return cmtDao.getBasicCommentListByAid(aid);
+	}
+	
+	public int reportComment(long cmtid, long uid, java.sql.Date submitDate, int isHandle) {
+		return cmtDao.reportComment(cmtid, uid, submitDate, isHandle);
+	}
+	
+	public List<Map<String, Object>> getUserReportCommentRecord(long uid, long cmtid) {
+		return cmtDao.getUserReportCommentRecord(uid, cmtid);
 	}
 	
 }

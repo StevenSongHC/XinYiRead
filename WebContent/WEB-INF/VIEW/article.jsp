@@ -21,10 +21,10 @@ $(document).ready(function() {
 	}
 	
 	// hover effect for report-comment link
-	$(".comment-list .report-comment").hover(function() {
-		$(this).prev().animate({borderWidth: "2px"}, "fast");
+	$(".comment-list .report-comment a").hover(function() {
+		$(this).parent().prev().animate({borderWidth: "2px"}, "fast");
 	}, function() {
-		$(this).prev().animate({borderWidth: "0"}, "fast");
+		$(this).parent().prev().animate({borderWidth: "0"}, "fast");
 	});
 });
 
@@ -134,7 +134,34 @@ function removeCommentCookie() {
 }
 
 function reportComment(cmtid) {
-	
+	$.ajax( {
+		url: "<%=basepath%>/article/report_comment",
+		type: "POST",
+		dataType: "JSON",
+		data: {
+			cmtid: cmtid
+		}
+	}).done(function(json) {
+		switch (json.status) {
+			case -2:
+				alert("你已举报过该评论");
+				break;
+			case -1:
+				alert("请先登录再举报\n若右上角显示你已登录，则有可能登陆信息已过期，请重新刷新页面再登陆");
+				goLogin();
+				break;
+			case 0:
+				alert("你所举报的评论不存在？！");
+				break;
+			case 1:
+				alert("你的举报已提交。在举报被处理前，该评论仍会显示，请耐心等待。感谢对新意阅读的支持 ;P");
+				break;
+			default:
+				alert("举报失败！");
+		}
+	}).fail(function() {
+		alert("举报失败！");
+	});
 }
 </script>
 <title>${article.title} | 新意阅读</title>

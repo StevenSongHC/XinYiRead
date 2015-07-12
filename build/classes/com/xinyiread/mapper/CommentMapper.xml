@@ -44,12 +44,31 @@
         VALUES (#{user.id},#{article.id},#{nid},#{word},#{isAnonymous},#{isDisplay},#{submitDate})
     </insert>
     
+    <select id="getCommentById" parameterType="java.lang.Long" resultMap="commentResultMap">
+        SELECT comments.*, user.*, article.*
+		FROM comments, user, article
+		WHERE user.uid=comments.uid
+			AND article.aid=comments.aid
+			AND comments.cmtid=#{id}
+    </select>
+    
     <select id="getBasicCommentListByAid" resultType="java.util.Map">
         SELECT comments.cmtid AS id, comments.cmt_word AS word, comments.cmt_is_anonymous AS is_anonymous, comments.cmt_is_display AS is_display, comments.cmt_submit_date AS submit_date,
 			user.uid AS uid, user.u_name AS username, user.u_portrait AS user_portrait
 		FROM comments, user
 		WHERE user.uid=comments.uid
 			AND comments.aid=#{aid}
+    </select>
+    
+    <insert id="reportComment">
+        INSERT INTO comments_report(cmtid,uid,cmtr_submit_date,cmtr_is_handle)
+        VALUES (#{cmtid},#{uid},#{cmtr_submit_date},#{cmtr_is_handle})
+    </insert>
+    
+    <select id="getUserReportCommentRecord" resultType="java.util.Map">
+        SELECT * FROM comments_report
+		WHERE uid=#{uid}
+			AND cmtid=#{cmtid}
     </select>
     
 </mapper>
