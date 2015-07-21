@@ -56,6 +56,10 @@
 .writer-title a {
 	color: #333;
 }
+.publisher-info {
+	font-size: 17px;
+	margin-bottom: 5px;
+}
 .action {
 	display: block;
 	text-align: center;

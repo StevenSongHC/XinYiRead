@@ -178,16 +178,20 @@
     
     <select id="countVariesDataAmount" parameterType="java.lang.String" resultType="java.util.Map">
         SELECT * FROM
-	        (SELECT COUNT(*) AS uncensored_article_amount
+	        (SELECT COUNT(aid) AS uncensored_article_amount
 			FROM article
 			WHERE a_is_censored=0
 				AND a_is_complete=1
 			)amount1, 
-			(SELECT COUNT(*) AS censored_article_amount
+			(SELECT COUNT(aid) AS censored_article_amount
 			FROM article
 			WHERE a_is_censored
 			IN (-1, 1)
-			)amount2
+			)amount2,
+			(SELECT COUNT(cmtid) AS reported_comment_amount
+			FROM comments_report
+			WHERE comments_report.cmtr_is_handle=0
+			)amount3
     </select>
     
     <update id="addReadCount" parameterType="java.lang.Long">

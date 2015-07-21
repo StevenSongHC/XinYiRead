@@ -32,8 +32,26 @@ public class CommentServiceImpl implements CommentService {
 		return cmtDao.reportComment(cmtid, uid, submitDate, isHandle);
 	}
 	
-	public List<Map<String, Object>> getUserReportCommentRecord(long uid, long cmtid) {
-		return cmtDao.getUserReportCommentRecord(uid, cmtid);
+	public List<Map<String, Object>> getCommentReportRecord(long cmtid) {
+		return cmtDao.getCommentReportRecord(cmtid);
+	}
+	
+	public List<Map<String, Object>> getReportedCommentDetailList() {
+		return cmtDao.getUnhandleReportedCommentDetailList();
+	}
+
+	public int blockComment(long cmtid) {
+		// hide the comment
+		cmtDao.updateCommentVisibleById(cmtid, 0);
+		// set report's handle status
+		cmtDao.handleCommentAllReportById(cmtid);
+		return 0;
+	}
+
+	public int ignoreCommentReport(long cmtid) {
+		cmtDao.updateCommentVisibleById(cmtid, 1);
+		cmtDao.handleCommentAllReportById(cmtid);
+		return 0;
 	}
 	
 }

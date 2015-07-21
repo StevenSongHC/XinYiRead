@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xinyiread.model.Article;
+import com.xinyiread.model.Comment;
 import com.xinyiread.model.User;
 import com.xinyiread.service.ArticleService;
+import com.xinyiread.service.CommentService;
 import com.xinyiread.service.UserService;
 import com.xinyiread.service.WriterService;
 
@@ -31,6 +33,8 @@ public class ManagerController {
 	private WriterService wService;
 	@Autowired
 	private ArticleService aService;
+	@Autowired
+	private CommentService cmtService;
 	
 	@RequestMapping
 	public String mainPage(ModelMap model,
@@ -80,6 +84,7 @@ public class ManagerController {
 			
 			return "MANAGER/admin";
 		}
+		// go to manager page
 		else {
 			List<Object> userRoles = uService.getUserRoleListById(currentUser.getId());
 			model.put("userRoles", userRoles);
@@ -110,7 +115,7 @@ public class ManagerController {
 				return redirectPage;
 			
 			if (queryData != null) {
-				// count
+				// some statistics
 				model.put("variesAmount", aService.countVariesDataAmount());
 				
 				if (queryData.equals("uncensored_article")) {
@@ -217,6 +222,12 @@ public class ManagerController {
 	public String loadCensoredArticle(ModelMap model) {
 		model.put("articleList", aService.getCensoredArticleDetailList());
 		return "MANAGER/DATA/censored-article";
+	}
+	
+	@RequestMapping("load/reported_comment")
+	public String loadReportedComment(ModelMap model) {
+		model.put("reportList", cmtService.getReportedCommentDetailList());
+		return "MANAGER/DATA/reported-comment";
 	}
 	
 	@RequestMapping("censorship/article/{aid}")
@@ -341,6 +352,33 @@ public class ManagerController {
 			article.setIsCensored(censorStatus);
 			aService.updateArticle(article);
 		}
+		return result;
+	}
+	
+	@RequestMapping("handleCommentReport")
+	@ResponseBody
+	public Map<String, Object> handleCommentReport(long cmtid,
+												   int isBlock) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (isBlock != 0 && isBlock != 1) {
+			result.put("status", -1);
+			return result;
+		}
+		Comment comment = cmtService.getCommentById(cmtid);
+		if (comment == null) {
+			result.put("status", 0);
+			return result;
+		}
+		
+		// block the comment
+		if (isBlock == 1) {
+			cmtService.blockComment(comment.getId());
+		}
+		// ignore the report
+		else {
+			cmtService.ignoreCommentReport(comment.getId());
+		}
+		result.put("status", 1);
 		return result;
 	}
 	

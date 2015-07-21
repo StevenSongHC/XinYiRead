@@ -332,6 +332,7 @@ public class ArticleController {
 		comment.setUser(currentUser);
 		comment.setWord(word);
 		comment.setIsAnonymous(isAnonymous);
+		comment.setIsDisplay(1);
 		java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
 		comment.setSubmitDate(currentDate);
 		// save the new comment
@@ -359,8 +360,8 @@ public class ArticleController {
 			return result;
 		}
 		
-		// already reported
-		if (!cmtService.getUserReportCommentRecord(currentUser.getId(), comment.getId()).isEmpty()) {
+		// comment already been reported
+		if (!cmtService.getCommentReportRecord(comment.getId()).isEmpty()) {
 			result.put("status", -2);
 			return result;
 		}

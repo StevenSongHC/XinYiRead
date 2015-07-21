@@ -144,7 +144,7 @@ function reportComment(cmtid) {
 	}).done(function(json) {
 		switch (json.status) {
 			case -2:
-				alert("你已举报过该评论");
+				alert("该评论已被举报过，非常感谢:)");
 				break;
 			case -1:
 				alert("请先登录再举报\n若右上角显示你已登录，则有可能登陆信息已过期，请重新刷新页面再登陆");
@@ -193,7 +193,7 @@ function reportComment(cmtid) {
 	<button type="button" class="btn btn-warning" style="float: right;" onclick="javascript:ratingArticle('down')"><span class="glyphicon glyphicon-thumbs-down"></span> 马马虎虎 <span class="badge">${article.dislike_count}</span></button>
 	<div style="clear: both;"></div>
 </div>
-<div class="comment panel panel-default">
+<div id="comments" class="comment panel panel-default">
 	<div class="panel-heading">
 		<h2 class="panel-title"><b>评论</b></h2>
 	</div>

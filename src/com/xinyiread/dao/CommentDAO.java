@@ -21,6 +21,12 @@ public interface CommentDAO {
 	
 	public int reportComment(@Param("cmtid") long cmtid, @Param("uid") long uid, @Param("cmtr_submit_date") java.sql.Date submitDate, @Param("cmtr_is_handle") int isHandle);
 	
-	public List<Map<String, Object>> getUserReportCommentRecord(@Param("uid") long uid, @Param("cmtid") long cmtid);
+	public List<Map<String, Object>> getCommentReportRecord(long cmtid);
+
+	public List<Map<String, Object>> getUnhandleReportedCommentDetailList();
+	
+	public int updateCommentVisibleById(@Param("cmtid") long cmtid, @Param("is_display") int isDisplay);
+	
+	public int handleCommentAllReportById(long cmtid);
 	
 }

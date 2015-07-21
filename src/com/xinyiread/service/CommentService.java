@@ -15,6 +15,12 @@ public interface CommentService {
 	
 	public int reportComment(long cmtid, long uid, java.sql.Date submitDate, int isHandle);
 	
-	public List<Map<String, Object>> getUserReportCommentRecord(long uid, long cmtid);
+	public List<Map<String, Object>> getCommentReportRecord(long cmtid);
+	
+	public List<Map<String, Object>> getReportedCommentDetailList();
+	
+	public int blockComment(long cmtid);
+	
+	public int ignoreCommentReport(long cmtid);
 	
 }

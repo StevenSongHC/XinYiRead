@@ -58,6 +58,7 @@
 		FROM comments, user
 		WHERE user.uid=comments.uid
 			AND comments.aid=#{aid}
+			AND comments.cmt_is_display=1
     </select>
     
     <insert id="reportComment">
@@ -65,10 +66,33 @@
         VALUES (#{cmtid},#{uid},#{cmtr_submit_date},#{cmtr_is_handle})
     </insert>
     
-    <select id="getUserReportCommentRecord" resultType="java.util.Map">
+    <select id="getCommentReportRecord" resultType="java.util.Map">
         SELECT * FROM comments_report
-		WHERE uid=#{uid}
-			AND cmtid=#{cmtid}
+		WHERE cmtid=#{cmtid}
+			AND cmtr_is_handle=0
     </select>
+    
+    <select id="getUnhandleReportedCommentDetailList" resultType="java.util.Map">
+        SELECT cmtr.cmtid, cmtr.cmtr_submit_date AS submit_date, cmtr.uid AS reporter_uid, user1.u_name AS reporter_username,
+			cmt.aid AS articleid, cmt.uid AS publisher_uid, user2.u_name AS publisher_username, cmt.cmt_word AS word, cmt.cmt_is_anonymous AS is_anonymous
+		FROM comments_report AS cmtr, user AS user1, user AS user2, comments AS cmt
+		WHERE user1.uid = cmtr.uid
+			AND user2.uid = cmt.uid
+			AND cmt.cmtid = cmtr.cmtid
+			AND cmtr.cmtr_is_handle=0
+		ORDER BY submit_date ASC
+    </select>
+    
+    <update id="updateCommentVisibleById">
+        UPDATE comments SET
+            cmt_is_display=#{is_display}
+        WHERE cmtid=#{cmtid}
+    </update>
+    
+    <update id="handleCommentAllReportById">
+        UPDATE comments_report SET
+            cmtr_is_handle=1
+        WHERE cmtid=#{cmtid}
+    </update>
     
 </mapper>

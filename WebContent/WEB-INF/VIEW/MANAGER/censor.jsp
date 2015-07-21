@@ -45,7 +45,7 @@ $(document).ready(function() {
 	<div class="nav-menu-item" role-id=4>
 		<div id="reported-comment" class="list-group">
 			<a href="<%=basepath%>/manager?query_data=reported_comment" class="list-group-item">
-				<h4 class="list-group-item-heading">被举报的评论 <span class="badge">0</span></h4>
+				<h4 class="list-group-item-heading">被举报的评论 <span class="badge">${variesAmount.reported_comment_amount}</span></h4>
 				<p class="list-group-item-text">
 					所有被举报的评论都将被检索。默认显示【未处理】的被举报评论，通过列表上方过滤器可检索到【已处理】的。
 				</p>
