@@ -72,6 +72,51 @@ $(document).ready(function() {
 		}
 	});
 });
+
+function submitUpdate() {
+	var email = $("input#input-email").val().trim();
+	var isEmailShow = $("input#is-email-show:checked").val() == undefined? 0 : 1;
+	var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+	if (email.length > 0 && !reg.test(email)) {
+		BootstrapDialog.show({
+			type: BootstrapDialog.TYPE_DANGER,
+			message: "邮箱格式非法"
+		});
+		return;
+	}
+	
+	$.ajax( {
+		url: "<%=basepath%>/user/setting/update",
+		type: "POST",
+		dataType: "JSON",
+		data: {
+			email: email,
+			isEmailShow: isEmailShow
+		}
+	}).done(function(json) {
+		switch (json.status) {
+			case -1:
+				BootstrapDialog.show({
+					type: BootstrapDialog.TYPE_WARNING,
+					message: "登陆信息失效"
+				});
+				break;
+			case 1:
+				BootstrapDialog.show({
+					type: BootstrapDialog.TYPE_SUCCESS,
+					message: "保存成功"
+				});
+				break;
+			default:
+				BootstrapDialog.show({
+					type: BootstrapDialog.TYPE_DANGER,
+					message: "保存失效"
+				});
+		}
+	}).fail(function() {
+		isExisted = true;
+	});
+}
 </script>
 <title>个人信息设置</title>
 </head>
@@ -109,7 +154,7 @@ $(document).ready(function() {
 			<input type="file" name="uploadFile" id="photo" />
 			<input type="hidden" name="type" value="userPortrait" />
 			<input type="hidden" name="fileType" id="fileType" />
-			<input type="submit" value="上传并保存头像" />
+			<input type="submit" value="上传并保存头像" class="btn btn-default" style="margin-top: 10px;" />
 		</form>
 		<div class="progress">
 		  <div id="upload-progress-bar" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%">
@@ -118,6 +163,34 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<hr>
+	<div class="user-info-wrapper">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="input-email" class="col-sm-2 control-label">邮箱</label>
+				<div class="col-sm-10">
+					<input type="email" class="form-control" id="input-email" placeholder="填入有效的邮箱" value="${user.email}">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<div class="checkbox">
+						<label>
+							<input id="is-email-show" type="checkbox"
+							<c:if test="${user.isEmailShow == 1}">
+								checked="checked"
+							</c:if>
+							> 是否设置为他人可见
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-10 col-sm-2">
+					<button type="button" class="btn btn-success btn-lg" onclick="javascript:submitUpdate()">保存</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
 </body>
 </html>

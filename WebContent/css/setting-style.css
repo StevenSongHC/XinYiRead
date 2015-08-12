@@ -6,7 +6,6 @@ body {
 	margin: auto;
 	width: 45%;
 	background-color: #fff;
-	height: 500px;
 }
 .user-head-wrapper {
 	padding: 20px;
@@ -32,4 +31,7 @@ body {
 #photo-uploader .progress {
 	margin-top: 10px;
 	width: 45%;
+}
+.user-info-wrapper {
+	padding: 20px;
 }

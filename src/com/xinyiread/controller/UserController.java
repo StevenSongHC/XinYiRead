@@ -1,7 +1,9 @@
 package com.xinyiread.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xinyiread.model.User;
 import com.xinyiread.service.UserService;
@@ -75,6 +78,24 @@ public class UserController {
 			return "redirect:../login";
 		model.put("user", currentUser);
 		return "USER/setting";
+	}
+	
+	@ResponseBody
+	@RequestMapping("setting/update")
+	public Map<String, Object> update(HttpSession session,
+									  String email,
+									  int isEmailShow) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		User currentUser = (User) session.getAttribute("USER_SESSION");
+		if (currentUser == null) {
+			result.put("status", -1);
+			return result;
+		}
+		currentUser.setEmail(email);
+		currentUser.setIsEmailShow(isEmailShow);
+		uService.updateUser(currentUser);
+		result.put("status", 1);
+		return result;
 	}
 
 }
