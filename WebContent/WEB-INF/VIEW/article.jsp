@@ -261,7 +261,7 @@ function reportComment(cmtid) {
 		<c:otherwise>
 			<textarea id="input-comment" class="form-control" rows="6" placeholder="在此输入评论"></textarea>
 			<div class="submit-block">
-				<span id="warning-message" class="alert alert-warning" role="alert">匿名发布后，管理员仍能查看评论发布者的信息，所以你懂的啦</span>
+				<span id="warning-message" class="alert alert-warning" role="alert">管理员仍能查看评论匿名发布者的信息！！</span>
 				<div id="anonymous-option">
 					<span is-anonymous=0 class="glyphicon glyphicon-unchecked yep" onclick="javascript:toggleAnonymous($(this))"></span>
 					<span is-anonymous=1 class="glyphicon glyphicon-check" onclick="javascript:toggleAnonymous($(this))"></span>
