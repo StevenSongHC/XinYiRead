@@ -17,6 +17,44 @@ $(document).ready(function() {
 		window.location.href="<%=basepath%>/user/setting";
 	});
 });
+
+function submitUpdate() {
+	var contact = $("input#input-contact").val().trim();
+	$.ajax( {
+		url: "<%=basepath%>/writer/setting/update",
+		type: "POST",
+		dataType: "JSON",
+		data: {
+			contact: contact
+		}
+	}).done(function(json) {
+		switch (json.status) {
+			case -1:
+				BootstrapDialog.show({
+					type: BootstrapDialog.TYPE_WARNING,
+					message: "登陆信息失效"
+				});
+				break;
+			case 1:
+				$("#contact-text").html(contact);
+				BootstrapDialog.show({
+					type: BootstrapDialog.TYPE_SUCCESS,
+					message: "保存成功"
+				});
+				break;
+			default:
+				BootstrapDialog.show({
+					type: BootstrapDialog.TYPE_DANGER,
+					message: "保存失效"
+				});
+		}
+	}).fail(function() {
+		BootstrapDialog.show({
+			type: BootstrapDialog.TYPE_DANGER,
+			message: "发生错误"
+		});
+	});
+}
 </script>
 <title>个人信息设置</title>
 </head>
@@ -34,7 +72,7 @@ $(document).ready(function() {
 						<h3 class="media-heading"><a href="<%=basepath%>/writer/i/${writer.penName}">${writer.penName}</a></h3>
 						<p class="date">
 							<address>
-								<abbr title="Contact">联系方式：</address></abbr>${writer.contact}
+								<abbr title="Contact">联系方式：</address></abbr><span id="contact-text">${writer.contact}</span>
 							</address>
 						</p>
 					</div>
@@ -55,6 +93,21 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<hr>
+	<div class="user-info-wrapper">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="input-contact" class="col-sm-2 control-label">联系方式</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="input-contact" placeholder="联系邮箱、电话或QQ号（QQ号请在前加上'QQ'）" value="${writer.contact}">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-10 col-sm-2">
+					<button type="button" class="btn btn-success btn-lg" onclick="javascript:submitUpdate()">保存</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
 </body>
 </html>

@@ -88,5 +88,21 @@ public class WriterController {
 		model.put("writer", currentWriter);
 		return "WRITER/setting";
 	}
+	
+	@ResponseBody
+	@RequestMapping("setting/update")
+	public Map<String, Object> update(HttpSession session,
+									  String contact) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		Writer currentWriter = (Writer) session.getAttribute("WRITER_SESSION");
+		if (currentWriter == null) {
+			result.put("status", -1);
+			return result;
+		}
+		currentWriter.setContact(contact);
+		wService.update(currentWriter);
+		result.put("status", 1);
+		return result;
+	}
 
 }

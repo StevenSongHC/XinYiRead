@@ -20,7 +20,7 @@
         VALUES (#{name},#{password},#{email},#{isEmailShow},#{joinDate},#{lastLoginDate})
     </insert>
     
-     <update id="update" parameterType="User">
+     <update id="update">
         UPDATE user SET
             u_name=#{name},
             u_password=#{password},

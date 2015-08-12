@@ -34,7 +34,7 @@
             w_contact=#{contact},
             w_intro=#{intro},
             w_current_project=#{currentProject},
-            w_like_count=#{likeCount},
+            w_like_count=#{likeCount}
         WHERE wid=#{id}
     </update>
     

@@ -113,7 +113,10 @@ function submitUpdate() {
 				});
 		}
 	}).fail(function() {
-		isExisted = true;
+		BootstrapDialog.show({
+			type: BootstrapDialog.TYPE_DANGER,
+			message: "发生错误"
+		});
 	});
 }
 </script>
