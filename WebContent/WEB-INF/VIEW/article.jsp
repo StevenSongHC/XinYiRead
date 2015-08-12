@@ -11,7 +11,6 @@ String basepath = request.getContextPath();
 <jsp:include page="include.jsp" flush="true" />
 <jsp:include page="top-bar.jsp" flush="true" />
 <script type="text/javascript"	src="<%=basepath%>/js/jquery.cookie.js"></script>
-<link rel="shortcut icon" href="<%=basepath%>/images/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="<%=basepath%>/css/article-style.css">
 <script type="text/javascript">
 $(document).ready(function() {

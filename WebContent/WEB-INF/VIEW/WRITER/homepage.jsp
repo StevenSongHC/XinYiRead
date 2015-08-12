@@ -10,7 +10,6 @@ String basepath = request.getContextPath();
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="../include.jsp" flush="true" />
 <jsp:include page="../top-bar.jsp" flush="true" />
-<link rel="shortcut icon" href="<%=basepath%>/images/favicon.ico" />
 <script type="text/javascript">
 function commendWriter() {
 	$.ajax( {

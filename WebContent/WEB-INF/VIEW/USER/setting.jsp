@@ -10,7 +10,6 @@ String basepath = request.getContextPath();
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="../include.jsp" flush="true" />
 <jsp:include page="../top-bar.jsp" flush="true" />
-<link rel="shortcut icon" href="<%=basepath%>/images/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="<%=basepath%>/css/setting-style.css">
 <script type="text/javascript"	src="<%=basepath%>/js/jquery.form.min.js"></script>
 <script type="text/javascript">
