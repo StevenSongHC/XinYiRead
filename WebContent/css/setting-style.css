@@ -1,0 +1,35 @@
+body {
+	background-color: #e4f2f7;
+	min-width: 1280px;
+}
+#main {
+	margin: auto;
+	width: 45%;
+	background-color: #fff;
+	height: 500px;
+}
+.user-head-wrapper {
+	padding: 20px;
+}
+.user-head-wrapper a {
+	color: #000;
+	text-decoration: underline;
+}
+.user-head-wrapper img {
+	width: 100px;
+	height: 100px;
+	margin-right: 20px;
+}
+.user-head-wrapper .date {
+	color: #777;
+}
+.user-head-wrapper .nav-btn {
+	margin-top: 20px;
+}
+#photo-uploader {
+	padding-left: 20px;
+}
+#photo-uploader .progress {
+	margin-top: 10px;
+	width: 45%;
+}

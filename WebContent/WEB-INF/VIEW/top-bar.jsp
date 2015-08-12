@@ -84,6 +84,7 @@ body {
 }
 .right-wrapper {
 	float: right;
+	background-color: #fff;
 }
 #top-bar img {
 	width: 25px;
@@ -144,13 +145,13 @@ body {
 				<b class="caret"></b>
 			</span>
 			<ul class="dropdown-menu">
-				<li><a href="<%=basepath%>/user/i/${sessionScope.USER_SESSION.name}">个人主页</a></li>
+				<li><a href="<%=basepath%>/user/i/${sessionScope.USER_SESSION.name}" target="_blank">个人主页</a></li>
 			<c:if test="${not empty sessionScope.WRITER_SESSION}">
-				<li><a href="<%=basepath%>/writer">写作空间</a></li>
+				<li><a href="<%=basepath%>/writer" target="_blank">写作空间</a></li>
 			</c:if>
 				<li><a href="<%=basepath%>/user/setting">资料设置</a></li>
-				<li><a href="#">书签</a></li>
-				<li><a href="#">收藏</a></li>
+				<li><a href="#" target="_blank">书签</a></li>
+				<li><a href="#" target="_blank">收藏</a></li>
 			</ul>
 		</div>
 		<div>

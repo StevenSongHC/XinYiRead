@@ -78,5 +78,15 @@ public class WriterController {
 		result.put("status", 1);			// rating succeed
 		return result;
 	}
+	
+	@RequestMapping("setting")
+	public String setting(ModelMap model,
+						  HttpSession session) {
+		Writer currentWriter = (Writer) session.getAttribute("WRITER_SESSION");
+		if (currentWriter == null)
+			return "redirect:../404";
+		model.put("writer", currentWriter);
+		return "WRITER/setting";
+	}
 
 }

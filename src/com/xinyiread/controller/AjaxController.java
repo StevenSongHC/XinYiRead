@@ -1,14 +1,23 @@
 package com.xinyiread.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.xinyiread.model.User;
 import com.xinyiread.service.UserService;
 import com.xinyiread.service.WriterService;
 
@@ -61,6 +70,52 @@ public class AjaxController {
 			result.put("isExisted", true);
 		else
 			result.put("isExisted", false);
+		return result;
+	}
+	
+	@RequestMapping(value = "ajaxFormSubmit")
+	@ResponseBody
+	public Map<String, Object> ajaxFormSubmit(HttpSession session,
+											  HttpServletRequest request,
+			  								  @RequestParam(value="uploadFile") MultipartFile uploadFile, 
+											  String type,
+											  String fileType) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (type != null && !type.equals("")) {
+			if (type.equals("userPortrait")) {
+				User currentUser = (User) session.getAttribute("USER_SESSION");
+				if (currentUser != null) {
+					String saveName = "images/portrait/" + currentUser.getId() + "_" + Calendar.getInstance().getTimeInMillis() + fileType;
+					String savePath = request.getServletContext().getRealPath("") + "/" + saveName;
+					System.out.println(savePath);
+					// can't delete the default portrait
+					if (!currentUser.getPortrait().equals("images/portrait/default.png")) {
+						// delete the old portrait
+						if (!new File(request.getServletContext().getRealPath("")+ "/" +currentUser.getPortrait()).delete()) {
+							// failed
+							result.put("code", 0);
+							return result;
+						}
+					}
+					try {
+						// upload and update
+						uploadFile.transferTo(new File(savePath));
+						currentUser.setPortrait(saveName);
+						uService.updateUser(currentUser);
+						result.put("newPhoto", currentUser.getPortrait());
+						result.put("code", 1);
+					} catch (IOException e) {
+						System.out.println("upload new portrait failed");
+						result.put("code", 0);
+						e.printStackTrace();
+					}
+				}
+				else {
+					// user login required
+					result.put("code", -1);
+				}
+			}
+		}
 		return result;
 	}
 	
