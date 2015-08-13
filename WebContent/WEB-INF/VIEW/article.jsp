@@ -11,6 +11,7 @@ String basepath = request.getContextPath();
 <jsp:include page="include.jsp" flush="true" />
 <jsp:include page="top-bar.jsp" flush="true" />
 <script type="text/javascript"	src="<%=basepath%>/js/jquery.cookie.js"></script>
+<script type="text/javascript"	src="<%=basepath%>/js/bootstrap-my-pagination.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=basepath%>/css/article-style.css">
 <script type="text/javascript">
 $(document).ready(function() {
@@ -24,6 +25,13 @@ $(document).ready(function() {
 		$(this).parent().prev().animate({borderWidth: "2px"}, "fast");
 	}, function() {
 		$(this).parent().prev().animate({borderWidth: "0"}, "fast");
+	});
+	
+	// pagination for comments
+	$(".comment-list").pagination( {
+		itemClass: "comment-wrapper",
+		pageSize: 5,
+		style: 3
 	});
 });
 
@@ -202,44 +210,46 @@ function reportComment(cmtid) {
 		<c:when test="${not empty requestScope.commentList}">
 			<div class="comment-list">
 			<c:forEach items="${commentList}" var="cmt">
-				<div class="item">
-				<c:choose>
-				<c:when test="${cmt.is_anonymous == 0}">
-					<div class="media">
-						<a class="pull-left" href="<%=basepath%>/user/i/${cmt.username}" target="_blank">
-							<img class="media-object img-rounded" alt="${cmt.username}" title="${cmt.username}" src="<%=basepath%>/${cmt.user_portrait}">
-						</a>
-						<div class="media-body">
-							<h6 class="media-heading">
-								<span class="username">
-									${cmt.username}
-									<c:if test="${cmt.uid == requestScope.article.writer_uid}">
-										<span class="label label-default">作者</span>
-									</c:if>
-								</span>
-								 <b>·</b> <span class="submit-date">${cmt.submit_date}</span></h6>
-							<p>${cmt.word}<p>
+				<div class="comment-wrapper">
+					<div class="item">
+					<c:choose>
+					<c:when test="${cmt.is_anonymous == 0}">
+						<div class="media">
+							<a class="pull-left" href="<%=basepath%>/user/i/${cmt.username}" target="_blank">
+								<img class="media-object img-rounded" alt="${cmt.username}" title="${cmt.username}" src="<%=basepath%>/${cmt.user_portrait}">
+							</a>
+							<div class="media-body">
+								<h6 class="media-heading">
+									<span class="username">
+										${cmt.username}
+										<c:if test="${cmt.uid == requestScope.article.writer_uid}">
+											<span class="label label-default">作者</span>
+										</c:if>
+									</span>
+									 <b>·</b> <span class="submit-date">${cmt.submit_date}</span></h6>
+								<p>${cmt.word}<p>
+							</div>
 						</div>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="media">
-						<a class="pull-left" href="javascript:void(0)">
-							<img class="media-object img-rounded" alt="anonymous" title="匿名用户" src="<%=basepath%>/images/portrait/anonymous.png">
-						</a>
-						<div class="media-body">
-							<h6 class="media-heading"><span class="username"><u>*匿名用户*</u></span> <b>·</b> <span class="submit-date">${cmt.submit_date}</span></h6>
-							<p>${cmt.word}<p>
+					</c:when>
+					<c:otherwise>
+						<div class="media">
+							<a class="pull-left" href="javascript:void(0)">
+								<img class="media-object img-rounded" alt="anonymous" title="匿名用户" src="<%=basepath%>/images/portrait/anonymous.png">
+							</a>
+							<div class="media-body">
+								<h6 class="media-heading"><span class="username"><u>*匿名用户*</u></span> <b>·</b> <span class="submit-date">${cmt.submit_date}</span></h6>
+								<p>${cmt.word}<p>
+							</div>
 						</div>
+					</c:otherwise>
+					</c:choose>
 					</div>
-				</c:otherwise>
-				</c:choose>
+					<c:if test="${not empty sessionScope.USER_SESSION}">
+					<div class="report-comment">
+						<a href="javascript:reportComment(${cmt.id})">举报</a>
+					</div>
+					</c:if>
 				</div>
-				<c:if test="${not empty sessionScope.USER_SESSION}">
-				<div class="report-comment">
-					<a href="javascript:reportComment(${cmt.id})">举报</a>
-				</div>
-				</c:if>
 			</c:forEach>
 			</div>
 		</c:when>

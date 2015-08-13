@@ -70,10 +70,9 @@ function submitUpdate() {
 					<div class="media-body">
 						<p class="date">注册于${writer.user.joinDate}</p>
 						<h3 class="media-heading"><a href="<%=basepath%>/writer/i/${writer.penName}">${writer.penName}</a></h3>
-						<p class="date">
-							<address>
-								<abbr title="Contact">联系方式：</address></abbr><span id="contact-text">${writer.contact}</span>
-							</address>
+						<p>
+							<br>
+							<abbr title="Contact">联系方式:</abbr>&nbsp;&nbsp;<span id="contact-text">${writer.contact}</span>
 						</p>
 					</div>
 				</div>

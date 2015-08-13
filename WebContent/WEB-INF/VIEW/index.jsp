@@ -10,13 +10,14 @@ String basepath = request.getContextPath();
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="include.jsp" flush="true" />
 <jsp:include page="top-bar.jsp" flush="true" />
+<script type="text/javascript"	src="<%=basepath%>/js/bootstrap-my-pagination.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		/**BootstrapDialog.show({
+	$(function() {
+		/* BootstrapDialog.show({
 			type: BootstrapDialog.TYPE_INFO,
 			title: "Greeting",
 			message: "欢迎访问 新意阅读网"
-		});**/
+		}); */
 	});
 	
 	function ajaxGreeting() {
@@ -46,5 +47,6 @@ String basepath = request.getContextPath();
 <h5><a href="user/list">data test</a></h5>
 <button type="button" class="btn btn-default" onclick="ajaxGreeting()">ajax test</button>
 <a href="<%=basepath%>/join">注册</a>
+
 </body>
 </html>
