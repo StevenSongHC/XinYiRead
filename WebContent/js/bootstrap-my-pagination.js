@@ -1,8 +1,8 @@
 /**
  * @author StevenSongHC (https://github.com/StevenSongHC)
- * @version 0.1.0
+ * @version 0.1.1
  */
-!function ($) {
+;!function ( $, window ) {
 	
 	"use strict";
 	
@@ -72,13 +72,21 @@
 					if (!isLastPage)
 						nb += "<li data-page='" + (parseInt(this.options.currentPage) + 1) + "'><a href='javascript:void(0)'>&gt;</a></li>";
 					nb += "</ul></center>";
+					break;
+				default:
+					nb += "<ul class='pager'>";
+					if (!isFirstPage)
+						nb += "<li data-page='" + (parseInt(this.options.currentPage) - 1) + "'><a href='javascript:void(0)'>&lt;</a></li>";
+					if (!isLastPage)
+						nb += "<li data-page='" + (parseInt(this.options.currentPage) + 1) + "'><a href='javascript:void(0)'>&gt;</a></li>";
+					nb += "</ul>";
 			}
 			nb += "</nav>";
 			
 			this.$element.append(nb);
 			
 			var obj = this;
-			this.$element.find("nav a").on("click", (function (e) {
+			this.$element.on("click", "nav a", (function (e) {
 				obj.options.currentPage = $(this).parent().attr("data-page");
 				obj.render();
 			}));
@@ -86,7 +94,10 @@
 	};
 	
 	$.fn.pagination = function (options) {
-		 return new Pagination(this, options).render();
+		 // maintaining chainability, and can be used by different elements with the same attribution
+		return this.each(function () {
+			 new Pagination($(this), options).render();
+		});
 	};
 	
-}( window.jQuery );
+}( jQuery, window );
