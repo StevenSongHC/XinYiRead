@@ -73,6 +73,12 @@ public class ArticleController {
 		// comment list
 		model.put("commentList", cmtService.getCommentListByAid(aid));
 		
+		// check is in collection
+		User currentUser = (User) session.getAttribute("USER_SESSION");
+		if (currentUser != null) {
+			model.put("isInCollection", !aService.isInUserCollection(currentUser.getId(), Long.parseLong(article.get("id").toString())).isEmpty());
+		}
+		
 		return "article";
 	}
 	
@@ -269,6 +275,71 @@ public class ArticleController {
 		else
 			result.put("status", -4);		// update succeed
 		
+		return result;
+	}
+	
+	@RequestMapping("add_collection")
+	@ResponseBody
+	public Map<String, Object> addCollection(HttpSession session,
+			 								 long aid) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		User currentUser = (User) session.getAttribute("USER_SESSION");
+		if (currentUser == null) {
+			result.put("status", -1);
+			return result;
+		}
+		
+		Article article = aService.getArticleById(aid);
+		
+		if (article == null) {
+			result.put("status", 0);
+			return result;
+		}
+		
+		// already added to collection b4
+		if (!aService.isInUserCollection(currentUser.getId(), article.getId()).isEmpty()) {
+			result.put("status", 2);
+			return result;
+		}
+		
+		// otherwise add to collection
+		aService.addToCollection(currentUser.getId(), article.getId(), new java.sql.Date(new java.util.Date().getTime()));
+		
+		result.put("status", 1);
+		return result;
+	}
+	
+	@RequestMapping("remove_collection")
+	@ResponseBody
+	public Map<String, Object> removeCollection(HttpSession session,
+			 								 	long aid) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		User currentUser = (User) session.getAttribute("USER_SESSION");
+		if (currentUser == null) {
+			result.put("status", -1);
+			return result;
+		}
+		
+		Article article = aService.getArticleById(aid);
+		
+		if (article == null) {
+			result.put("status", 0);
+			return result;
+		}
+		
+		// remove
+		aService.removeFromCollection(currentUser.getId(), article.getId());
+		
+		// remove failed
+		if (!aService.isInUserCollection(currentUser.getId(), article.getId()).isEmpty()) {
+			result.put("status", -2);
+			return result;
+		}
+		
+		// done
+		result.put("status", 1);
 		return result;
 	}
 	

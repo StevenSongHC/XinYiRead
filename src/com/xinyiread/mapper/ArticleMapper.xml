@@ -224,4 +224,22 @@
         VALUES (#{uid},#{aid},#{rating})
     </insert>
     
+    <insert id="addToCollection">
+        INSERT INTO collection(uid,aid,clc_create_date)
+        VALUES (#{uid},#{aid},#{createDate})
+    </insert>
+    
+    <delete id="removeFromCollection">
+        DELETE FROM collection
+        WHERE uid=#{uid}
+        	AND aid=#{aid}
+    </delete>
+    
+    <select id="isInUserCollection" resultType="java.util.Map">
+        SELECT *
+        FROM collection
+        WHERE uid=#{uid}
+        	AND aid=#{aid}
+    </select>
+    
 </mapper>

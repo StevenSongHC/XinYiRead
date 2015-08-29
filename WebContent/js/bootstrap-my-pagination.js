@@ -93,6 +93,9 @@
 		}
 	};
 	
+	// re-define Pagination's constructor
+	Pagination.prototype.constructor = Pagination;
+	
 	$.fn.pagination = function (options) {
 		 // maintaining chainability, and can be used by different elements with the same attribution
 		return this.each(function () {

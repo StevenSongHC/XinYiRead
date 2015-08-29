@@ -35,6 +35,72 @@ $(document).ready(function() {
 	});
 });
 
+function addCollection() {
+	$.ajax( {
+		url: "<%=basepath%>/article/add_collection",
+		type: "POST",
+		dataType: "JSON",
+		data: {
+			aid: ${article.id}
+		}
+	}).done(function(json) {
+		switch (json.status) {
+			case -1:
+				alert("清先登录再进行收藏");
+				goLogin();
+				break;
+			case 0:
+				alert("收藏的文章不存在\n页面将会重新载入");
+				window.location.reload();
+				break;
+			case 1:
+				$(".collection").html("<button type='button' class='btn btn-primary' onclick='javascript:removeCollection()'><span class='glyphicon glyphicon-star'></span> 已收藏 </button>");
+				break;
+			case 2:
+				alert("该文章之前已被收藏");
+				window.location.reload();
+				break;
+			default:
+				alert("添加失败");
+		}
+	}).fail(function() {
+		alert("添加失败");
+	});
+}
+
+function removeCollection() {
+	$.ajax( {
+		url: "<%=basepath%>/article/remove_collection",
+		type: "POST",
+		dataType: "JSON",
+		data: {
+			aid: ${article.id}
+		}
+	}).done(function(json) {
+		switch (json.status) {
+			case -2:
+				alert("删除失败\n重载入页面");
+				window.location.reload();
+				break;
+			case -1:
+				alert("清先登录再进行操作");
+				goLogin();
+				break;
+			case 0:
+				alert("收藏的文章不存在\n页面将会重新载入");
+				window.location.reload();
+				break;
+			case 1:
+				$(".collection").html("<button type='button' class='btn btn-default' onclick='javascript:addCollection()'><span class='glyphicon glyphicon-star-empty'></span> 添加收藏 </button>");
+				break;
+			default:
+				alert("删除失败");
+		}
+	}).fail(function() {
+		alert("删除失败");
+	});
+}
+
 function ratingArticle(rating) {
 	$.ajax( {
 		url: "<%=basepath%>/article/rating_article",
@@ -194,6 +260,17 @@ function reportComment(cmtid) {
 			<span class="item"><a href="#" title="${tag.id}">${tag.name}</a></span>
 		</c:forEach>
 	</div>
+	<div class="collection">
+<c:choose>
+	<c:when test="${requestScope.isInCollection == true}">
+		<button type="button" class="btn btn-primary" onclick="javascript:removeCollection()"><span class="glyphicon glyphicon-star"></span> 已收藏 </button>
+	</c:when>
+	<c:otherwise>
+		<button type="button" class="btn btn-default" onclick="javascript:addCollection()"><span class="glyphicon glyphicon-star-empty"></span> 添加收藏 </button>
+	</c:otherwise>
+</c:choose>
+	</div>
+	<div style="height: 20px; visible: hidden;"></div>
 </div>
 <div class="rating">
 	<button type="button" class="btn btn-success" style="float: left;" onclick="javascript:ratingArticle('up')"><span class="glyphicon glyphicon-thumbs-up"></span> 写得不错 <span class="badge">${article.like_count}</span></button>

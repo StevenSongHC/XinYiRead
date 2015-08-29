@@ -1,5 +1,6 @@
 package com.xinyiread.service.impl;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -132,6 +133,18 @@ public class ArticleServiceImpl implements ArticleService {
 			return 0;
 		
 		return 1;
+	}
+
+	public long addToCollection(long uid, long aid, Date createDate) {
+		return aDao.addToCollection(uid, aid, createDate);
+	}
+	
+	public int removeFromCollection(long uid, long aid) {
+		return aDao.removeFromCollection(uid, aid);
+	}
+
+	public List<Map<String, Object>> isInUserCollection(long uid, long aid) {
+		return aDao.isInUserCollection(uid, aid);
 	}
 	
 	

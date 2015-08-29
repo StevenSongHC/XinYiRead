@@ -91,4 +91,13 @@ public interface ArticleDAO {
 	// 插入文章评价文章记录
 	public int insertRatingHistory(@Param("uid") long uid, @Param("aid") long aid, @Param("rating") int rating);
 	
+	// 添加收藏
+	public long addToCollection(@Param("uid") long uid, @Param("aid") long aid, @Param("createDate") java.sql.Date createDate);
+	
+	// 删除收藏
+	public int removeFromCollection(@Param("uid") long uid, @Param("aid") long aid);
+	
+	// 检查收藏是否已存在
+	public List<Map<String, Object>> isInUserCollection(@Param("uid") long uid, @Param("aid") long aid);
+	
 }
