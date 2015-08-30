@@ -91,7 +91,16 @@ public class UserController {
 			result.put("status", -1);
 			return result;
 		}
-		currentUser.setEmail(email);
+		// email has been changed
+		if (!email.equals(currentUser.getEmail())) {
+			// new email has been used
+			if (uService.getUserByEmail(email) != null) {
+				result.put("status", -2);
+				return result;
+			}
+			// update the email
+			currentUser.setEmail(email);
+		}
 		currentUser.setIsEmailShow(isEmailShow);
 		uService.updateUser(currentUser);
 		result.put("status", 1);

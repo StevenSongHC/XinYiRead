@@ -93,7 +93,7 @@ function submitUpdate() {
 	</div>
 	<hr>
 	<div class="user-info-wrapper">
-		<form class="form-horizontal">
+		<form class="form-horizontal" action="javascript:submitUpdate()">
 			<div class="form-group">
 				<label for="input-contact" class="col-sm-2 control-label">联系方式</label>
 				<div class="col-sm-10">
@@ -102,7 +102,7 @@ function submitUpdate() {
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-10 col-sm-2">
-					<button type="button" class="btn btn-success btn-lg" onclick="javascript:submitUpdate()">保存</button>
+					<button type="submit" class="btn btn-success btn-lg">保存</button>
 				</div>
 			</div>
 		</form>

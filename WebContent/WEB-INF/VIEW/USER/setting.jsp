@@ -41,7 +41,7 @@ $(document).ready(function() {
 			switch (json.code) {
 				case -1:
 					BootstrapDialog.show({
-						type: BootstrapDialog.TYPE_WRANING,
+						type: BootstrapDialog.TYPE_WARNING,
 						message: "无登陆信息"
 					});
 					break;
@@ -94,6 +94,12 @@ function submitUpdate() {
 		}
 	}).done(function(json) {
 		switch (json.status) {
+			case -2:
+				BootstrapDialog.show({
+					type: BootstrapDialog.TYPE_WARNING,
+					message: "该邮箱已被他人使用"
+				});
+				break;
 			case -1:
 				BootstrapDialog.show({
 					type: BootstrapDialog.TYPE_WARNING,
@@ -166,7 +172,7 @@ function submitUpdate() {
 	</div>
 	<hr>
 	<div class="user-info-wrapper">
-		<form class="form-horizontal">
+		<form class="form-horizontal" action="javascript:submitUpdate()">
 			<div class="form-group">
 				<label for="input-email" class="col-sm-2 control-label">邮箱</label>
 				<div class="col-sm-10">
@@ -188,7 +194,7 @@ function submitUpdate() {
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-10 col-sm-2">
-					<button type="button" class="btn btn-success btn-lg" onclick="javascript:submitUpdate()">保存</button>
+					<button type="submit" class="btn btn-success btn-lg">保存</button>
 				</div>
 			</div>
 		</form>

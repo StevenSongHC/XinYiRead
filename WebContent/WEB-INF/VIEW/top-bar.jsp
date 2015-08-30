@@ -6,14 +6,6 @@ String basepath = request.getContextPath();
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript"	src="<%=basepath%>/js/bootstrap-hover-dropdown.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-	$("#top-bar").keyup(function(e) {
-		if (e.keyCode == 13) {
-			login();
-		}
-	});
-});
-
 function login() {
 	if ($("#login-account").val().trim() === "") {
 		alert("用户名或邮箱不得为空");
@@ -117,7 +109,7 @@ body {
 	<div class="right-wrapper">
 	<c:choose>
 	<c:when test="${empty sessionScope.USER_SESSION}">
-	<div class="form-inline">
+	<form class="form-inline" action="javascript:login()">
 		<div class="form-group">
 			<input type="text" class="form-control" id="login-account" placeholder="输入用户名或邮箱">
 		</div>
@@ -129,10 +121,10 @@ body {
 				<input type="checkbox" id="rememberme"> 记住我
 			</label>
 		</div>
-		<button id="login-button" class="btn btn-default" onclick="login()">登陆</button>
+		<button type="submit" id="login-button" class="btn btn-default">登陆</button>
 		|
 		<a href="<%=basepath%>/join" class="btn btn-default">注册</a>
-	</div>
+	</form>
 	</c:when>
 	<c:otherwise>
 		<div class="user-title">
