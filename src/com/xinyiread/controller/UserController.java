@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xinyiread.model.User;
@@ -81,7 +82,7 @@ public class UserController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("setting/update")
+	@RequestMapping(value = "setting/update", method = RequestMethod.POST)
 	public Map<String, Object> update(HttpSession session,
 									  String email,
 									  int isEmailShow) {

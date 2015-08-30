@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"  isErrorPage="true"%>
+    pageEncoding="UTF-8"%>
 <% 
 String basepath = request.getContextPath();
 %>
@@ -8,9 +8,9 @@ String basepath = request.getContextPath();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="shortcut icon" href="<%=basepath%>/images/favicon.ico" />
-<title>404</title>
+<title>400</title>
 </head>
 <body>
-404 page no found
+错误请求
 </body>
 </html>

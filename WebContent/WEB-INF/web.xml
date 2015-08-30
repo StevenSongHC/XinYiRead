@@ -60,4 +60,21 @@
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
   
+  <error-page>
+      <error-code>400</error-code>
+      <location>/WEB-INF/VIEW/STATIC/400.jsp</location>
+  </error-page>
+  <error-page>
+      <error-code>404</error-code>
+      <location>/WEB-INF/VIEW/STATIC/404.jsp</location>
+  </error-page>
+  <error-page>
+      <error-code>405</error-code>
+      <location>/WEB-INF//VIEW/STATIC/405.jsp</location>
+  </error-page>
+  <error-page>
+      <error-code>500</error-code>
+      <location>/WEB-INF//VIEW/STATIC/500.jsp</location>
+  </error-page>
+  
 </web-app>

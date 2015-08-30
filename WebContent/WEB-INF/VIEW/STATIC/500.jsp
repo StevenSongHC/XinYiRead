@@ -8,9 +8,9 @@ String basepath = request.getContextPath();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="shortcut icon" href="<%=basepath%>/images/favicon.ico" />
-<title>404</title>
+<title>500</title>
 </head>
 <body>
-404 page no found
+服务器错误
 </body>
 </html>

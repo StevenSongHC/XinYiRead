@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -131,7 +132,7 @@ public class ArticleController {
 	 * @param tags
 	 * @return
 	 */
-	@RequestMapping("draft/submit")
+	@RequestMapping(value = "draft/submit", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> saveArticle(HttpSession session,
 										   long aid,
@@ -234,7 +235,7 @@ public class ArticleController {
 		return result;
 	}
 	
-	@RequestMapping("cancel_publish")
+	@RequestMapping(value = "cancel_publish", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> cancelPublish(HttpSession session,
 											 long aid) {
@@ -278,7 +279,7 @@ public class ArticleController {
 		return result;
 	}
 	
-	@RequestMapping("add_collection")
+	@RequestMapping(value = "add_collection", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> addCollection(HttpSession session,
 			 								 long aid) {
@@ -310,7 +311,7 @@ public class ArticleController {
 		return result;
 	}
 	
-	@RequestMapping("remove_collection")
+	@RequestMapping(value = "remove_collection", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> removeCollection(HttpSession session,
 			 								 	long aid) {
@@ -343,7 +344,7 @@ public class ArticleController {
 		return result;
 	}
 	
-	@RequestMapping("rating_article")
+	@RequestMapping(value = "rating_article", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> ratingArticle(HttpSession session,
 			 								 long aid,
@@ -376,7 +377,7 @@ public class ArticleController {
 		return result;
 	}
 	
-	@RequestMapping("comment_article")
+	@RequestMapping(value = "comment_article", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> commentArticle(HttpSession session,
 			 								  long aid,
@@ -413,7 +414,7 @@ public class ArticleController {
 		return result;
 	}
 	
-	@RequestMapping("report_comment")
+	@RequestMapping(value = "report_comment", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> reportComment(HttpSession session,
 			 								 long cmtid) {
