@@ -140,7 +140,6 @@ function isUsernameExisted() {
 	$.ajax( {
 		async: false,
 		url: "<%=basepath%>/ajax/checkUsername",
-		type: "POST",
 		dataType: "JSON",
 		data: {
 			username: $("#form-container #input-username").val().trim()
@@ -160,7 +159,6 @@ function isEmailExisted() {
 	$.ajax( {
 		async: false,
 		url: "<%=basepath%>/ajax/checkEmail",
-		type: "POST",
 		dataType: "JSON",
 		data: {
 			email: $("#form-container #input-email").val().trim()
@@ -180,7 +178,6 @@ function isPenNameExisted() {
 	$.ajax( {
 		async: false,
 		url: "<%=basepath%>/ajax/checkPenName",
-		type: "POST",
 		dataType: "JSON",
 		data: {
 			penName: $("#form-container #input-pen-name").val().trim()

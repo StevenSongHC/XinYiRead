@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -47,7 +48,7 @@ public class IndexController {
 		return "join";
 	}
 	
-	@RequestMapping(value = "join/do")
+	@RequestMapping(value = "join/do", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> registerUser(ModelMap model,
 											String name,
@@ -115,7 +116,7 @@ public class IndexController {
 		return "login";
 	}
 	
-	@RequestMapping(value = "login/do")
+	@RequestMapping(value = "login/do", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> loginUser(ModelMap model,
 										 String account,
@@ -181,7 +182,7 @@ public class IndexController {
 		return result;
 	}
 	
-	@RequestMapping("logout")
+	@RequestMapping(value = "logout", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> logoutUser(SessionStatus sessionStatus,
 										  HttpServletRequest request,

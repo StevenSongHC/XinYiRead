@@ -260,6 +260,7 @@ function reportComment(cmtid) {
 			<span class="item"><a href="#" title="${tag.id}">${tag.name}</a></span>
 		</c:forEach>
 	</div>
+	<hr>
 	<div class="collection">
 <c:choose>
 	<c:when test="${requestScope.isInCollection == true}">
