@@ -35,8 +35,7 @@ public class BaseInterceptor implements HandlerInterceptor {
 			if (cookies != null) {
 				for (Cookie cookie : cookies) {
 					if (cookie.getName().equals("USER_COOKIE")) {
-						@SuppressWarnings("deprecation")
-						String cookieValue = URLDecoder.decode(cookie.getValue());					// decode cookie value
+						String cookieValue = URLDecoder.decode(cookie.getValue(), "utf-8");					// decode cookie value
 						
 						User user = uService.getUserByName(cookieValue.split(",")[1]);
 						if (user != null) {

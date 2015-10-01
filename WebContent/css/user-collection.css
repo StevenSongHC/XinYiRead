@@ -1,0 +1,27 @@
+.article-collection .item {
+	position: relative;
+}
+.article-collection .item .operation-bar {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+}
+.item .view-zone {
+	float: right;
+}
+.item .view-zone .h {
+	display: none;
+}
+.details{
+	display: none;
+}
+.details .info span {
+	font-size: 13px;
+	display: block;
+	margin-bottom: 10px;
+}
+.details .empty-intro {
+	font-size: 13px;
+	font-style: italic;
+	color: #7c7c7c;
+}
