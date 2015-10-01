@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xinyiread.model.User;
 import com.xinyiread.model.Writer;
+import com.xinyiread.service.ArticleService;
 import com.xinyiread.service.WriterService;
 
 @Controller
@@ -25,6 +26,8 @@ public class WriterController {
 	
 	@Autowired
 	WriterService wService;
+	@Autowired
+	ArticleService aService;
 	
 	@RequestMapping
 	public String index(HttpSession session,
@@ -33,7 +36,9 @@ public class WriterController {
 		
 		if (currentWriter == null)
 			return "redirect:/login";
-		List<Map<String, Object>> briefArticleList = wService.getWriterArticleBriefList(currentWriter.getId());
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("wid", currentWriter.getId());
+		List<Map<String, Object>> briefArticleList = wService.getWriterArticleBriefList(map);
 		List<Map<String, Object>> incompletedList = new ArrayList<Map<String, Object>>();		// 未完成列表
 		List<Map<String, Object>> uncheckedList = new ArrayList<Map<String, Object>>();			// 待审核列表
 		List<Map<String, Object>> checkedList = new ArrayList<Map<String, Object>>();			// 已通过列表
@@ -84,6 +89,17 @@ public class WriterController {
 		
 		if (writer == null)
 			return "STATIC/404";
+		
+		// current project
+		if (writer.getCurrentProject() != 0) {
+			model.put("currentProject", aService.getArticleById(writer.getCurrentProject()));
+		}
+		
+		// published article list
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("wid", writer.getId());
+		map.put("isComplete", 1);
+		model.put("articleList", wService.getWriterArticleBriefList(map));
 		
 		model.put("writer", writer);
 		return "WRITER/homepage";

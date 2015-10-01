@@ -69,6 +69,12 @@ function removeCollection(id, aid) {
 		</div>
 	</div>
 	<div class="article-collection col-md-4 col-md-offset-1">
+		<c:if test="${empty articleCollection}">
+			<div class="jumbotron">
+				<p>看上去你还没有收藏任何一篇文章呢，多逛逛总会发现你喜欢的文章和作者</p>
+				<p><p><a class="btn btn-primary btn-lg" href="#" role="button">发现更多</a></p></p>
+			</div>
+		</c:if>
 		<c:forEach items="${articleCollection}" var="ac">
 			<div class="item well" data-id="${ac.id}">
 				<div class="operation-bar">

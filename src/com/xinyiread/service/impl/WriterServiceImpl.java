@@ -51,8 +51,8 @@ public class WriterServiceImpl implements WriterService {
 		return 1;
 	}
 	
-	public List<Map<String, Object>> getWriterArticleBriefList(long wid) {
-		return wDao.getWriterArticleBriefList(wid);
+	public List<Map<String, Object>> getWriterArticleBriefList(Map<String, Object> map) {
+		return wDao.getWriterArticleBriefList(map);
 	}
 	
 }

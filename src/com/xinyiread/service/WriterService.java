@@ -24,6 +24,6 @@ public interface WriterService {
 	
 	public int commendWriter(long uid, long wid);
 	
-	public List<Map<String, Object>> getWriterArticleBriefList(long wid);
+	public List<Map<String, Object>> getWriterArticleBriefList(Map<String, Object> map);
 
 }

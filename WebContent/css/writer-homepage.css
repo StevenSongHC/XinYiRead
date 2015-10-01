@@ -1,0 +1,74 @@
+body {
+	background-color: #f5deb3;
+}
+#main {
+	position: relative;
+	margin: auto;
+	top: 50px;
+	min-width: 520px;
+	width: 45%;
+	background-color: #fff;
+	font-size: 17px;
+}
+.writer-info {
+	position: absolute;
+	top: -35px;
+	left: -65px;
+}
+.writer-info .left-wrapper {
+	float: left;
+}
+.writer-info .right-wrapper {
+	flaot: right;
+	margin-top: 40px;
+	margin-left: 30px;
+}
+.writer-info .left-wrapper img {
+	width: 100px;
+	height: 100px;
+	display: block;
+	margin: auto;
+}
+.writer-info .left-wrapper button {
+	margin-top: 10px;
+}
+.writer-info .right-wrapper span {
+	display: block;
+	cursor: default;
+}
+.writer-info .right-wrapper .pen-name {
+	font-size: 24px;
+	margin-bottom: 5px;
+}
+.writer-info .right-wrapper .join-date {
+	font-size: 14px;
+	color: #777;
+}
+.writer-activity {
+	width: 80%;
+	margin: auto;
+	padding-top: 130px;
+	padding-bottom: 50px;
+}
+.writer-activity .empty {
+	font-size: 19px;
+	color: #777;
+	font-style: italic;
+	cursor: default;
+}
+#current-project h3 {
+	cursor: pointer;
+}
+#published-article .item {
+	padding: 5px;
+	background-color: #f5f5f5;
+}
+#published-article .item a {
+	font-size: 21px;
+	color: #ff5c00;
+	padding: 3px;
+}
+#published-article .item a:hover {
+	color: #fff;
+	background-color: #ff5c00;
+}
