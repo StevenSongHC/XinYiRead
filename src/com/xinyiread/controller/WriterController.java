@@ -146,5 +146,21 @@ public class WriterController {
 		result.put("status", 1);
 		return result;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "reset_current_project", method = RequestMethod.POST)
+	public Map<String, Object> reset(HttpSession session,
+									 String contact) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		Writer currentWriter = (Writer) session.getAttribute("WRITER_SESSION");
+		if (currentWriter == null) {
+			result.put("status", 0);
+			return result;
+		}
+		currentWriter.setCurrentProject(0);
+		wService.update(currentWriter);
+		result.put("status", 1);
+		return result;
+	}
 
 }

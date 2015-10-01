@@ -31,6 +31,7 @@ body {
 	padding: 10px;
 	background-color: #f5f5f5;
 	font-size: 18px;
+	overflow: auto;
 }
 #list-content .empty-list {
 	padding: 30px;
@@ -42,4 +43,10 @@ body {
 	margin-left: 30px;
 	font-size: 12px;
 	color: #333;
+	cursor: default;
+}
+.set-current-project {
+	float: right;
+	margin-right: 30px;
+	color: #000;
 }

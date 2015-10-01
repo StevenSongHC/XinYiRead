@@ -14,6 +14,7 @@ String basepath = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="<%=basepath%>/css/writer-index.css">
 <script type="text/javascript">
 $(function() {
+	$("[data-toggle='tooltip']").tooltip();
 	$('.nav-pills, .nav-tabs').tabdrop();
 	var ic = ${incompletedCount};
 	var uc = ${uncheckedCount};
@@ -23,6 +24,31 @@ $(function() {
 	$("#list-sort>li[order='" + order + "']").addClass("active");
 	$("#list-content>div[order='" + order + "']").addClass("active");
 });
+
+function resetCurrentProject() {
+	if (confirm("确定要重置当前项目标志位？")) {
+		$.ajax( {
+			url: "<%=basepath%>/writer/reset_current_project",
+			type: "POST",
+			dataType: "JSON"
+		}).done(function(json) {
+			switch (json.status) {
+				case 0:
+					alert("登录信息失效");
+					window.location.reload();
+					break;
+				case 1:
+					alert("重置成功");
+					$("#incompleted .set-current-project").remove();
+					break;
+				default:
+					alert("重置失败，请手动刷新页面");
+			}
+		}).fail(function() {
+			alert("重置失败，请手动刷新页面");
+		});
+	}
+}
 </script>
 <title>我的写作空间</title>
 </head>
@@ -51,6 +77,9 @@ $(function() {
 						<c:forEach items="${incompletedList}" var="a">
 							<div class="item">
 								<a href="<%=basepath%>/article/draft/${a.id}" style="color: #333;"><b>${a.title}</b></a><span class="datetime">最后修改于&nbsp;${a.publish_date}</span>
+								<c:if test="${writer.currentProject == a.id}">
+									<a href="javascript:resetCurrentProject()" class="set-current-project" data-toggle="tooltip" data-placement="right" title="当前项目标志，点击此图标将删除"><span class="glyphicon glyphicon-flag"></span></a>
+								</c:if>
 							</div>
 							<hr>
 						</c:forEach>

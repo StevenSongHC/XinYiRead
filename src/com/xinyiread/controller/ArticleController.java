@@ -172,6 +172,9 @@ public class ArticleController {
 			// update aid
 			aid = newArticle.getId();
 			
+			// set current project
+			currentWriter.setCurrentProject(aid);
+			
 			long addr = aService.getArticleByTitle(title).getId(); 
 			if (addr != 0) {
 				result.put("addr", addr);
@@ -212,11 +215,21 @@ public class ArticleController {
 			article.setIsComplete(isComplete);
 			// update article
 			aService.updateArticle(article);
-			if (isComplete == 0)					// just save
+			if (isComplete == 0) {					// just save
 				result.put("status", 1);			// save succeed
-			else
+				// set as current project
+				currentWriter.setCurrentProject(article.getId());
+			}
+			else {
 				result.put("status", 2);			// publish, redirect to default writer page
+				// remove form current project if it is
+				if (currentWriter.getCurrentProject() == article.getId()) {
+					currentWriter.setCurrentProject(0);
+				}
+			}
 		}
+		// update writer's current project status
+		wService.update(currentWriter);
 
 		// remove all tags of the article
 		aService.removeArticleTag(aid);
