@@ -1,5 +1,7 @@
 package com.xinyiread.interceptor;
 
+import java.net.URLDecoder;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,24 +35,27 @@ public class BaseInterceptor implements HandlerInterceptor {
 			if (cookies != null) {
 				for (Cookie cookie : cookies) {
 					if (cookie.getName().equals("USER_COOKIE")) {
-						User user = uService.getUserByName(cookie.getValue().split(",")[1]);
+						@SuppressWarnings("deprecation")
+						String cookieValue = URLDecoder.decode(cookie.getValue());					// decode cookie value
+						
+						User user = uService.getUserByName(cookieValue.split(",")[1]);
 						if (user != null) {
-							String password = cookie.getValue().split(",")[2];
+							String password = cookieValue.split(",")[2];
 							
-							cookie.setValue("");												// remove the old cookie first
+							cookie.setValue("");													// remove the old cookie first
 							cookie.setMaxAge(0);
 							cookie.setPath("/");
 							response.addCookie(cookie);
 							
 							if (password.equals(user.getPassword())) {
-								request.getSession().setAttribute("USER_SESSION", user);		// add user session
+								request.getSession().setAttribute("USER_SESSION", user);			// add user session
 								Writer writer = wService.getWriterByUser(user);
 								if (writer != null)
 									request.getSession().setAttribute("WRITER_SESSION", writer);	// add writer session
 								
-								response.addCookie(CookieUtil.generateUserCookie(user));		// add the new cookie
+								response.addCookie(CookieUtil.generateUserCookie(user));			// add the new cookie
 							}
-							if (request.getSession().getAttribute("USER_SESSION") != null)  	// don't know why the heck does it run 4 times
+							if (request.getSession().getAttribute("USER_SESSION") != null)  		// don't know why the heck does it run 4 times
 								break;
 						}
 						else {

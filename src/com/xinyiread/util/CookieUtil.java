@@ -1,5 +1,8 @@
 package com.xinyiread.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,10 +17,16 @@ public class CookieUtil {
 	// 生成包含用户信息的 cookie
 	public static Cookie generateUserCookie(User user) {
 		// cookie contains id, name, encrypted password
-		Cookie cookie = new Cookie("USER_COOKIE", user.getId()+","+user.getName()+","+user.getPassword());
+		Cookie cookie = null;
+		try {
+			cookie = new Cookie("USER_COOKIE", URLEncoder.encode(user.getId()+","+user.getName()+","+user.getPassword(), "utf-8"));
 		cookie.setMaxAge(COOKIE_MAX_AGE);
 		cookie.setPath("/");
 		System.out.println("cookie: "+cookie.getValue());
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return cookie;
 	}
 	

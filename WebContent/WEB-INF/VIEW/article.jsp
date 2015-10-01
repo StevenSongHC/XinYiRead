@@ -16,8 +16,8 @@ String basepath = request.getContextPath();
 <script type="text/javascript">
 $(document).ready(function() {
 	// fill comment input box by related cookie
-	if ($.cookie("ARTICLE_${article.id}_" + $.cookie("USER_COOKIE").split(",")[1] + "_COMMENT_WORD")) {
-		$("#input-comment").val($.cookie("ARTICLE_${article.id}_" + $.cookie("USER_COOKIE").split(",")[1] + "_COMMENT_WORD"));
+	if ($.cookie("ARTICLE_${article.id}_COMMENT_WORD")) {
+		$("#input-comment").val($.cookie("ARTICLE_${article.id}_COMMENT_WORD"));
 	}
 	
 	// hover effect for report-comment link
@@ -198,11 +198,13 @@ function submitComment() {
 }
 
 function storeCommentToCookie() {
-	// last 30 days
-	$.cookie("ARTICLE_${article.id}_" + $.cookie("USER_COOKIE").split(",")[1] + "_COMMENT_WORD", $("#input-comment").val().trim(), {expires: 30, path: "/"});
+	if ($("#input-comment").val().trim().length > 0) {
+		// last 30 days
+		$.cookie("ARTICLE_${article.id}_COMMENT_WORD", $("#input-comment").val().trim(), {expires: 30, path: "/"});
+	}
 }
 function removeCommentCookie() {
-	$.removeCookie("ARTICLE_${article.id}_" + $.cookie("USER_COOKIE").split(",")[1] + "_COMMENT_WORD", {path: "/"});
+	$.removeCookie("ARTICLE_${article.id}_COMMENT_WORD", {path: "/"});
 }
 
 function reportComment(cmtid) {

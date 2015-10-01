@@ -12,32 +12,13 @@ String basepath = request.getContextPath();
 <jsp:include page="top-bar.jsp" flush="true" />
 <script type="text/javascript"	src="<%=basepath%>/js/bootstrap-my-pagination.js"></script>
 <script type="text/javascript">
-	$(function() {
-		/* BootstrapDialog.show({
-			type: BootstrapDialog.TYPE_INFO,
-			title: "Greeting",
-			message: "欢迎访问 新意阅读网"
-		}); */
-	
-	function ajaxGreeting() {
-		$.ajax( {
-			url: "<%=basepath%>/ajax/greeting",
-			type: "POST",
-			dataType: "JSON",
-			data: {
-				data: "hello there"
-			}
-		}).done(function( json ) {
-			BootstrapDialog.show({
-				title: "Message",
-				message: json.msg
-			});
-		}).fail(function() {
-			alert("FAIL");
-		}).error(function (XMLHttpRequest, textStatus, errorThrown) {
-			$("body").append(XMLHttpRequest.responseText);
-		});
-	}
+$(function() {
+	/* BootstrapDialog.show({
+		type: BootstrapDialog.TYPE_INFO,
+		title: "Greeting",
+		message: "欢迎访问 新意阅读网"
+	 */
+	});
 </script>
 <title>新意阅读网</title>
 </head>
