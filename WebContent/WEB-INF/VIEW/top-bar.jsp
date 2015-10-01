@@ -67,9 +67,11 @@ body {
 }
 #top-bar {
 	position: absolute;
-	top: 4px;
+	top: 1px;
 	padding-right: 35px;
+	padding-bottom: 5px;
 	width: 100%;
+	background-color: #fff;
 }
 #top-bar div {
 	display: inline-block;

@@ -83,4 +83,11 @@
         VALUES (#{uid},#{wid})
     </insert>
     
+    <select id="getWriterArticleBriefList" resultType="java.util.Map">
+        SELECT aid AS id,a_title AS title,a_publish_date AS publish_date,a_is_complete AS is_complete,a_is_censored AS is_censored
+		FROM article
+		WHERE wid=#{wid}
+		ORDER BY publish_date DESC
+    </select>
+    
 </mapper>

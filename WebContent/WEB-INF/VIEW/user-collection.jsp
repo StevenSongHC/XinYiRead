@@ -13,7 +13,7 @@ String basepath = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="<%=basepath%>/css/user-collection.css">
 <script type="text/javascript">
 $(document).ready(function() {
-	
+	$("[data-toggle='tooltip']").tooltip();
 });
 
 function toggleDetails(id) {
@@ -72,7 +72,7 @@ function removeCollection(id, aid) {
 		<c:forEach items="${articleCollection}" var="ac">
 			<div class="item well" data-id="${ac.id}">
 				<div class="operation-bar">
-					<a href="javascript:removeCollection(${ac.id}, ${ac.aid})" title="删除该收藏" style="color: #d9534f;"><span class="glyphicon glyphicon-minus-sign"></span></a>
+					<a href="javascript:removeCollection(${ac.id}, ${ac.aid})" data-toggle="tooltip" data-placement="right" title="删除该收藏" style="color: #d9534f;"><span class="glyphicon glyphicon-minus-sign"></span></a>
 				</div>
 				<blockquote>
 					<h4><a href="<%=basepath%>/article/${ac.aid}" target="_blank">${ac.title}</a></h4>

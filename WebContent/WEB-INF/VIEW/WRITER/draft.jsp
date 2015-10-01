@@ -237,7 +237,7 @@ function cancelPublish() {
 		<c:otherwise>
 			<c:if test="${article.is_censored == 1}">
 			<p>本文章已通过审核，并与读者见面啦，点<a href="<%=basepath%>/article/${article.id}">此处</a>转到文章阅读页</p>
-			<p id="cp-block">或者你想<button class="btn btn-primary btn-lg" onclick="javascript:cancelPublish()">继续完善</button></p>
+			<p id="cp-block">或者你想&nbsp;&nbsp;<button class="btn btn-primary btn-lg" onclick="javascript:cancelPublish()">继续完善</button></p>
 			</c:if>
 			<c:if test="${article.is_censored == -1}">
 			<p>很遗憾，本文章并未通过审核，点击下方按钮即可重新编辑并重新提交</p>

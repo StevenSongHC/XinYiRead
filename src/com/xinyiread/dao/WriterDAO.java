@@ -32,4 +32,6 @@ public interface WriterDAO {
 	
 	public int insertCommendHistory(@Param("uid") long uid, @Param("wid") long wid);
 	
+	public List<Map<String, Object>> getWriterArticleBriefList(long wid);
+	
 }
