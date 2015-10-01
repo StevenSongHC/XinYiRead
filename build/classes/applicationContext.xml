@@ -23,7 +23,7 @@
 		<property name="driverClass">
 			<value>com.mysql.jdbc.Driver</value>
 		</property>	
-		<property name="jdbcUrl">
+		<!-- <property name="jdbcUrl">
 			<value>jdbc:mysql://951471197h.gotoftp5.com/951471197h?characterEncoding=utf-8</value>
 		</property>			
 		<property name="user">
@@ -31,6 +31,15 @@
 		</property>
 		<property name="password">
 			<value>2bjdzvb2</value>
+		</property> -->
+		<property name="jdbcUrl">
+			<value>jdbc:mysql://localhost:3306/xinyiread?characterEncoding=utf-8</value>
+		</property>			
+		<property name="user">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value>123456</value>
 		</property>
 		
 		<!-- c3p0 Config -->

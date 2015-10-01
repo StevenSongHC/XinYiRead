@@ -55,10 +55,12 @@ public interface ArticleService {
 	
 	public int ratingArticle(long uid, long aid, String rating);
 	
-	public long addToCollection(long uid, long aid, java.sql.Date createDate);
+	public long addToArticleCollection(long uid, long aid, java.sql.Date createDate);
 	
-	public int removeFromCollection(long uid, long aid);
+	public int removeFromArticleCollection(long uid, long aid);
 	
-	public List<Map<String, Object>> isInUserCollection(long uid, long aid);
+	public List<Map<String, Object>> isInUserArticleCollection(long uid, long aid);
+	
+	public List<Map<String, Object>> getUserArticleCollection(long uid);
 	
 }

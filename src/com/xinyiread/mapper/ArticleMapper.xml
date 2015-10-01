@@ -224,22 +224,33 @@
         VALUES (#{uid},#{aid},#{rating})
     </insert>
     
-    <insert id="addToCollection">
+    <insert id="addToArticleCollection">
         INSERT INTO collection(uid,aid,clc_create_date)
         VALUES (#{uid},#{aid},#{createDate})
     </insert>
     
-    <delete id="removeFromCollection">
+    <delete id="removeFromArticleCollection">
         DELETE FROM collection
         WHERE uid=#{uid}
         	AND aid=#{aid}
     </delete>
     
-    <select id="isInUserCollection" resultType="java.util.Map">
+    <select id="isInUserArticleCollection" resultType="java.util.Map">
         SELECT *
         FROM collection
         WHERE uid=#{uid}
         	AND aid=#{aid}
+    </select>
+    
+    <select id="getUserArticleCollection" resultType="java.util.Map">
+        SELECT clc.clcid AS id,clc.aid AS aid,clc.clc_create_date AS create_date,
+        	a.a_title AS title,a.a_intro AS intro,a_publish_date AS publish_date,
+        	w.w_pen_name AS writer_name
+        FROM collection AS clc,article AS a,writer AS w
+        WHERE clc.uid=#{uid}
+        	AND a.aid=clc.aid
+        	AND w.wid=a.wid
+        ORDER BY clc_create_date DESC
     </select>
     
 </mapper>

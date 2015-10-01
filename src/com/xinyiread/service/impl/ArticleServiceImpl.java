@@ -135,17 +135,20 @@ public class ArticleServiceImpl implements ArticleService {
 		return 1;
 	}
 
-	public long addToCollection(long uid, long aid, Date createDate) {
-		return aDao.addToCollection(uid, aid, createDate);
+	public long addToArticleCollection(long uid, long aid, Date createDate) {
+		return aDao.addToArticleCollection(uid, aid, createDate);
 	}
 	
-	public int removeFromCollection(long uid, long aid) {
-		return aDao.removeFromCollection(uid, aid);
+	public int removeFromArticleCollection(long uid, long aid) {
+		return aDao.removeFromArticleCollection(uid, aid);
 	}
 
-	public List<Map<String, Object>> isInUserCollection(long uid, long aid) {
-		return aDao.isInUserCollection(uid, aid);
+	public List<Map<String, Object>> isInUserArticleCollection(long uid, long aid) {
+		return aDao.isInUserArticleCollection(uid, aid);
 	}
 	
+	public List<Map<String, Object>> getUserArticleCollection(long uid) {
+		return aDao.getUserArticleCollection(uid);
+	}
 	
 }

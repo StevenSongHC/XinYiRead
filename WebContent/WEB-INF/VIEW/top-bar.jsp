@@ -142,8 +142,8 @@ body {
 				<li><a href="<%=basepath%>/writer" target="_blank">写作空间</a></li>
 			</c:if>
 				<li><a href="<%=basepath%>/user/setting">资料设置</a></li>
-				<li><a href="#" target="_blank">书签</a></li>
-				<li><a href="#" target="_blank">收藏</a></li>
+				<li><a href="#" target="_blank"><s>书签</s></a></li>
+				<li><a href="<%=basepath%>/my_collection" target="_blank">收藏</a></li>
 			</ul>
 		</div>
 		<div>

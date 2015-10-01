@@ -180,8 +180,7 @@ function submitComment() {
 				case 1:
 					alert("感谢您参与评论");
 					removeCommentCookie();
-					<%-- window.location.href = "<%=basepath%>/article/${article.id}/#comment"; --%>
-					window.location.reload();
+					window.location.href = "<%=basepath%>/article/${article.id}/#comment";
 					break;
 				default:
 					alert("评论失败！您所输入的评论仍会保存30天，不用担心 :)");

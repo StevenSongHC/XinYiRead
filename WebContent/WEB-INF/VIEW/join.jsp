@@ -19,7 +19,7 @@ $(document).ready(function() {
 		
 
 		if ($("#form-container #input-username").val().trim() !== "") {
-			var legalNameReg = /^[a-zA-Z]{1}[a-zA-Z0-9_]{3,14}$/;
+			var legalNameReg = /^[a-zA-Z\u4e00-\u9fa5]{1}[a-zA-Z0-9_\u4e00-\u9fa5]{3,14}$/;
 			if (legalNameReg.test($("#form-container #input-username").val().trim())) {
 				if ($("#form-container #input-password").val() !== "") {
 					if ($("#form-container #input-password").val().length > 5) {

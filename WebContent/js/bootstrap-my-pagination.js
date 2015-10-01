@@ -67,10 +67,14 @@
 					break;
 				case 3:
 					nb += "<center><ul class='pagination'>";
-					if (!isFirstPage)
-						nb += "<li data-page='" + (parseInt(this.options.currentPage) - 1) + "'><a href='javascript:void(0)'>&lt;</a></li>";
-					if (!isLastPage)
-						nb += "<li data-page='" + (parseInt(this.options.currentPage) + 1) + "'><a href='javascript:void(0)'>&gt;</a></li>";
+					nb += "<li data-page='" + (parseInt(this.options.currentPage) - 1) + "'";
+					if (isFirstPage)
+						nb += " style='visibility: hidden;'";
+					nb += "><a href='javascript:void(0)'>&lt;</a></li>";
+					nb += "<li data-page='" + (parseInt(this.options.currentPage) + 1) + "'";
+					if (isLastPage)
+						nb += " style='visibility: hidden;'";
+					nb += "><a href='javascript:void(0)'>&gt;</a></li>";
 					nb += "</ul></center>";
 					break;
 				default:

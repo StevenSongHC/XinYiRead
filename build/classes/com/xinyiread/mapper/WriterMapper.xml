@@ -25,7 +25,7 @@
     
     <insert id="insert" parameterType="Writer" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO writer(uid,w_pen_name,w_contact,w_intro,w_current_project,w_like_count)
-        VALUES (#{user.uid},#{penName},#{contact},#{intro},#{currentProject},#{likeCount})
+        VALUES (#{user.id},#{penName},#{contact},#{intro},#{currentProject},#{likeCount})
     </insert>
     
     <update id="update">

@@ -18,6 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.xinyiread.model.User;
 import com.xinyiread.model.Writer;
+import com.xinyiread.service.ArticleService;
 import com.xinyiread.service.UserService;
 import com.xinyiread.service.WriterService;
 import com.xinyiread.util.CookieUtil;
@@ -32,6 +33,8 @@ public class IndexController {
 	private UserService uService;
 	@Autowired
 	private WriterService wService;
+	@Autowired
+	private ArticleService aService;
 	
 	@RequestMapping("index")
 	public String index() {
@@ -195,6 +198,17 @@ public class IndexController {
 		return result;
 	}
 	
+	@RequestMapping("my_collection")
+	public String getCollection(ModelMap model,
+								HttpSession session) {
+		User currentUser = (User) session.getAttribute("USER_SESSION");
+		if (currentUser == null) {
+			return "redirect:/login";
+		}
+		model.put("user", currentUser);
+		model.put("articleCollection", aService.getUserArticleCollection(currentUser.getId()));
+		return "user-collection";
+	}
 	
 	// STATIC INFO PAGES
 	@RequestMapping("404")
