@@ -51,7 +51,7 @@
     </select>
     
      <select id="getLatestPublishedArticleList" resultType="java.util.Map">
-        SELECT aid AS id, a_title AS title, a_intro AS intro, a_update_time AS update_time
+        SELECT aid AS id, a_title AS title, a_intro AS intro, a_update_time AS update_time, a_read_count AS read_count
 		FROM article
 		WHERE a_is_censored=1
 		ORDER BY a_update_time DESC
@@ -59,7 +59,8 @@
     </select>
     
     <select id="getLatestCommentedArticleList" resultType="java.util.Map">
-		SELECT a.aid AS id , a.a_title AS title, a_intro AS intro, a.a_update_time AS update_time, cmt.cmt_submit_time AS comment_submit_time
+		SELECT a.aid AS id , a.a_title AS title, a_intro AS intro, a.a_update_time AS update_time, a_read_count AS read_count,
+			cmt.cmt_submit_time AS comment_submit_time
 		FROM article AS a
 		LEFT JOIN comments AS cmt
 		ON a.aid=cmt.aid
@@ -70,7 +71,8 @@
     </select>
     
     <select id="getLatestLikedArticleList" resultType="java.util.Map">
-        SELECT a.aid AS id , a.a_title AS title, a_intro AS intro, a.a_update_time AS update_time, rat.rat_submit_time AS rating_submit_time
+        SELECT a.aid AS id , a.a_title AS title, a_intro AS intro, a.a_update_time AS update_time, a_read_count AS read_count,
+        	rat.rat_submit_time AS rating_submit_time
 		FROM article AS a
 		LEFT JOIN rating_article_history AS rat
 		ON a.aid=rat.aid
@@ -82,12 +84,36 @@
     </select>
     
     <select id="getLatestArticleListByCategoryName" resultType="java.util.Map">
-        SELECT aid AS id , a_title AS title, a_intro AS intro, a_update_time AS update_time
+        SELECT aid AS id , a_title AS title, a_intro AS intro, a_update_time AS update_time, a_read_count AS read_count
 		FROM article
 		WHERE catid=(SELECT catid FROM category WHERE cat_name=#{categoryName})
 			AND a_is_censored=1
 		GROUP BY aid
 		ORDER BY MAX(a_update_time) DESC
+		LIMIT #{quantity}
+    </select>
+    
+    <select id="queryArticleList" resultType="java.util.Map">
+        SELECT aid AS id, a_title AS title, a_intro AS intro, a_update_time AS update_time, a_read_count AS read_count
+		FROM article
+		WHERE a_is_censored=1
+		<if test="keyword != null and keyword != ''">
+		    AND a_title LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+		<if test="category != null and category != ''">
+		    AND catid=(SELECT catid FROM category WHERE cat_name=#{category})
+		</if>
+		<choose>
+		    <when test="orderBy == 'latest_published'">
+		        ORDER BY a_update_time DESC
+		    </when>
+		    <when test="orderBy == 'most_read'">
+		        ORDER BY a_read_count DESC
+		    </when>
+		    <when test="orderBy == 'most_like'">
+		        ORDER BY a_like_count DESC
+		    </when>
+		</choose>
 		LIMIT #{quantity}
     </select>
     

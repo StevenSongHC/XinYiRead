@@ -45,6 +45,10 @@ public class ArticleServiceImpl implements ArticleService {
 		return aDao.getLatestArticleListByCategoryName(categoryName, quantity);
 	}
 	
+	public List<Map<String, Object>> queryArticleList(String keyword, String category, String orderBy, int quantity) {
+		return aDao.queryArticleList(keyword, category, orderBy, quantity);
+	}
+	
 	public List<Map<String, Object>> getArticleDetailList() {
 		List<Map<String, Object>> articleList = aDao.getArticleDetailList();
 		// add tag list

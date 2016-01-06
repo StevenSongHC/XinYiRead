@@ -13,20 +13,25 @@ body {
 .head-marker {
 	/* background-color: #c8c8c8; */
 	background-color: #f5deb3;
-	font-size: 19px;
-	font-weight: bold;
 	margin-bottom: 10px;
 	padding: 10px;
 }
-#categories {
+.head-marker a {
+	color: #333;
+	font-size: 19px;
+	font-weight: bold;
+}
+#sidenav {
 	width: 18%;
 	float: left;
+}
+#sidenav #categories {
 	padding: 30px;
 	background-color: #f5deb3;
 	border: 2px #ff6a00 solid;
 	border-radius: 15px;
 }
-#categories .item {
+#sidenav #categories .item {
 	width: 33%;
 	display: block;
 	float: left;
@@ -34,13 +39,24 @@ body {
 	font-size: 20px;
 	line-height: 45px;
 }
-#categories .item a {
+#sidenav #categories .item a {
 	color: #ff5c00;
 	padding: 5px;
 }
-#categories .item a:hover {
+#sidenav #categories .item a:hover {
 	color: #fff;
 	background-color: #ff5c00;
+}
+#sidenav #orderby-func {
+	margin-top: 50px;
+}
+#sidenav #orderby-func p {
+	margin-top: 15px;
+}
+#sidenav #orderby-func p a {
+	font-size: 16px;
+	color: #ff5c00;
+	text-decoration: none;
 }
 #article-list {
 	width: 50%;
@@ -113,9 +129,24 @@ body {
 	border-radius: 10px;
 	background-color: #fff;
 }
+#article-list .intro {
+	font-size: 13px;
+}
+#article-list .basic-info {
+	font-size: 12.7px;
+}
+.empty {
+	padding: 30px;
+	font-size: 20px;
+	color: #777;
+}
 #special {
 	background-color: #fff;
-	height: 200px;
 	width: 28%;
 	float: left;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+#special #search-box {
+	text-align: center;
 }

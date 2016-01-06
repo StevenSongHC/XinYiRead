@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -233,13 +234,44 @@ public class IndexController {
 		return "user-collection";
 	}
 	
-	@RequestMapping("category/{categoryName}")
-	public String browseCategory(ModelMap model,
-								 @PathVariable String categoryName) {
-		model.put("categoryName", categoryName);
+	@RequestMapping("search")
+	public String searchArticle(ModelMap model,
+								@RequestParam(value="keyword", required=false) String keyword,
+								@RequestParam(value="category", required=false) String category,
+								@RequestParam(value="order_by", required=false) String orderBy) {
+		// flags
+		boolean isNotEmptyKeyword = (keyword != null && !keyword.equals(""));
+		boolean isNotEmptyCategory = (category != null && !category.equals(""));
+		boolean isNotEmptyOrderBy = (orderBy != null && !orderBy.equals(""));
+		
+		// existed category required
+		if (isNotEmptyCategory && aService.getCatidByCategoryName(category).size() == 0) {
+			return "redirect:/404";
+		}
+		// correct orderBy required -> latest_published, most_read, most_like
+		if (isNotEmptyOrderBy && !(orderBy.equals("latest_published") || orderBy.equals("most_read") || orderBy.equals("most_like"))) {
+			return "redirect:/404";
+		}
+		
+		// all empty, return latest published articles by default
+		if (!isNotEmptyKeyword && !isNotEmptyCategory && !isNotEmptyOrderBy) {
+			orderBy = "latest_published";
+		}
+		// only category not empty, return category's latest published articles
+		if (!isNotEmptyKeyword && isNotEmptyCategory && !isNotEmptyOrderBy) {
+			orderBy = "latest_published";
+		}
+		System.out.println("ORDERBY " + orderBy);
+		// display info
+		model.put("keyword", keyword);
+		model.put("categoryName", category);
+		model.put("orderBy", orderBy);
 		model.put("categories", aService.getAllCategory());
-		model.put("articleList", aService.getLatestArticleListByCategoryName(categoryName, 10));
-		return "category-articles";
+		
+		// load data
+		model.put("articleList", aService.queryArticleList(keyword, category, orderBy, 10));
+		
+		return "query-articles";
 	}
 	
 	// STATIC INFO PAGES

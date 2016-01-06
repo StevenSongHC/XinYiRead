@@ -34,6 +34,9 @@ public interface ArticleDAO {
 	// 获取所给类别名字对应数量的最新文章列表
 	public List<Map<String, Object>> getLatestArticleListByCategoryName(@Param("categoryName") String categoryName, @Param("quantity") int quantity);
 	
+	//根据所以条件检索文章列表
+	public List<Map<String, Object>> queryArticleList(@Param("keyword") String keyword, @Param("category") String category, @Param("orderBy") String orderBy, @Param("quantity") int quantity);
+	
 	// 得到文章所有信息详细列表
 	public List<Map<String, Object>> getArticleDetailList();
 	

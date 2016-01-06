@@ -29,8 +29,9 @@
 .content-item .right-wrapper {
 	float: right;
 	width: 40%;
+	background-color: #fdf9ec;
 }
-.brief-content {
+.intro {
 	display: block;
 	padding: 5px;
 	border: 1px solid #f4cf59;
@@ -64,4 +65,8 @@
 	display: block;
 	text-align: center;
 	margin-top: 10px;
+}
+.empty {
+	color: #777;
+	font-style: italic;
 }

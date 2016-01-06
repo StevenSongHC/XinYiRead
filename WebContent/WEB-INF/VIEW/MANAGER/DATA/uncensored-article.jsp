@@ -181,7 +181,16 @@ function restoreArticleLocker(aid) {
 	<div class="content-item">
 		<div class="left-wrapper">
 			<h4 title="[${a.id}]">${a.title}</h4>
-			<span class="brief-content">${a.content}</span>
+			<span class="intro">
+			<c:choose>
+			<c:when test="${not empty a.intro}">
+				${a.intro}
+			</c:when>
+			<c:otherwise>
+				<span class="empty">* 无简要 *</span>
+			</c:otherwise>
+			</c:choose>
+			</span>
 			<span class="submit-date">${a.publish_date}</span>
 		</div>
 		<div class="right-wrapper">

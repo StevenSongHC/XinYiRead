@@ -28,28 +28,30 @@ $(function() {
 </head>
 <body>
 <div id="main">
-	<div id="categories">
-		<div class="row">
-		<c:forEach items="${categories}" var="cat">
-			<span class="item"><a href="<%=basepath%>/category/${cat.name}">${cat.name}</a></span>
-		</c:forEach>
+	<div id="sidenav">
+		<div id="categories">
+			<div class="row">
+			<c:forEach items="${categories}" var="cat">
+				<span class="item"><a href="<%=basepath%>/search?category=${cat.name}">${cat.name}</a></span>
+			</c:forEach>
+			</div>
 		</div>
 	</div>
 	<div id="article-list">
 		<div id="latest">
-			<div class="head-marker">最新发布的文章</div>
+			<div class="head-marker"><a href="<%=basepath%>/" title="更多" target="_blank">最新发布的文章</a></div>
 		<c:forEach items="${latestPublishedArticleList}" var="a">
 			<div class="item"><a href="<%=basepath%>/article/${a.id}" target="_blank">${a.title}</a></div>
 		</c:forEach>
 		</div>
 		<div id="recently-commented">
-			<div class="head-marker">最近被评论的文章</div>
+			<div class="head-marker"><a href="<%=basepath%>/" title="更多" target="_blank">最近被评论的文章</a></div>
 		<c:forEach items="${latestCommentedArticleList}" var="a">
 			<div class="item"><a href="<%=basepath%>/article/${a.id}" target="_blank">${a.title}</a></div>
 		</c:forEach>
 		</div>
 		<div id="recently-liked">
-			<div class="head-marker">最近被点赞的文章</div>
+			<div class="head-marker"><a href="<%=basepath%>/" title="更多" target="_blank">最近被点赞的文章</a></div>
 		<c:forEach items="${latestLikedArticleList}" var="a">
 			<div class="item"><a href="<%=basepath%>/article/${a.id}" target="_blank">${a.title}</a></div>
 		</c:forEach>
@@ -58,7 +60,7 @@ $(function() {
 		<div id="latest-category-articles">
 		<c:forEach items="${categoryArticleList}" var="cal">
 			<div class="category-item">
-				<div class="head-marker">${cal.categoryName}</div>
+				<div class="head-marker"><a href="<%=basepath%>/search?category=${cal.categoryName}" title="更多" target="_blank">${cal.categoryName}</a></div>
 				<c:forEach items="${cal.articles}" var="cala">
 					<div class="item"><a href="<%=basepath%>/article/${cala.id}" target="_blank">${cala.title}</a></div>
 				</c:forEach>
@@ -67,7 +69,12 @@ $(function() {
 		</div>
 	</div>
 	<div id="special">
-		special
+		<div id="search-box">
+			<form class="form-inline" action="<%=basepath%>/search" target="_blank">
+				<input type="text" name="keyword" class="form-control" placeholder="输入关键字">
+				<button type="submit" class="btn btn-default"><img src="<%=basepath%>/images/search_icon.png" width="20" height="20"/></button>
+			</form>
+		</div>
 	</div>
 	<div style="clear: both;"></div>
 </div>

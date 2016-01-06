@@ -100,6 +100,10 @@ function submitArticle(isComplete) {
 			alert("文章标题不得超过17个字符");
 			return;
 		}
+		if ($("#article-intro").val().trim().length > 150) {
+			alert("文章简介不得超过250个字符，请尽量简单扼要");
+			return;
+		}
 		// parse tag into string array
 		var tagArr = new Array();
 		$(".tag-item").each(function(i, e) {
@@ -300,7 +304,7 @@ function cancelPublish() {
 	<input type="text" id="article-title" value="${article.title}">
 	<hr>
 	<h5>简介</h5>
-	<textarea rows="4" cols="70" id="article-intro">${article.intro}</textarea>
+	<textarea rows="5" cols="75" id="article-intro">${article.intro}</textarea>
 	<hr>
 	<h5>正文</h5>
 	<div contentEditable="true" id="draft-stage">
