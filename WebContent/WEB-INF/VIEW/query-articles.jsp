@@ -27,6 +27,7 @@ $(function() {
 			<c:forEach items="${categories}" var="cat">
 				<span class="item" cat-name="${cat.name}"><a href="<%=basepath%>/search?category=${cat.name}&keyword=${keyword}&order_by=${orderBy}">${cat.name}</a></span>
 			</c:forEach>
+			<span class="item"><a href="<%=basepath%>/search?keyword=${keyword}&order_by=${orderBy}" style="color: #333; text-decoration: none;">全部</a></span>
 			</div>
 		</div>
 		<div id="orderby-func">
