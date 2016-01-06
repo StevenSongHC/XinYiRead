@@ -81,7 +81,7 @@ h1 {
 	color: #333;
 	cursor: default;
 }
-.comment-list .item .submit-date {
+.comment-list .item .submit-time {
 	color: #777;
 	font-style: italic;
 }

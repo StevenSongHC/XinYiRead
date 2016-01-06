@@ -39,9 +39,25 @@ $(function() {
 			<div class="item"><a href="<%=basepath%>/article/${a.id}" target="_blank">${a.title}</a></div>
 		</c:forEach>
 		</div>
+		<div id="recently-commented">
+			<div class="head-marker">最新被评论的文章</div>
+		<c:forEach items="${latestArticleList}" var="a">
+			<div class="item"><a href="<%=basepath%>/article/${a.id}" target="_blank">${a.title}</a></div>
+		</c:forEach>
+		</div>
+		<div id="recently-liked">
+			<div class="head-marker">最新被点赞的文章</div>
+		<c:forEach items="${latestArticleList}" var="a">
+			<div class="item"><a href="<%=basepath%>/article/${a.id}" target="_blank">${a.title}</a></div>
+		</c:forEach>
+		</div>
+		<div style="clear: both;"></div>
+		<div id="latest-category-articles">
+			latest
+		</div>
 	</div>
 	<div id="special">
-	
+		special
 	</div>
 	<div style="clear: both;"></div>
 </div>

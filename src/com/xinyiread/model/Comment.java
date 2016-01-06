@@ -1,6 +1,6 @@
 package com.xinyiread.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Comment {
 	
@@ -11,7 +11,7 @@ public class Comment {
 	private String word;
 	private int isAnonymous;
 	private int isDisplay;
-	private Date submitDate;
+	private Timestamp submitTime;
 	
 	public long getId() {
 		return id;
@@ -55,11 +55,11 @@ public class Comment {
 	public void setIsDisplay(int isDisplay) {
 		this.isDisplay = isDisplay;
 	}
-	public Date getSubmitDate() {
-		return submitDate;
+	public Timestamp getSubmitTime() {
+		return submitTime;
 	}
-	public void setSubmitDate(Date submitDate) {
-		this.submitDate = submitDate;
+	public void setSubmitTime(Timestamp submitTime) {
+		this.submitTime = submitTime;
 	}
 
 }

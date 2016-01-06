@@ -306,7 +306,7 @@ function reportComment(cmtid) {
 											<span class="label label-default">作者</span>
 										</c:if>
 									</span>
-									 <b>·</b> <span class="submit-date">${cmt.submit_date}</span></h6>
+									 <b>·</b> <span class="submit-time"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${cmt.submit_time}"/></span></h6>
 								<p>${cmt.word}<p>
 							</div>
 						</div>
@@ -317,7 +317,7 @@ function reportComment(cmtid) {
 								<img class="media-object img-rounded" alt="anonymous" title="匿名用户" src="<%=basepath%>/images/portrait/anonymous.png">
 							</a>
 							<div class="media-body">
-								<h6 class="media-heading"><span class="username"><u>*匿名用户*</u></span> <b>·</b> <span class="submit-date">${cmt.submit_date}</span></h6>
+								<h6 class="media-heading"><span class="username"><u>*匿名用户*</u></span> <b>·</b> <span class="submit-time"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${cmt.submit_time}"/></span></h6>
 								<p>${cmt.word}<p>
 							</div>
 						</div>

@@ -62,7 +62,7 @@ public class ArticleController {
 			return "STATIC/404";												// or redirect to the 404
 		}
 		
-		// article content
+		// load article content
 		model.put("article", article);
 		
 		// read count + 1
@@ -418,8 +418,8 @@ public class ArticleController {
 		comment.setWord(word);
 		comment.setIsAnonymous(isAnonymous);
 		comment.setIsDisplay(1);
-		java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
-		comment.setSubmitDate(currentDate);
+		java.sql.Timestamp currentTime = new java.sql.Timestamp(new java.util.Date().getTime());
+		comment.setSubmitTime(currentTime);
 		// save the new comment
 		cmtService.addComment(comment);
 
