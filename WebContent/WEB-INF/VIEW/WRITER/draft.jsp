@@ -91,6 +91,10 @@ function deleteTag(ele) {
 
 function submitArticle(isComplete) {
 	if ($("#article-title").val().trim() != "") {
+		if ($("#article-category").children("option:selected").val() == 0) {
+			alert("每篇文章必须进行分类！");
+			return;
+		}
 		// parse tag into string array
 		var tagArr = new Array();
 		$(".tag-item").each(function(i, e) {
@@ -111,8 +115,6 @@ function submitArticle(isComplete) {
 			var msg = "";
 			if ($("input[type='radio'][name='showWriter']:checked").val() == 0)
 				msg += "你将以 [匿名（管理员可见）] 方式发表！";
-			if ($("#article-category").children("option:selected").val() == 0)
-				msg += "\n该篇文章未分类，不利于读者根据兴趣看到这篇文章！";
 			if (tagArr.length == 0)
 				msg += "\n未添加任何标签，将使本文章难以根据关键字被检索到！";
 			msg += "\n\n确定继续？";

@@ -244,8 +244,8 @@ function reportComment(cmtid) {
 <body>
 <div id="main">
 	<ol class="breadcrumb">
-		<li><a href="#">主页</a></li>
-		<li><a href="#">${article.category_name}</a></li>
+		<li><a href="<%=basepath%>">主页</a></li>
+		<li><a href="<%=basepath%>/category/${article.category_name}">${article.category_name}</a></li>
 		<li class="active">${article.title}</li>
 	</ol>
 	<h1>${article.title}</h1>

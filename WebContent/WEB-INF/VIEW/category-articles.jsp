@@ -10,9 +10,30 @@ String basepath = request.getContextPath();
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="include.jsp" flush="true" />
 <jsp:include page="top-bar.jsp" flush="true" />
+<link rel="stylesheet" type="text/css" href="<%=basepath%>/css/index-style.css"><script type="text/javascript">
+$(function() {
+	$("#categories .item[cat-name='${categoryName}']").children("a").css({"color": "#fff", "background-color" : "#ff5c00"});
+});
+</script>
 <title>所有 ${categoryName} 的文章 | 新意阅读网</title>
 </head>
 <body>
-${categoryName}
+<div id="main">
+	<div id="categories">
+		<div class="row">
+		<c:forEach items="${categories}" var="cat">
+			<span class="item" cat-name="${cat.name}"><a href="<%=basepath%>/category/${cat.name}">${cat.name}</a></span>
+		</c:forEach>
+		</div>
+	</div>
+	<div id="article-list">
+	<c:forEach items="${articleList}" var="a">
+		<div class="item"><a href="<%=basepath%>/article/${a.id}" target="_blank">${a.title}</a></div>
+	</c:forEach>
+	</div>
+	<div id="special">
+		
+	</div>
+</div>
 </body>
 </html>

@@ -236,8 +236,9 @@ public class IndexController {
 	@RequestMapping("category/{categoryName}")
 	public String browseCategory(ModelMap model,
 								 @PathVariable String categoryName) {
-		System.out.println(categoryName);
 		model.put("categoryName", categoryName);
+		model.put("categories", aService.getAllCategory());
+		model.put("articleList", aService.getLatestArticleListByCategoryName(categoryName, 10));
 		return "category-articles";
 	}
 	

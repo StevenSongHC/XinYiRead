@@ -19,7 +19,7 @@ $(function() {
 		title: "Greeting",
 		message: "欢迎访问 新意阅读网"
 	 */
-	 // index start with 0
+	 // index starts with 0
 	 $("#latest-category-articles>.category-item:odd").css("float", "right");
 	 $("#latest-category-articles>.category-item:even").css("float", "left");
 	});
