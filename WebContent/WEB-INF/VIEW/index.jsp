@@ -19,6 +19,9 @@ $(function() {
 		title: "Greeting",
 		message: "欢迎访问 新意阅读网"
 	 */
+	 // index start with 0
+	 $("#latest-category-articles>.category-item:odd").css("float", "right");
+	 $("#latest-category-articles>.category-item:even").css("float", "left");
 	});
 </script>
 <title>新意阅读网</title>
@@ -40,20 +43,27 @@ $(function() {
 		</c:forEach>
 		</div>
 		<div id="recently-commented">
-			<div class="head-marker">最新被评论的文章</div>
+			<div class="head-marker">最近被评论的文章</div>
 		<c:forEach items="${latestCommentedArticleList}" var="a">
 			<div class="item"><a href="<%=basepath%>/article/${a.id}" target="_blank">${a.title}</a></div>
 		</c:forEach>
 		</div>
 		<div id="recently-liked">
-			<div class="head-marker">最新被点赞的文章</div>
+			<div class="head-marker">最近被点赞的文章</div>
 		<c:forEach items="${latestLikedArticleList}" var="a">
 			<div class="item"><a href="<%=basepath%>/article/${a.id}" target="_blank">${a.title}</a></div>
 		</c:forEach>
 		</div>
 		<div style="clear: both;"></div>
 		<div id="latest-category-articles">
-			latest
+		<c:forEach items="${categoryArticleList}" var="cal">
+			<div class="category-item">
+				<div class="head-marker">${cal.categoryName}</div>
+				<c:forEach items="${cal.articles}" var="cala">
+					<div class="item"><a href="<%=basepath%>/article/${cala.id}" target="_blank">${cala.title}</a></div>
+				</c:forEach>
+			</div>
+		</c:forEach>
 		</div>
 	</div>
 	<div id="special">

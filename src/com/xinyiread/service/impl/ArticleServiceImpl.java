@@ -41,6 +41,10 @@ public class ArticleServiceImpl implements ArticleService {
 		return aDao.getLatestLikedArticleList(quantity);
 	}
 	
+	public List<Map<String, Object>> getLatestArticleListByCategoryName(String categoryName, int quantity) {
+		return aDao.getLatestArticleListByCategoryName(categoryName, quantity);
+	}
+	
 	public List<Map<String, Object>> getArticleDetailList() {
 		List<Map<String, Object>> articleList = aDao.getArticleDetailList();
 		// add tag list

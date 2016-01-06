@@ -31,6 +31,9 @@ public interface ArticleDAO {
 	// 获取对应数量的最新被点赞文章列表
 	public List<Map<String, Object>> getLatestLikedArticleList(int quantity);
 	
+	// 获取所给类别名字对应数量的最新文章列表
+	public List<Map<String, Object>> getLatestArticleListByCategoryName(@Param("categoryName") String categoryName, @Param("quantity") int quantity);
+	
 	// 得到文章所有信息详细列表
 	public List<Map<String, Object>> getArticleDetailList();
 	

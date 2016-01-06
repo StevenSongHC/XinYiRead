@@ -1,6 +1,8 @@
 package com.xinyiread.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,13 +42,23 @@ public class IndexController {
 	@RequestMapping("index")
 	public String index(ModelMap model) {
 		// all categories
-		model.put("categories", aService.getAllCategory());
+		List<Map<String, Object>> categoryList = aService.getAllCategory();
+		model.put("categories", categoryList);
 		// latest published article list
 		model.put("latestPublishedArticleList", aService.getLatestPublishedArticleList(10));
 		// latest commented article list
 		model.put("latestCommentedArticleList", aService.getLatestCommentedArticleList(5));
 		// latest liked article list
 		model.put("latestLikedArticleList", aService.getLatestLikedArticleList(5));
+		// latest articles sorted by category
+		List<Map<String, Object>> categoryArticleList = new ArrayList<Map<String, Object>>();
+		for (Map<String, Object> category : categoryList) {
+			Map<String, Object> articleList = new HashMap<String, Object>();
+			articleList.put("categoryName", category.get("name").toString());
+			articleList.put("articles", aService.getLatestArticleListByCategoryName(category.get("name").toString(), 6));
+			categoryArticleList.add(articleList);
+		}
+		model.put("categoryArticleList", categoryArticleList);
 		// special recommendations
 		model.put("special", null);
 		return "index";
