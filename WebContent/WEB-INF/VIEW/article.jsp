@@ -4,6 +4,7 @@
 String basepath = request.getContextPath();
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -250,7 +251,7 @@ function reportComment(cmtid) {
 	<h1>${article.title}</h1>
 	<div class="info">
 		<span>作者：<a href="<%=basepath%>/writer/i/${article.writer_name}" target=_blank title="访问${article.writer_name}的个人主页">${article.writer_name}</a></span>
-		<span>发布时间：${article.publish_date}</span>
+		<span>发布时间：<fmt:formatDate pattern="yyyy-MM-dd" value="${article.update_time}"/></span>
 		<span>阅读量：${article.read_count}</span>
 	</div>
 	<div class="content">

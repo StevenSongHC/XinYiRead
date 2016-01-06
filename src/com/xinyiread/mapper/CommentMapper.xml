@@ -32,7 +32,7 @@
 	        <result column="a_read_count" property="readCount" />
 	        <result column="a_like_count" property="likeCount" />
 	        <result column="a_dislike_count" property="dislikeCount" />
-	        <result column="a_publish_date" property="publishDate" />
+	        <result column="a_update_time" property="updateTime" />
 	        <result column="a_is_complete" property="isComplete" />
 	        <result column="a_is_writer_show" property="isWriterShow" />
 	        <result column="a_is_censored" property="isCensored" />

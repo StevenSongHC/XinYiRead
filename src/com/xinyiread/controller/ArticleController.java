@@ -149,6 +149,8 @@ public class ArticleController {
 			result.put("status", -2);
 			return result;
 		}
+
+		java.sql.Timestamp currentTime = new java.sql.Timestamp(new java.util.Date().getTime());
 		
 		// new article
 		if (aid == 0) {
@@ -164,8 +166,7 @@ public class ArticleController {
 			newArticle.setContent(content);
 			newArticle.setIsWriterShow(isWriterShow);
 			newArticle.setCatid(catid);
-			java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
-			newArticle.setPublishDate(currentDate);
+			newArticle.setUpdateTime(currentTime);
 			newArticle.setIsComplete(isComplete);
 			aService.addArticle(newArticle);
 			
@@ -210,8 +211,7 @@ public class ArticleController {
 			article.setContent(content);
 			article.setIsWriterShow(isWriterShow);
 			article.setCatid(catid);
-			java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
-			article.setPublishDate(currentDate);
+			article.setUpdateTime(currentTime);
 			article.setIsComplete(isComplete);
 			// update article
 			aService.updateArticle(article);

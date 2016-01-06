@@ -4,6 +4,7 @@
 String basepath = request.getContextPath();
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -94,7 +95,7 @@ $(document).ready(function() {
 		<c:when test="${not empty censorRecord}">
 			<c:forEach items="${censorRecord}" var="cr">
 			<span class="item">
-				审核员【${cr.auditor_name}】于 ${cr.time} 
+				审核员【${cr.auditor_name}】于 <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${cr.time}"/> 
 				<c:if test="${cr.is_pass == 1}">
 					【通过】
 				</c:if>

@@ -28,7 +28,8 @@ $(document).ready(function() {
 	$(".content-item").each(function() {
 		var bc = $(this).find(".brief-content").text();
 		bc = bc.substr(0,110);
-		bc += "<span class='preview-content' title='" + $(this).find(".brief-content").text() + "'>...</span>";
+		//bc += "<span class='preview-content' title='" + $(this).find(".brief-content").text() + "'>...</span>";
+		bc += "...";
 		$(this).find(".brief-content").html("").html(bc);
 	});
 });

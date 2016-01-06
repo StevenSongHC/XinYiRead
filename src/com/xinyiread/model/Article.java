@@ -1,6 +1,6 @@
 package com.xinyiread.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Article {
 
@@ -14,7 +14,7 @@ public class Article {
 	private int readCount;
 	private int likeCount;
 	private int dislikeCount;
-	private Date publishDate;
+	private Timestamp updateTime;
 	private int isComplete;
 	private int isWriterShow;
 	private int isCensored;
@@ -79,11 +79,11 @@ public class Article {
 	public void setDislikeCount(int dislikeCount) {
 		this.dislikeCount = dislikeCount;
 	}
-	public Date getPublishDate() {
-		return publishDate;
+	public Timestamp getUpdateTime() {
+		return updateTime;
 	}
-	public void setPublishDate(Date publishDate) {
-		this.publishDate = publishDate;
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 	public int getIsComplete() {
 		return isComplete;

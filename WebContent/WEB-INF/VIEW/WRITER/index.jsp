@@ -4,6 +4,7 @@
 String basepath = request.getContextPath();
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -76,7 +77,7 @@ function resetCurrentProject() {
 					<c:otherwise>
 						<c:forEach items="${incompletedList}" var="a">
 							<div class="item">
-								<a href="<%=basepath%>/article/draft/${a.id}" style="color: #333;"><b>${a.title}</b></a><span class="datetime">最后修改于&nbsp;${a.publish_date}</span>
+								<a href="<%=basepath%>/article/draft/${a.id}" style="color: #333;"><b>${a.title}</b></a><span class="datetime">最后修改于&nbsp;<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${a.update_time}"/></span>
 								<c:if test="${writer.currentProject == a.id}">
 									<a href="javascript:resetCurrentProject()" class="set-current-project" data-toggle="tooltip" data-placement="right" title="当前项目标志，点击此图标将删除"><span class="glyphicon glyphicon-flag"></span></a>
 								</c:if>
@@ -94,7 +95,7 @@ function resetCurrentProject() {
 					<c:otherwise>
 						<c:forEach items="${uncheckedList}" var="a">
 							<div class="item">
-								<a href="<%=basepath%>/article/draft/${a.id}"><b>${a.title}</b></a><span class="datetime">提交于&nbsp;${a.publish_date}</span>
+								<a href="<%=basepath%>/article/draft/${a.id}"><b>${a.title}</b></a><span class="datetime">提交于&nbsp;<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${a.update_time}"/></span>
 							</div>
 							<hr>
 						</c:forEach>
@@ -109,7 +110,7 @@ function resetCurrentProject() {
 					<c:otherwise>
 						<c:forEach items="${checkedList}" var="a">
 							<div class="item">
-								<a href="<%=basepath%>/article/${a.id}" style="color: #ff5c00;" target="_blank"><b>${a.title}</b></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="<%=basepath%>/article/draft/${a.id}"><span class="glyphicon glyphicon-pencil"></span></a><span class="datetime">通过于&nbsp;${a.publish_date}</span>
+								<a href="<%=basepath%>/article/${a.id}" style="color: #ff5c00;" target="_blank"><b>${a.title}</b></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="<%=basepath%>/article/draft/${a.id}"><span class="glyphicon glyphicon-pencil"></span></a><span class="datetime">通过于&nbsp;<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${a.update_time}"/></span>
 							</div>
 							<hr>
 						</c:forEach>
@@ -124,7 +125,7 @@ function resetCurrentProject() {
 					<c:otherwise>
 						<c:forEach items="${failedList}" var="a">
 							<div class="item">
-								<a href="<%=basepath%>/article/draft/${a.id}"><b>${a.title}</b></a><span class="datetime">审核于&nbsp;${a.publish_date}</span>
+								<a href="<%=basepath%>/article/draft/${a.id}"><b>${a.title}</b></a><span class="datetime">审核于&nbsp;<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${a.update_time}"/></span>
 							</div>
 							<hr>
 						</c:forEach>

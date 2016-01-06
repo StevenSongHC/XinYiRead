@@ -15,15 +15,15 @@
         <result column="a_read_count" property="readCount" />
         <result column="a_like_count" property="likeCount" />
         <result column="a_dislike_count" property="dislikeCount" />
-        <result column="a_publish_date" property="publishDate" />
+        <result column="a_update_time" property="updateTime" />
         <result column="a_is_complete" property="isComplete" />
         <result column="a_is_writer_show" property="isWriterShow" />
         <result column="a_is_censored" property="isCensored" />
     </resultMap>
     
     <insert id="insertArticle" parameterType="Article" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO article(wid,catid,a_title,a_intro,a_content,a_recommand,a_read_count,a_like_count,a_dislike_count,a_publish_date,a_is_complete,a_is_writer_show,a_is_censored)
-        VALUES (#{wid},#{catid},#{title},#{intro},#{content},#{recommand},#{readCount},#{likeCount},#{dislikeCount},#{publishDate},#{isComplete},#{isWriterShow},#{isCensored})
+        INSERT INTO article(wid,catid,a_title,a_intro,a_content,a_recommand,a_read_count,a_like_count,a_dislike_count,a_update_time,a_is_complete,a_is_writer_show,a_is_censored)
+        VALUES (#{wid},#{catid},#{title},#{intro},#{content},#{recommand},#{readCount},#{likeCount},#{dislikeCount},#{updateTime},#{isComplete},#{isWriterShow},#{isCensored})
     </insert>
     
      <update id="updateArticle" parameterType="Article">
@@ -37,7 +37,7 @@
             a_read_count=#{readCount},
             a_like_count=#{likeCount},
             a_dislike_count=#{dislikeCount},
-            a_publish_date=#{publishDate},
+            a_update_time=#{updateTime},
             a_is_complete=#{isComplete},
             a_is_writer_show=#{isWriterShow},
             a_is_censored=#{isCensored}
@@ -54,12 +54,12 @@
         SELECT *
 		FROM article
 		WHERE a_is_censored=1
-		ORDER BY a_publish_date DESC LIMIT #{quantity}
+		ORDER BY a_update_time DESC LIMIT #{quantity}
     </select>
     
      <select id="getArticleDetailList" resultType="java.util.Map">
         SELECT article.aid AS id, article.a_title AS title, article.a_intro, article.a_content AS content, article.a_recommand AS recommand,
-			article.a_read_count AS read_count, article.a_like_count AS like_count, article.a_dislike_count AS dislike_count, article.a_publish_date AS publish_date,
+			article.a_read_count AS read_count, article.a_like_count AS like_count, article.a_dislike_count AS dislike_count, article.a_update_time AS update_time,
 			article.a_is_complete AS is_complete, article.a_is_writer_show AS is_writer_show, article.a_is_censored AS is_censored,
 			writer.wid AS wid, writer.w_pen_name AS writer_name, category.catid AS catid, category.cat_name AS category_name
 		FROM article
@@ -70,7 +70,7 @@
     
      <select id="getArticleDetailById" parameterType="java.lang.Long" resultType="java.util.Map">
         SELECT article.aid AS id, article.a_title AS title, article.a_intro, article.a_content AS content, article.a_recommand AS recommand,
-			article.a_read_count AS read_count, article.a_like_count AS like_count, article.a_dislike_count AS dislike_count, article.a_publish_date AS publish_date,
+			article.a_read_count AS read_count, article.a_like_count AS like_count, article.a_dislike_count AS dislike_count, article.a_update_time AS update_time,
 			article.a_is_complete AS is_complete, article.a_is_writer_show AS is_writer_show, article.a_is_censored AS is_censored,
 			writer.wid AS wid, writer.uid AS writer_uid, writer.w_pen_name AS writer_name, category.catid AS catid, category.cat_name AS category_name
 		FROM article
@@ -81,7 +81,7 @@
     
      <select id="getUncensoredArticleDetailList" resultType="java.util.Map">
         SELECT article.aid AS id, article.a_title AS title, article.a_intro AS intro, article.a_content AS content, article.a_recommand AS recommand,
-			article.a_read_count AS read_count, article.a_like_count AS like_count, article.a_dislike_count AS dislike_count, article.a_publish_date AS publish_date,
+			article.a_read_count AS read_count, article.a_like_count AS like_count, article.a_dislike_count AS dislike_count, article.a_update_time AS update_time,
 			article.a_is_complete AS is_complete, article.a_is_writer_show AS is_writer_show, article.a_is_censored AS is_censored,
 			writer.wid AS wid, writer.w_pen_name AS writer_name, category.catid AS catid, category.cat_name AS category_name
 		FROM article
@@ -89,19 +89,19 @@
 		LEFT JOIN category ON article.catid = category.catid
 		WHERE article.a_is_censored=0
 			AND article.a_is_complete=1
-		ORDER BY article.a_publish_date ASC
+		ORDER BY article.a_update_time ASC
     </select>
     
      <select id="getCensoredArticleDetailList" resultType="java.util.Map">
         SELECT article.aid AS id, article.a_title AS title, article.a_intro AS intro, article.a_content AS content, article.a_recommand AS recommand,
-			article.a_read_count AS read_count, article.a_like_count AS like_count, article.a_dislike_count AS dislike_count, article.a_publish_date AS publish_date,
+			article.a_read_count AS read_count, article.a_like_count AS like_count, article.a_dislike_count AS dislike_count, article.a_update_time AS update_time,
 			article.a_is_complete AS is_complete, article.a_is_writer_show AS is_writer_show, article.a_is_censored AS is_censored,
 			writer.wid AS wid, writer.w_pen_name AS writer_name, category.catid AS catid, category.cat_name AS category_name
 		FROM article
 		LEFT JOIN writer ON article.wid = writer.wid
 		LEFT JOIN category ON article.catid = category.catid
 		WHERE article.a_is_censored=-1 OR article.a_is_censored=1
-		ORDER BY article.a_publish_date DESC
+		ORDER BY article.a_update_time DESC
     </select>
     
      <select id="getArticleByTitle" parameterType="java.lang.String" resultMap="articleResultMap">
@@ -181,6 +181,7 @@
 		WHERE article.aid=censor_record.aid
 			AND user.uid=censor_record.uid
 			AND censor_record.aid=#{aid}
+		ORDER BY time DESC
     </select>
     
     <select id="countVariesDataAmount" parameterType="java.lang.String" resultType="java.util.Map">
@@ -251,7 +252,7 @@
     
     <select id="getUserArticleCollection" resultType="java.util.Map">
         SELECT clc.clcid AS id,clc.aid AS aid,clc.clc_create_date AS create_date,
-        	a.a_title AS title,a.a_intro AS intro,a_publish_date AS publish_date,
+        	a.a_title AS title,a.a_intro AS intro,a_update_time AS update_time,
         	w.w_pen_name AS writer_name
         FROM collection AS clc,article AS a,writer AS w
         WHERE clc.uid=#{uid}

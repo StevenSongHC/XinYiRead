@@ -13,12 +13,12 @@ $(document).ready(function() {
 	$("#submenu-nav ul[parent='article']").show();
 	$("#submenu-nav ul[parent='article']>li[submenu='list']").addClass("active");
 	
-	$(".sp").each(function() {
+	/* $(".sp").each(function() {
 		$(this).prop("title", $(this).text());
-	});
+	}); */
 	$(".ml").each(function() {
 		$(this).html($(this).text());
-		$(this).prop("title", $(this).html());
+		//$(this).prop("title", $(this).html());
 	});
 });
 </script>
@@ -68,7 +68,7 @@ $(document).ready(function() {
 			<td class="sp">${a.read_count}</td>
 			<td class="sp">${a.like_count}</td>
 			<td class="sp">${a.dislike_count}</td>
-			<td>${a.publish_date}</td>
+			<td>${a.update_time}</td>
 			<td>${a.is_complete}</td>
 			<td>${a.is_writer_show}</td>
 			<td>${a.is_censored}</td>

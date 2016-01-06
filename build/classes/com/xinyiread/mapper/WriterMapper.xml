@@ -84,7 +84,7 @@
     </insert>
     
     <select id="getWriterArticleBriefList" resultType="java.util.Map">
-        SELECT aid AS id,a_title AS title,a_publish_date AS publish_date,a_is_complete AS is_complete,a_is_censored AS is_censored
+        SELECT aid AS id,a_title AS title,a_update_time AS update_time,a_is_complete AS is_complete,a_is_censored AS is_censored
 		FROM article
 		WHERE wid=#{wid}
 		<if test="isComplete != null">
@@ -93,7 +93,7 @@
 		<if test="isCensored != null">
 		    AND a_is_censored=#{isCensored}
 		</if>
-		ORDER BY publish_date DESC
+		ORDER BY update_time DESC
     </select>
     
 </mapper>

@@ -326,16 +326,16 @@ public class ManagerController {
 			result.put("status", 0);	// article not existed
 			return result;
 		}
+
+		java.sql.Timestamp currentTime = new java.sql.Timestamp(new java.util.Date().getTime());
 		
 		article.setIsCensored(isPass);
 		if (isPass == 1) {				// passage granted date as publish date
-			java.sql.Date currentDate = new java.sql.Date(new java.util.Date().getTime());
-			article.setPublishDate(currentDate);
+			article.setUpdateTime(currentTime);
 		}
 		aService.updateArticle(article);
 		
 		// record this censor result
-		java.sql.Timestamp currentTime = new java.sql.Timestamp(new java.util.Date().getTime());
 		aService.recordCensor(aid, currentUser.getId(), isPass, currentTime);
 		
 		result.put("status", 1);		// succeed
