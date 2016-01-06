@@ -50,14 +50,21 @@
 		WHERE aid=#{id}
     </select>
     
+     <select id="getLatestPublishedArticles" resultMap="articleResultMap">
+        SELECT *
+		FROM article
+		WHERE a_is_censored=1
+		ORDER BY a_publish_date DESC LIMIT #{quantity}
+    </select>
+    
      <select id="getArticleDetailList" resultType="java.util.Map">
         SELECT article.aid AS id, article.a_title AS title, article.a_intro, article.a_content AS content, article.a_recommand AS recommand,
 			article.a_read_count AS read_count, article.a_like_count AS like_count, article.a_dislike_count AS dislike_count, article.a_publish_date AS publish_date,
 			article.a_is_complete AS is_complete, article.a_is_writer_show AS is_writer_show, article.a_is_censored AS is_censored,
 			writer.wid AS wid, writer.w_pen_name AS writer_name, category.catid AS catid, category.cat_name AS category_name
 		FROM article
-		LEFT JOIN writer ON article.wid = writer.wid
-		LEFT JOIN category ON article.catid = category.catid
+		LEFT JOIN writer ON article.wid=writer.wid
+		LEFT JOIN category ON article.catid=category.catid
 		ORDER BY article.aid ASC
     </select>
     
@@ -67,8 +74,8 @@
 			article.a_is_complete AS is_complete, article.a_is_writer_show AS is_writer_show, article.a_is_censored AS is_censored,
 			writer.wid AS wid, writer.uid AS writer_uid, writer.w_pen_name AS writer_name, category.catid AS catid, category.cat_name AS category_name
 		FROM article
-		LEFT JOIN writer ON article.wid = writer.wid
-		LEFT JOIN category ON article.catid = category.catid
+		LEFT JOIN writer ON article.wid=writer.wid
+		LEFT JOIN category ON article.catid=category.catid
 		WHERE article.aid=#{id}
     </select>
     

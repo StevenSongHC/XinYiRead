@@ -70,11 +70,11 @@
   </error-page>
   <error-page>
       <error-code>405</error-code>
-      <location>/WEB-INF//VIEW/STATIC/405.jsp</location>
+      <location>/WEB-INF/VIEW/STATIC/405.jsp</location>
   </error-page>
   <error-page>
       <error-code>500</error-code>
-      <location>/WEB-INF//VIEW/STATIC/500.jsp</location>
+      <location>/WEB-INF/VIEW/STATIC/500.jsp</location>
   </error-page>
   
 </web-app>

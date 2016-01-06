@@ -50,7 +50,7 @@ function resetCurrentProject() {
 	}
 }
 </script>
-<title>我的写作空间</title>
+<title>我的写作空间 | 新意阅读网</title>
 </head>
 <body>
 <div id="main">

@@ -22,6 +22,9 @@ public interface ArticleDAO {
 	// 通过主键找到文章
 	public Article getArticleById(long id);
 	
+	// 获取对应数量的最新发布文章列表
+	public List<Article> getLatestPublishedArticles(int quantity);
+	
 	// 得到文章所有信息详细列表
 	public List<Map<String, Object>> getArticleDetailList();
 	

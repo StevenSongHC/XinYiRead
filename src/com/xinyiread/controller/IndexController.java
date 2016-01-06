@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,8 +38,13 @@ public class IndexController {
 	private ArticleService aService;
 	
 	@RequestMapping("index")
-	public String index() {
-		System.out.println("this is index!!!");
+	public String index(ModelMap model) {
+		// all categories
+		model.put("categories", aService.getAllCategory());
+		// latest article list
+		model.put("latestArticleList", aService.getLatestPublishedArticles(10));
+		// special recommendations
+		model.put("special", null);
 		return "index";
 	}
 	
@@ -209,6 +215,14 @@ public class IndexController {
 		model.put("user", currentUser);
 		model.put("articleCollection", aService.getUserArticleCollection(currentUser.getId()));
 		return "user-collection";
+	}
+	
+	@RequestMapping("category/{categoryName}")
+	public String browseCategory(ModelMap model,
+								 @PathVariable String categoryName) {
+		System.out.println(categoryName);
+		model.put("categoryName", categoryName);
+		return "category-articles";
 	}
 	
 	// STATIC INFO PAGES

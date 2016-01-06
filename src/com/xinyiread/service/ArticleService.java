@@ -13,6 +13,8 @@ public interface ArticleService {
 	
 	public Article getArticleById(long id);
 	
+	public List<Article> getLatestPublishedArticles(int quantity);
+	
 	public List<Map<String, Object>> getArticleDetailList();
 	
 	public Map<String, Object> getArticleDetailById(long id);

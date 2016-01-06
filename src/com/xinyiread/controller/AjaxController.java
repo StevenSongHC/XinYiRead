@@ -89,11 +89,14 @@ public class AjaxController {
 					String saveName = "images/portrait/" + currentUser.getId() + "_" + Calendar.getInstance().getTimeInMillis() + fileType;
 					String savePath = request.getServletContext().getRealPath("") + "/" + saveName;
 					System.out.println(savePath);
-					// can't delete the default portrait
+					// can't delete default portrait
 					if (!currentUser.getPortrait().equals("images/portrait/default.png")) {
 						// delete the old portrait
+						// WARNING: if the portrait file name can't match with the real portrait file in the directory, leads to uploading new portrait failure, //
+						//          thus requires to update the portrait file name according to the one stored in database                                       //
 						if (!new File(request.getServletContext().getRealPath("")+ "/" +currentUser.getPortrait()).delete()) {
 							// failed
+							System.out.println("failed here");
 							result.put("code", 0);
 							return result;
 						}

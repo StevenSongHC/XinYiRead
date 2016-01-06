@@ -11,6 +11,7 @@ String basepath = request.getContextPath();
 <jsp:include page="include.jsp" flush="true" />
 <jsp:include page="top-bar.jsp" flush="true" />
 <script type="text/javascript"	src="<%=basepath%>/js/bootstrap-my-pagination.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=basepath%>/css/index-style.css">
 <script type="text/javascript">
 $(function() {
 	/* BootstrapDialog.show({
@@ -23,8 +24,26 @@ $(function() {
 <title>新意阅读网</title>
 </head>
 <body>
-<h1>Hello World</h1>
-<h5><a href="user/list">data test</a></h5>
-
+<div id="main">
+	<div id="categories">
+		<div class="row">
+		<c:forEach items="${categories}" var="cat">
+			<span class="item"><a href="<%=basepath%>/category/${cat.name}">${cat.name}</a></span>
+		</c:forEach>
+		</div>
+	</div>
+	<div id="article-list">
+		<div id="latest">
+			<div class="head-marker">最新发布的文章</div>
+		<c:forEach items="${latestArticleList}" var="a">
+			<div class="item"><a href="<%=basepath%>/article/${a.id}" target="_blank">${a.title}</a></div>
+		</c:forEach>
+		</div>
+	</div>
+	<div id="special">
+	
+	</div>
+	<div style="clear: both;"></div>
+</div>
 </body>
 </html>

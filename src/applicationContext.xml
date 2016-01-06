@@ -24,13 +24,13 @@
 			<value>com.mysql.jdbc.Driver</value>
 		</property>	
 		<!-- <property name="jdbcUrl">
-			<value>jdbc:mysql://951471197h.gotoftp5.com/951471197h?characterEncoding=utf-8</value>
+			<value>jdbc:mysql://115.28.45.184:3306/xinyiread?characterEncoding=utf-8</value>
 		</property>			
 		<property name="user">
-			<value>951471197h</value>
+			<value>xinyiread</value>
 		</property>
 		<property name="password">
-			<value>2bjdzvb2</value>
+			<value>123456</value>
 		</property> -->
 		<property name="jdbcUrl">
 			<value>jdbc:mysql://localhost:3306/xinyiread?characterEncoding=utf-8</value>
