@@ -87,6 +87,7 @@
         SELECT aid AS id,a_title AS title,a_update_time AS update_time,a_is_complete AS is_complete,a_is_censored AS is_censored
 		FROM article
 		WHERE wid=#{wid}
+			AND a_is_censored=1
 		<if test="isComplete != null">
 		    AND a_is_complete=#{isComplete}
 		</if>

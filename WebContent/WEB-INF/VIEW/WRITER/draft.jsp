@@ -37,6 +37,7 @@ $(document).ready(function() {
 		$("#btn-save").attr("disabled", "disabled");
 		$("#btn-submit").attr("disabled", "disabled");
 		$("#article-category").attr("disabled", "disabled");
+		$("#article-intro").attr("readOnly", true);
 		$("#article-title").attr("readOnly", true);
 		$("#add-tag").hide();
 		$("#draft-stage").removeAttr("contenteditable");
@@ -95,6 +96,10 @@ function submitArticle(isComplete) {
 			alert("每篇文章必须进行分类！");
 			return;
 		}
+		if ($("#article-title").val().trim().length > 17) {
+			alert("文章标题不得超过17个字符");
+			return;
+		}
 		// parse tag into string array
 		var tagArr = new Array();
 		$(".tag-item").each(function(i, e) {
@@ -141,6 +146,7 @@ function doSubmit(isComplete, tagArr) {
 		data: {
 			aid: $("#article-aid").val(),
 			title: $("#article-title").val().trim(),
+			intro: $("#article-intro").val(),
 			content: $("#draft-stage").html().trim(),
 			isWriterShow: $("input[type='radio'][name='showWriter']:checked").val(),
 			catid: $("#article-category").children("option:selected").val(),
@@ -292,6 +298,11 @@ function cancelPublish() {
 	</c:otherwise>
 	</c:choose>
 	<input type="text" id="article-title" value="${article.title}">
+	<hr>
+	<h5>简介</h5>
+	<textarea rows="4" cols="70" id="article-intro">${article.intro}</textarea>
+	<hr>
+	<h5>正文</h5>
 	<div contentEditable="true" id="draft-stage">
 	<c:choose>
 	<c:when test="${empty requestScope.article.content}">

@@ -51,7 +51,7 @@
     </select>
     
      <select id="getLatestPublishedArticleList" resultType="java.util.Map">
-        SELECT aid AS id, a_title AS title, a_update_time AS update_time
+        SELECT aid AS id, a_title AS title, a_intro AS intro, a_update_time AS update_time
 		FROM article
 		WHERE a_is_censored=1
 		ORDER BY a_update_time DESC
@@ -59,7 +59,7 @@
     </select>
     
     <select id="getLatestCommentedArticleList" resultType="java.util.Map">
-		SELECT a.aid AS id , a.a_title AS title, a.a_update_time AS update_time, cmt.cmt_submit_time AS comment_submit_time
+		SELECT a.aid AS id , a.a_title AS title, a_intro AS intro, a.a_update_time AS update_time, cmt.cmt_submit_time AS comment_submit_time
 		FROM article AS a
 		LEFT JOIN comments AS cmt
 		ON a.aid=cmt.aid
@@ -70,7 +70,7 @@
     </select>
     
     <select id="getLatestLikedArticleList" resultType="java.util.Map">
-        SELECT a.aid AS id , a.a_title AS title, a.a_update_time AS update_time, rat.rat_submit_time AS rating_submit_time
+        SELECT a.aid AS id , a.a_title AS title, a_intro AS intro, a.a_update_time AS update_time, rat.rat_submit_time AS rating_submit_time
 		FROM article AS a
 		LEFT JOIN rating_article_history AS rat
 		ON a.aid=rat.aid
@@ -82,7 +82,7 @@
     </select>
     
     <select id="getLatestArticleListByCategoryName" resultType="java.util.Map">
-        SELECT aid AS id , a_title AS title, a_update_time AS update_time
+        SELECT aid AS id , a_title AS title, a_intro AS intro, a_update_time AS update_time
 		FROM article
 		WHERE catid=(SELECT catid FROM category WHERE cat_name=#{categoryName})
 			AND a_is_censored=1
@@ -92,7 +92,7 @@
     </select>
     
      <select id="getArticleDetailList" resultType="java.util.Map">
-        SELECT article.aid AS id, article.a_title AS title, article.a_intro, article.a_content AS content, article.a_recommand AS recommand,
+        SELECT article.aid AS id, article.a_title AS title, article.a_intro AS intro, article.a_content AS content, article.a_recommand AS recommand,
 			article.a_read_count AS read_count, article.a_like_count AS like_count, article.a_dislike_count AS dislike_count, article.a_update_time AS update_time,
 			article.a_is_complete AS is_complete, article.a_is_writer_show AS is_writer_show, article.a_is_censored AS is_censored,
 			writer.wid AS wid, writer.w_pen_name AS writer_name, category.catid AS catid, category.cat_name AS category_name
@@ -103,7 +103,7 @@
     </select>
     
      <select id="getArticleDetailById" parameterType="java.lang.Long" resultType="java.util.Map">
-        SELECT article.aid AS id, article.a_title AS title, article.a_intro, article.a_content AS content, article.a_recommand AS recommand,
+        SELECT article.aid AS id, article.a_title AS title, article.a_intro AS intro, article.a_content AS content, article.a_recommand AS recommand,
 			article.a_read_count+1 AS read_count, article.a_like_count AS like_count, article.a_dislike_count AS dislike_count, article.a_update_time AS update_time,
 			article.a_is_complete AS is_complete, article.a_is_writer_show AS is_writer_show, article.a_is_censored AS is_censored,
 			writer.wid AS wid, writer.uid AS writer_uid, writer.w_pen_name AS writer_name, category.catid AS catid, category.cat_name AS category_name

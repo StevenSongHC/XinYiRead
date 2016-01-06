@@ -137,6 +137,7 @@ public class ArticleController {
 	public Map<String, Object> saveArticle(HttpSession session,
 										   long aid,
 										   String title,
+										   String intro,
 										   String content,
 										   int isWriterShow,
 										   int isComplete,
@@ -163,6 +164,7 @@ public class ArticleController {
 			Article newArticle = new Article();
 			newArticle.setWid(currentWriter.getId());
 			newArticle.setTitle(title);
+			newArticle.setIntro(intro);
 			newArticle.setContent(content);
 			newArticle.setIsWriterShow(isWriterShow);
 			newArticle.setCatid(catid);
@@ -208,6 +210,7 @@ public class ArticleController {
 				return result;
 			}
 			article.setTitle(title);
+			article.setIntro(intro);
 			article.setContent(content);
 			article.setIsWriterShow(isWriterShow);
 			article.setCatid(catid);
