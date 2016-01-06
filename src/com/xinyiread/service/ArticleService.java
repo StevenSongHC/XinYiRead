@@ -13,7 +13,11 @@ public interface ArticleService {
 	
 	public Article getArticleById(long id);
 	
-	public List<Article> getLatestPublishedArticles(int quantity);
+	public List<Map<String, Object>> getLatestPublishedArticleList(int quantity);
+	
+	public List<Map<String, Object>> getLatestCommentedArticleList(int quantity);
+	
+	public List<Map<String, Object>> getLatestLikedArticleList(int quantity);
 	
 	public List<Map<String, Object>> getArticleDetailList();
 	
@@ -55,7 +59,7 @@ public interface ArticleService {
 	
 	public List<Map<String, Object>> getUserRatingArticleHistory(long uid, long aid);
 	
-	public int ratingArticle(long uid, long aid, String rating);
+	public int ratingArticle(long uid, long aid, String rating, java.sql.Timestamp submitTime);
 	
 	public long addToArticleCollection(long uid, long aid, java.sql.Date createDate);
 	

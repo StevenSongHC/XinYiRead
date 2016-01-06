@@ -23,7 +23,13 @@ public interface ArticleDAO {
 	public Article getArticleById(long id);
 	
 	// 获取对应数量的最新发布文章列表
-	public List<Article> getLatestPublishedArticles(int quantity);
+	public List<Map<String, Object>> getLatestPublishedArticleList(int quantity);
+	
+	// 获取对应数量的最新被评论文章列表
+	public List<Map<String, Object>> getLatestCommentedArticleList(int quantity);
+	
+	// 获取对应数量的最新被点赞文章列表
+	public List<Map<String, Object>> getLatestLikedArticleList(int quantity);
 	
 	// 得到文章所有信息详细列表
 	public List<Map<String, Object>> getArticleDetailList();
@@ -92,7 +98,7 @@ public interface ArticleDAO {
 	public List<Map<String, Object>> getUserRatingArticleHistory(@Param("uid") long uid, @Param("aid") long aid);
 	
 	// 插入文章评价文章记录
-	public int insertRatingHistory(@Param("uid") long uid, @Param("aid") long aid, @Param("rating") int rating);
+	public int insertRatingHistory(@Param("uid") long uid, @Param("aid") long aid, @Param("rating") int rating, @Param("submitTime") java.sql.Timestamp submitTime);
 	
 	// 添加收藏
 	public long addToArticleCollection(@Param("uid") long uid, @Param("aid") long aid, @Param("createDate") java.sql.Date createDate);

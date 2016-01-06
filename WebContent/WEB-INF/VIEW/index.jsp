@@ -35,19 +35,19 @@ $(function() {
 	<div id="article-list">
 		<div id="latest">
 			<div class="head-marker">最新发布的文章</div>
-		<c:forEach items="${latestArticleList}" var="a">
+		<c:forEach items="${latestPublishedArticleList}" var="a">
 			<div class="item"><a href="<%=basepath%>/article/${a.id}" target="_blank">${a.title}</a></div>
 		</c:forEach>
 		</div>
 		<div id="recently-commented">
 			<div class="head-marker">最新被评论的文章</div>
-		<c:forEach items="${latestArticleList}" var="a">
+		<c:forEach items="${latestCommentedArticleList}" var="a">
 			<div class="item"><a href="<%=basepath%>/article/${a.id}" target="_blank">${a.title}</a></div>
 		</c:forEach>
 		</div>
 		<div id="recently-liked">
 			<div class="head-marker">最新被点赞的文章</div>
-		<c:forEach items="${latestArticleList}" var="a">
+		<c:forEach items="${latestLikedArticleList}" var="a">
 			<div class="item"><a href="<%=basepath%>/article/${a.id}" target="_blank">${a.title}</a></div>
 		</c:forEach>
 		</div>

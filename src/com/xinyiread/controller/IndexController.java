@@ -41,8 +41,12 @@ public class IndexController {
 	public String index(ModelMap model) {
 		// all categories
 		model.put("categories", aService.getAllCategory());
-		// latest article list
-		model.put("latestArticleList", aService.getLatestPublishedArticles(10));
+		// latest published article list
+		model.put("latestPublishedArticleList", aService.getLatestPublishedArticleList(10));
+		// latest commented article list
+		model.put("latestCommentedArticleList", aService.getLatestCommentedArticleList(5));
+		// latest liked article list
+		model.put("latestLikedArticleList", aService.getLatestLikedArticleList(5));
 		// special recommendations
 		model.put("special", null);
 		return "index";

@@ -40,9 +40,6 @@ body {
 	width: 50%;
 	margin: 0 20px 0 20px;
 	float: left;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
 }
 #article-list .item {
 	font-size: 18px;
@@ -88,6 +85,11 @@ body {
 	border-color: #f1f1f1;
 	border-width: 2px 2px 2px 1px;
 	border-radius: 0px 0px 15px 0px;
+}
+#article-list #latest,#article-list #recently-commented,#article-list #recently-liked {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 #special {
 	background-color: red;

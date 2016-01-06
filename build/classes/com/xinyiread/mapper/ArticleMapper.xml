@@ -50,11 +50,33 @@
 		WHERE aid=#{id}
     </select>
     
-     <select id="getLatestPublishedArticles" resultMap="articleResultMap">
-        SELECT *
+     <select id="getLatestPublishedArticleList" resultType="java.util.Map">
+        SELECT aid AS id, a_title AS title, a_update_time AS update_time
 		FROM article
 		WHERE a_is_censored=1
-		ORDER BY a_update_time DESC LIMIT #{quantity}
+		ORDER BY a_update_time DESC
+		LIMIT #{quantity}
+    </select>
+    
+    <select id="getLatestCommentedArticleList" resultType="java.util.Map">
+		SELECT a.aid AS id ,a.a_title AS title, a.a_update_time AS update_time, cmt.cmt_submit_time AS comment_submit_time
+		FROM article AS a
+		LEFT JOIN comments AS cmt
+		ON a.aid=cmt.aid
+		GROUP BY cmt.aid
+		ORDER BY MAX(cmt.cmt_submit_time) DESC
+		LIMIT #{quantity}
+    </select>
+    
+    <select id="getLatestLikedArticleList" resultType="java.util.Map">
+        SELECT a.aid AS id ,a.a_title AS title, a.a_update_time AS update_time, rat.rat_submit_time AS rating_submit_time
+		FROM article AS a
+		LEFT JOIN rating_article_history AS rat
+		ON a.aid=rat.aid
+		WHERE rat.rat_down_or_up=1
+		GROUP BY rat.aid
+		ORDER BY MAX(rat.rat_submit_time) DESC
+		LIMIT #{quantity}
     </select>
     
      <select id="getArticleDetailList" resultType="java.util.Map">
@@ -228,8 +250,8 @@
     </select>
     
     <insert id="insertRatingHistory">
-        INSERT INTO rating_article_history(uid,aid,down_or_up)
-        VALUES (#{uid},#{aid},#{rating})
+        INSERT INTO rating_article_history(uid,aid,rat_down_or_up,rat_submit_time)
+        VALUES (#{uid},#{aid},#{rating},#{submitTime})
     </insert>
     
     <insert id="addToArticleCollection">

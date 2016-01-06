@@ -381,7 +381,7 @@ public class ArticleController {
 			return result;
 		}
 		
-		if (aService.ratingArticle(currentUser.getId(), aid, rating) == 0) {
+		if (aService.ratingArticle(currentUser.getId(), aid, rating, new java.sql.Timestamp(new java.util.Date().getTime())) == 0) {
 			result.put("status", -2);		// illegal rating
 			return result;
 		}

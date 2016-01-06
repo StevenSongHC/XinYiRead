@@ -29,8 +29,16 @@ public class ArticleServiceImpl implements ArticleService {
 		return aDao.getArticleById(id);
 	}
 	
-	public List<Article> getLatestPublishedArticles(int quantity) {
-		return aDao.getLatestPublishedArticles(quantity);
+	public List<Map<String, Object>> getLatestPublishedArticleList(int quantity) {
+		return aDao.getLatestPublishedArticleList(quantity);
+	}
+	
+	public List<Map<String, Object>> getLatestCommentedArticleList(int quantity) {
+		return aDao.getLatestCommentedArticleList(quantity);
+	}
+	
+	public List<Map<String, Object>> getLatestLikedArticleList(int quantity) {
+		return aDao.getLatestLikedArticleList(quantity);
 	}
 	
 	public List<Map<String, Object>> getArticleDetailList() {
@@ -124,14 +132,14 @@ public class ArticleServiceImpl implements ArticleService {
 		return aDao.getUserRatingArticleHistory(uid, aid);
 	}
 
-	public int ratingArticle(long uid, long aid, String rating) {
+	public int ratingArticle(long uid, long aid, String rating, java.sql.Timestamp submitTime) {
 		if (rating.equals("up")) {					// like
 			aDao.addLikeCount(aid);
-			aDao.insertRatingHistory(uid, aid, 1);	// record like
+			aDao.insertRatingHistory(uid, aid, 1, submitTime);	// record like
 		}
 		else if (rating.equals("down")) {			// dislike
 			aDao.addDislikeCount(aid);
-			aDao.insertRatingHistory(uid, aid, 0);	// record dislike
+			aDao.insertRatingHistory(uid, aid, 0, submitTime);	// record dislike
 		}
 		else
 			return 0;
