@@ -16,6 +16,11 @@ String basepath = request.getContextPath();
 <link rel="stylesheet" type="text/css" href="<%=basepath%>/css/article-style.css">
 <script type="text/javascript">
 $(document).ready(function() {
+	// assign id to every paragraphs
+	$(".content p").each(function(i, e) {
+		e.id = i+1;
+	});
+	
 	// fill comment input box by related cookie
 	if ($.cookie("ARTICLE_${article.id}_COMMENT_WORD")) {
 		$("#input-comment").val($.cookie("ARTICLE_${article.id}_COMMENT_WORD"));
@@ -34,6 +39,23 @@ $(document).ready(function() {
 		pageSize: 5,
 		style: 3
 	});
+	
+	// enable paragraph focus style
+	$(".content p").click(function() {
+		// if focused para selected, then remove the focus style and return
+		if ($(this).hasClass("focus")) {
+			$(this).removeClass("focus");
+			return;
+		}
+		// clear focus style from the old focus para
+		$(".content p.focus").removeClass("focus");
+		// set focus style to the new selected para
+		$(this).addClass("focus");
+	});
+	
+	
+	
+	
 });
 
 function addCollection() {
@@ -238,6 +260,36 @@ function reportComment(cmtid) {
 		alert("举报失败！");
 	});
 }
+
+// bookmarkable para effect
+function toggleAddBookmark(isAdd) {
+	// bookmark function activated
+	if (isAdd) {
+		$("#add-bookmark a").attr("href", "javascript:toggleAddBookmark(false)");
+		$("#add-bookmark img").attr("src", "<%=basepath%>/images/bookmark_orange.png");
+		$(".content p").css({"cursor": "url(<%=basepath%>/images/bookmark_cursor.cur), auto", "border-color": "#000"});
+		// bookmark function activate
+		$("body").delegate(".content p", "click", bookmarkActivate);
+		// enable bookmarkable para hover effect
+		$(".content p").hover( function() {
+			$(this).css("border-style", "solid");
+		}, function() {
+			$(this).css("border-style", "dotted");
+		});
+	}
+	// bookmark function deactivated
+	else {
+		$("#add-bookmark a").attr("href", "javascript:toggleAddBookmark(true)");
+		$("#add-bookmark img").attr("src", "<%=basepath%>/images/bookmark_black.png");
+		$(".content p").css({"cursor": "default", "border-color": "#fff"});
+		$("body").undelegate(".content p", "click", bookmarkActivate);
+		$(".content p").unbind("mouseenter");
+		$(".content p").unbind("mouseleave");
+	}
+}
+function bookmarkActivate() {
+	console.log($(this).index()+1);
+}
 </script>
 <title>${article.title} | 新意阅读</title>
 </head>
@@ -245,7 +297,7 @@ function reportComment(cmtid) {
 <div id="main">
 	<ol class="breadcrumb">
 		<li><a href="<%=basepath%>">主页</a></li>
-		<li><a href="<%=basepath%>/category/${article.category_name}">${article.category_name}</a></li>
+		<li><a href="<%=basepath%>/search?category=${article.category_name}" target="_blank">${article.category_name}</a></li>
 		<li class="active">${article.title}</li>
 	</ol>
 	<h1>${article.title}</h1>
@@ -354,7 +406,6 @@ function reportComment(cmtid) {
 				<span id="warning-message" class="alert alert-warning" role="alert">管理员仍能查看评论匿名发布者的信息！！</span>
 				<div id="anonymous-option">
 					<span is-anonymous=0 class="glyphicon glyphicon-unchecked yep" onclick="javascript:toggleAnonymous($(this))"></span>
-					<span is-anonymous=1 class="glyphicon glyphicon-check" onclick="javascript:toggleAnonymous($(this))"></span>
 					匿名
 				</div>
 				<button type="button" class="btn btn-default" onclick="javascript:submitComment()">发表评论</button>
@@ -364,5 +415,10 @@ function reportComment(cmtid) {
 	</div>
 </div>
 <div style="clear: both;"></div>
+<c:if test="${not empty sessionScope.USER_SESSION}">
+<div id="add-bookmark">
+	<a href="javascript:toggleAddBookmark(true)" title="添加书签"><img alt="添加书签" src="<%=basepath%>/images/bookmark_black.png"></a>
+</div>
+</c:if>
 </body>
 </html>
