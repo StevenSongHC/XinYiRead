@@ -77,8 +77,15 @@ public class ArticleController {
 		// check is in collection
 		User currentUser = (User) session.getAttribute("USER_SESSION");
 		if (currentUser != null) {
-			model.put("isInCollection", !aService.isInUserArticleCollection(currentUser.getId(), Long.parseLong(article.get("id").toString())).isEmpty());
+			model.put("isInCollection", aService.isInUserArticleCollection(currentUser.getId(), Long.parseLong(article.get("id").toString())));
 		}
+		
+		// load all bookmarks of the article in string format
+		String bookmarks = "";
+		for (Map<String, Object> bookmark : aService.retrieveUserArticleBookmark(currentUser.getId(), aid)) {
+			bookmarks += "@" + bookmark.get("a_para_id").toString();
+		}
+		model.put("bookmarks", bookmarks);
 		
 		return "article";
 	}
@@ -315,7 +322,7 @@ public class ArticleController {
 		}
 		
 		// already added to collection b4
-		if (!aService.isInUserArticleCollection(currentUser.getId(), article.getId()).isEmpty()) {
+		if (aService.isInUserArticleCollection(currentUser.getId(), article.getId())) {
 			result.put("status", 2);
 			return result;
 		}
@@ -350,12 +357,40 @@ public class ArticleController {
 		aService.removeFromArticleCollection(currentUser.getId(), article.getId());
 		
 		// remove failed
-		if (!aService.isInUserArticleCollection(currentUser.getId(), article.getId()).isEmpty()) {
+		if (aService.isInUserArticleCollection(currentUser.getId(), article.getId())) {
 			result.put("status", -2);
 			return result;
 		}
 		
 		// done
+		result.put("status", 1);
+		return result;
+	}
+	
+	@RequestMapping(value = "add_bookmark", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> addBookMark(ModelMap model,
+							  HttpSession session,
+							  long aid,
+							  String aParaId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		User currentUser = (User) session.getAttribute("USER_SESSION");
+		if (currentUser == null) {
+			result.put("status", -1);
+			return result;
+		}
+		Article article = aService.getArticleById(aid);
+		if (article == null) {
+			result.put("status", 0);
+			return result;
+		}
+		if (aService.isInUserArticleBookmark(currentUser.getId(), aid, aParaId)) {
+			result.put("status", 2);
+			return result;
+		}
+		
+		aService.addToArticleBookmark(currentUser.getId(), aid, aParaId, new java.sql.Timestamp(new java.util.Date().getTime()));
+		result.put("paraId", aParaId);
 		result.put("status", 1);
 		return result;
 	}

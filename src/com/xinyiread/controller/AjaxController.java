@@ -30,9 +30,9 @@ public class AjaxController {
 	private UserService uService;
 	@Autowired
 	private WriterService wService;
-	
-	@ResponseBody
+
 	@RequestMapping("greeting")
+	@ResponseBody
 	public Map<String, Object> greeting(String data) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		Logger androidLog = Logger.getLogger("managerLogger");
@@ -40,9 +40,9 @@ public class AjaxController {
 		result.put("msg", "Ajax Greeting!");
 		return result;
 	}
-	
+
+	@RequestMapping(value = "checkUsername", method = RequestMethod.POST)
 	@ResponseBody
-	@RequestMapping("checkUsername")
 	public Map<String, Object> isUsernameExisted(String username) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (uService.getUserByName(username) != null)
@@ -51,9 +51,9 @@ public class AjaxController {
 			result.put("isExisted", false);
 		return result;
 	}
-	
+
+	@RequestMapping(value = "checkEmail", method = RequestMethod.POST)
 	@ResponseBody
-	@RequestMapping("checkEmail")
 	public Map<String, Object> isEmailExisted(String email) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (uService.getUserByEmail(email) != null)
@@ -62,9 +62,9 @@ public class AjaxController {
 			result.put("isExisted", false);
 		return result;
 	}
-	
+
+	@RequestMapping(value = "checkPenName", method = RequestMethod.POST)
 	@ResponseBody
-	@RequestMapping("checkPenName")
 	public Map<String, Object> isPenNameExisted(String penName) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (wService.getWriterByPenName(penName) != null)
@@ -73,7 +73,7 @@ public class AjaxController {
 			result.put("isExisted", false);
 		return result;
 	}
-	
+
 	@RequestMapping(value = "ajaxFormSubmit", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> ajaxFormSubmit(HttpSession session,

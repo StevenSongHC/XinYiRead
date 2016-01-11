@@ -163,12 +163,24 @@ public class ArticleServiceImpl implements ArticleService {
 		return aDao.removeFromArticleCollection(uid, aid);
 	}
 
-	public List<Map<String, Object>> isInUserArticleCollection(long uid, long aid) {
-		return aDao.isInUserArticleCollection(uid, aid);
+	public boolean isInUserArticleCollection(long uid, long aid) {
+		return !aDao.retrieveUserArticleCollection(uid, aid).isEmpty();
 	}
 	
 	public List<Map<String, Object>> getUserArticleCollection(long uid) {
 		return aDao.getUserArticleCollection(uid);
+	}
+
+	public long addToArticleBookmark(long uid, long aid, String aParaId, java.sql.Timestamp createTime) {
+		return aDao.addToArticleBookmark(uid, aid, aParaId, createTime);
+	}
+	
+	public List<Map<String, Object>> retrieveUserArticleBookmark(long uid, long aid) {
+		return aDao.retrieveUserArticleBookmark(uid, aid, null);
+	}
+	
+	public boolean isInUserArticleBookmark(long uid, long aid, String aParaId) {
+		return !aDao.retrieveUserArticleBookmark(uid, aid, aParaId).isEmpty();
 	}
 	
 }

@@ -69,8 +69,14 @@ public interface ArticleService {
 	
 	public int removeFromArticleCollection(long uid, long aid);
 	
-	public List<Map<String, Object>> isInUserArticleCollection(long uid, long aid);
+	public boolean isInUserArticleCollection(long uid, long aid);
 	
 	public List<Map<String, Object>> getUserArticleCollection(long uid);
+	
+	public long addToArticleBookmark(long uid, long aid, String aParaId, java.sql.Timestamp createTime);
+	
+	public List<Map<String, Object>> retrieveUserArticleBookmark(long uid, long aid);
+	
+	public boolean isInUserArticleBookmark(long uid, long aid, String aParaId);
 	
 }

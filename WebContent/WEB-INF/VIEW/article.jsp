@@ -40,21 +40,32 @@ $(document).ready(function() {
 		style: 3
 	});
 	
-	// enable paragraph focus style
-	$(".content p").click(function() {
-		// if focused para selected, then remove the focus style and return
-		if ($(this).hasClass("focus")) {
-			$(this).removeClass("focus");
-			return;
-		}
-		// clear focus style from the old focus para
-		$(".content p.focus").removeClass("focus");
-		// set focus style to the new selected para
-		$(this).addClass("focus");
+	// parse all bookmarks
+	var bookmarks = "${bookmarks}".split("@").filter(function(ele) {
+		return ele != "";
+	});
+	bookmarks.forEach(function(e, i) {
+		$(".content p").eq(e-1).addClass("bookmarked");
 	});
 	
-	
-	
+	// enable paragraph focus style
+	$(".content p").click(function() {
+		// focus style must be applied on unbookmarked paras
+		if (!$(this).hasClass("bookmarked")) {
+			// if focused para selected, then remove the focus style and return
+			if ($(this).hasClass("focus")) {
+				$(this).removeClass("focus");
+				return;
+			}
+			// clear focus style from the old focus para
+			$(".content p.focus").removeClass("focus");
+			// set focus style to the new selected para
+			$(this).addClass("focus");
+		}
+		else {
+			$(".content p.focus").removeClass("focus");
+		}
+	});
 	
 });
 
@@ -265,30 +276,66 @@ function reportComment(cmtid) {
 function toggleAddBookmark(isAdd) {
 	// bookmark function activated
 	if (isAdd) {
-		$("#add-bookmark a").attr("href", "javascript:toggleAddBookmark(false)");
-		$("#add-bookmark img").attr("src", "<%=basepath%>/images/bookmark_orange.png");
-		$(".content p").css({"cursor": "url(<%=basepath%>/images/bookmark_cursor.cur), auto", "border-color": "#000"});
-		// bookmark function activate
-		$("body").delegate(".content p", "click", bookmarkActivate);
-		// enable bookmarkable para hover effect
-		$(".content p").hover( function() {
-			$(this).css("border-style", "solid");
-		}, function() {
-			$(this).css("border-style", "dotted");
-		});
+		bookmarkActivate();
 	}
 	// bookmark function deactivated
 	else {
-		$("#add-bookmark a").attr("href", "javascript:toggleAddBookmark(true)");
-		$("#add-bookmark img").attr("src", "<%=basepath%>/images/bookmark_black.png");
-		$(".content p").css({"cursor": "default", "border-color": "#fff"});
-		$("body").undelegate(".content p", "click", bookmarkActivate);
-		$(".content p").unbind("mouseenter");
-		$(".content p").unbind("mouseleave");
+		bookmarkDeactivate();
 	}
 }
 function bookmarkActivate() {
-	console.log($(this).index()+1);
+	$("#add-bookmark a").attr("href", "javascript:toggleAddBookmark(false)");
+	$("#add-bookmark img").attr("src", "<%=basepath%>/images/bookmark_orange.png");
+	$(".content p").css({"cursor": "url(<%=basepath%>/images/bookmark_cursor.cur), auto", "border-color": "#000"});
+	// bookmark function activate
+	$("body").delegate(".content p", "click", addBookmark);
+	// enable bookmarkable para hover effect
+	$(".content p").hover( function() {
+		$(this).css("border-style", "solid");
+	}, function() {
+		$(this).css("border-style", "dotted");
+	});
+}
+function bookmarkDeactivate() {
+	$("#add-bookmark a").attr("href", "javascript:toggleAddBookmark(true)");
+	$("#add-bookmark img").attr("src", "<%=basepath%>/images/bookmark_black.png");
+	$(".content p").css({"cursor": "default", "border-color": "#fff"});
+	$("body").undelegate(".content p", "click", addBookmark);
+	$(".content p").unbind("mouseenter");
+	$(".content p").unbind("mouseleave");
+}
+function addBookmark() {
+	$.ajax( {
+		url: "<%=basepath%>/article/add_bookmark",
+		type: "POST",
+		dataType: "JSON",
+		data: {
+			aid: ${article.id},
+			aParaId: $(this).index()+1
+		}
+	}).done(function(json) {
+		switch (json.status) {
+			case -1:
+				alert("请先登录再添加标签");
+				goLogin();
+				break;
+			case 0:
+				alert("文章不存在？！请刷新");
+				break;
+			case 1:
+				bookmarkDeactivate();
+				$(".content p").eq(json.paraId-1).removeClass("focus").addClass("bookmarked");
+				return false;
+				break;
+			case 2:
+				alert("已存在相同的书签");
+				break;
+			default:
+				alert("添加标签失败！");
+		}
+	}).fail(function() {
+		alert("添加标签失败！");
+	});
 }
 </script>
 <title>${article.title} | 新意阅读</title>
@@ -301,6 +348,7 @@ function bookmarkActivate() {
 		<li class="active">${article.title}</li>
 	</ol>
 	<h1>${article.title}</h1>
+	<input type="hidden" id="a" value="${article.aid}">
 	<div class="info">
 		<span>作者：<a href="<%=basepath%>/writer/i/${article.writer_name}" target=_blank title="访问${article.writer_name}的个人主页">${article.writer_name}</a></span>
 		<span>发布时间：<fmt:formatDate pattern="yyyy-MM-dd" value="${article.update_time}"/></span>

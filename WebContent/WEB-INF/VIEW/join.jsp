@@ -139,6 +139,7 @@ function isUsernameExisted() {
 	var isExisted;
 	$.ajax( {
 		async: false,
+		type: "POST",
 		url: "<%=basepath%>/ajax/checkUsername",
 		dataType: "JSON",
 		data: {
@@ -158,6 +159,7 @@ function isEmailExisted() {
 	var isExisted;
 	$.ajax( {
 		async: false,
+		type: "POST",
 		url: "<%=basepath%>/ajax/checkEmail",
 		dataType: "JSON",
 		data: {

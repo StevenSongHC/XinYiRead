@@ -303,7 +303,7 @@
         	AND aid=#{aid}
     </delete>
     
-    <select id="isInUserArticleCollection" resultType="java.util.Map">
+    <select id="retrieveUserArticleCollection" resultType="java.util.Map">
         SELECT *
         FROM collection
         WHERE uid=#{uid}
@@ -319,6 +319,21 @@
         	AND a.aid=clc.aid
         	AND w.wid=a.wid
         ORDER BY clc_create_date DESC
+    </select>
+    
+    <insert id="addToArticleBookmark">
+        INSERT INTO bookmark(uid,aid,a_para_id,bm_create_time)
+        VALUES (#{uid},#{aid},#{aParaId},#{createTime})
+    </insert>
+    
+    <select id="retrieveUserArticleBookmark" resultType="java.util.Map">
+        SELECT *
+        FROM bookmark
+        WHERE uid=#{uid}
+        	AND aid=#{aid}
+        	<if test="aParaId != null">
+        		AND a_para_id=#{aParaId}
+        	</if>
     </select>
     
 </mapper>

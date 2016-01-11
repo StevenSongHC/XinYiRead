@@ -113,9 +113,15 @@ public interface ArticleDAO {
 	public int removeFromArticleCollection(@Param("uid") long uid, @Param("aid") long aid);
 	
 	// 检查收藏是否已存在
-	public List<Map<String, Object>> isInUserArticleCollection(@Param("uid") long uid, @Param("aid") long aid);
+	public List<Map<String, Object>> retrieveUserArticleCollection(@Param("uid") long uid, @Param("aid") long aid);
 	
 	// 获取用户文章收藏列表
 	public List<Map<String, Object>> getUserArticleCollection(long uid);
+	
+	// 添加文章段落书签
+	public long addToArticleBookmark(@Param("uid") long uid, @Param("aid") long aid, @Param("aParaId") String aParaId, @Param("createTime") java.sql.Timestamp createTime);
+
+	// 检查书签是否已存在
+	public List<Map<String, Object>> retrieveUserArticleBookmark(@Param("uid") long uid, @Param("aid") long aid, @Param("aParaId") String aParaId);
 	
 }
