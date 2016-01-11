@@ -239,7 +239,7 @@ public class IndexController {
 								@RequestParam(value="category", required=false) String category,
 								@RequestParam(value="order_by", required=false) String orderBy) {
 		// flags
-		boolean isNotEmptyKeyword = (keyword != null && !keyword.equals(""));
+		//boolean isNotEmptyKeyword = (keyword != null && !keyword.equals(""));
 		boolean isNotEmptyCategory = (category != null && !category.equals(""));
 		boolean isNotEmptyOrderBy = (orderBy != null && !orderBy.equals(""));
 		
@@ -252,15 +252,11 @@ public class IndexController {
 			return "redirect:/404";
 		}
 		
-		// all empty, return latest published articles by default
-		if (!isNotEmptyKeyword && !isNotEmptyCategory && !isNotEmptyOrderBy) {
+		// set orderBy to 'last_published' by default if no orderBy defined
+		if (!isNotEmptyOrderBy) {
 			orderBy = "latest_published";
 		}
-		// only category not empty, return category's latest published articles
-		if (!isNotEmptyKeyword && isNotEmptyCategory && !isNotEmptyOrderBy) {
-			orderBy = "latest_published";
-		}
-		System.out.println("ORDERBY " + orderBy);
+		
 		// display info
 		model.put("keyword", keyword);
 		model.put("categoryName", category);
