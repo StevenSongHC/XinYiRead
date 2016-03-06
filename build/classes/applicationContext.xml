@@ -23,15 +23,8 @@
 		<property name="driverClass">
 			<value>com.mysql.jdbc.Driver</value>
 		</property>	
-		<!-- <property name="jdbcUrl">
-			<value>jdbc:mysql://115.28.45.184:3306/xinyiread?characterEncoding=utf-8</value>
-		</property>			
-		<property name="user">
-			<value>xinyiread</value>
-		</property>
-		<property name="password">
-			<value>123456</value>
-		</property> -->
+		
+		
 		<property name="jdbcUrl">
 			<value>jdbc:mysql://localhost:3306/xinyiread?characterEncoding=utf-8</value>
 		</property>			
@@ -41,6 +34,17 @@
 		<property name="password">
 			<value>123456</value>
 		</property>
+		
+		<!-- <property name="jdbcUrl">
+			<value>jdbc:mysql://115.28.45.184:3306/xinyiread?characterEncoding=utf-8</value>
+		</property>			
+		<property name="user">
+			<value>xinyiread</value>
+		</property>
+		<property name="password">
+			<value>123456</value>
+		</property> -->
+		
 		
 		<!-- c3p0 Config -->
 		<property name="initialPoolSize" value="5" />

@@ -78,14 +78,14 @@ public class ArticleController {
 		User currentUser = (User) session.getAttribute("USER_SESSION");
 		if (currentUser != null) {
 			model.put("isInCollection", aService.isInUserArticleCollection(currentUser.getId(), Long.parseLong(article.get("id").toString())));
+			
+			// load all bookmarks of the article in string format
+			String bookmarks = "";
+			for (Map<String, Object> bookmark : aService.retrieveUserArticleBookmark(currentUser.getId(), aid)) {
+				bookmarks += "@" + bookmark.get("a_para_id").toString();
+			}
+			model.put("bookmarks", bookmarks);
 		}
-		
-		// load all bookmarks of the article in string format
-		String bookmarks = "";
-		for (Map<String, Object> bookmark : aService.retrieveUserArticleBookmark(currentUser.getId(), aid)) {
-			bookmarks += "@" + bookmark.get("a_para_id").toString();
-		}
-		model.put("bookmarks", bookmarks);
 		
 		return "article";
 	}
