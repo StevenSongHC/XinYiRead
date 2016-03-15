@@ -21,13 +21,13 @@ $(document).ready(function() {
 	
 	if ($("#article-aid").val() != 0) {
 		$("input[type='radio'][name='showWriter'][value=" + ${article.is_writer_show} + "]").attr("checked", "checked").parent().addClass("active");
-		$("#article-category").find("option[value=" + ${article.catid} + "]").attr("selected", "selected");
+		$("#article-category").val(${article.catid});
 	}
 	else {
 		$("input[type='radio'][name='showWriter'][value=1]").attr("checked", "checked").parent().addClass("active");
 		$("#article-category").find("option[value=0]").attr("selected", "selected");
 	}
-	$("#article-category").selectpicker("refresh");
+	$("#article-category").selectpicker("render");
 	
 	/*
 	 * make every editable element uneditable

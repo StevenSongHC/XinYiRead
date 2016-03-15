@@ -179,6 +179,7 @@ function isPenNameExisted() {
 	var isExisted;
 	$.ajax( {
 		async: false,
+		type: "POST",
 		url: "<%=basepath%>/ajax/checkPenName",
 		dataType: "JSON",
 		data: {

@@ -99,6 +99,7 @@ public class WriterController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("wid", writer.getId());
 		map.put("isComplete", 1);
+		map.put("isCensored", 1);
 		model.put("articleList", wService.getWriterArticleBriefList(map));
 		
 		model.put("writer", writer);
